@@ -1,0 +1,2223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TradeConnect - Barter and Marketplace System for Barangay Bulihan">
+  <meta name="keywords" content="TradeConnect, Barter, Marketplace, Silang, Cavite, Bulihan">
+  <meta name="author" content="Maricar Caratao">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <title>TradeConnect</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/css/shepherd.css"/>
+   <style>
+    :root {
+      --primary: #4a6fa5; /* Deep blue */
+      --secondary: #166088; /* Darker blue */
+      --accent: #d16644; /* Warm accent */
+      --light: #f8f9fa; /* Light background */
+      --dark: #343a40; /* Dark text */
+      --gray: #6c757d; /* Medium gray */
+      --light-gray: #e9ecef; /* Light gray */
+      --white: #ffffff; /* Pure white */
+      --success: #28a745; /* Green */
+      --warning: #ffc107; /* Yellow */
+      --danger: #dc3545; /* Red */
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Times New Roman", Times, serif;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: "Times New Roman", Times, serif;
+      font-weight: bold;
+      color: var(--secondary);
+    }
+
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      padding: 40px 0;
+      position: fixed;
+      height: 100vh;
+      transition: all 0.3s ease;
+      z-index: 100;
+      color: white;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      margin-left: 18px;
+    }
+  .logo img {
+      width: 20px;
+      margin-right: 25px;
+      animation: spinAndScale 3s linear infinite;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      background-color: white;
+      border-radius: 50%;
+    }
+
+    .logo-text {
+      font-size: 14px;
+      color: white;
+      font-weight: bold;
+    }
+
+    @keyframes spinAndScale {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.1); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
+    .nav-menu {
+      padding: 0 20px;
+      margin-top: 20px;
+    }
+
+    .nav-item {
+      list-style: none;
+      margin-bottom: 20px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: translateX(5px);
+    }
+
+    .nav-link i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+      color: white;
+    }
+
+    .main-content {
+      flex: 1;
+      margin-left: 250px;
+      padding: 20px;
+      transition: margin-left 0.3s ease;
+    }
+
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--white);
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .search-bar {
+      position: relative;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 10px 40px 10px 15px;
+      border-radius: 25px;
+      border: 1px solid var(--light-gray);
+      transition: all 0.3s ease;
+      font-family: "Times New Roman", Times, serif;
+    }
+
+    .search-bar input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.2);
+    }
+
+    .search-bar i {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+    }
+
+    .user-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      margin-right: 15px;
+    }
+
+    .user-info span {
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .user-info #userName {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .notification {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: var(--accent);
+      color: white;
+      border-radius: 50%;
+      font-size: 10px;
+      padding: 2px 5px;
+    }
+
+    .user-profile {
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .user-profile img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 10px;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .user-profile:hover img {
+      transform: scale(1.1);
+    }
+
+    .user-dropdown {
+      display: none;
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+      width: 200px;
+      overflow: hidden;
+    }
+
+    .user-profile:hover .user-dropdown {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .dropdown-item {
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--dark);
+      transition: all 0.2s ease;
+    }
+
+    .dropdown-item:hover {
+      background: var(--light-gray);
+    }
+
+    .dropdown-item i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .content-section {
+      display: none;
+      padding: 15px;
+      padding-bottom: 80px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      width: 500px;
+      max-width: 95%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 20px;
+      color: var(--gray);
+      transition: all 0.2s ease;
+    }
+
+    .close:hover {
+      color: var(--dark);
+      transform: rotate(90deg);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      border-radius: 8px;
+      color: white;
+      background-color: #4CAF50;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast i {
+      font-size: 20px;
+    }
+
+    .toast-error {
+      background-color: #f44336;
+    }
+
+    .toast-warning {
+      background-color: #ff9800;
+    }
+
+    .toast-info {
+      background-color: #2196F3;
+    }
+
+    /* Home Dashboard Styles */
+    .home-header h2 {
+      margin: 0 0 10px 0;
+      color: #333;
+    }
+
+    /* Categories Scroll */
+    .categories-scroll {
+      display: flex;
+      gap: 80px;
+      overflow-x: auto;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+      scrollbar-width: thin;
+    }
+
+    .categories-scroll::-webkit-scrollbar {
+      height: 5px;
+    }
+
+    .categories-scroll::-webkit-scrollbar-thumb {
+      background: var(--light-gray);
+      border-radius: 10px;
+    }
+
+    .category {
+      padding: 8px 15px;
+      background: #f5f5f5;
+      border-radius: 20px;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .category:hover {
+      background: #e0e0e0;
+    }
+
+    .category.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Listings Feed */
+    .listings-feed {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 10px;
+    }
+
+    .product-card {
+      border: 1px solid #eee;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: white;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .product-info {
+      padding: 15px;
+    }
+
+    .product-info h3 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      line-height: 1.3;
+      height: 2.6em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #e53935;
+      margin: 8px 0;
+      font-size: 16px;
+    }
+
+    .location {
+      font-size: 13px;
+      color: #666;
+      margin: 5px 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .location i {
+      font-size: 12px;
+    }
+
+    .product-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #999;
+      margin-top: 10px;
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #ff9800;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .product-badge.trade {
+      background: #2196F3;
+    }
+
+    /* Floating Button */
+    .floating-post-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #2196F3;
+      color: white;
+      border: none;
+      font-size: 24px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .floating-post-btn:hover {
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .floating-post-btn:active {
+      transform: translateY(0) scale(0.95);
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: var(--dark);
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group input[type="email"],
+    .form-group input[type="tel"],
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(110, 142, 251, 0.2);
+    }
+
+    .form-group textarea {
+      height: 120px;
+      resize: vertical;
+    }
+
+    /* Messages Section Styles */
+#messages {
+  padding: 20px;
+}
+
+.chat-container {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  max-width: 1000px;
+  margin: 0 auto;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.chat-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9;
+  border-radius: 12px 12px 0 0;
+}
+
+.chat-partner-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.partner-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.chat-partner-info h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.status {
+  font-size: 12px;
+  color: #4CAF50;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.status::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background-color: #4CAF50;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.chat-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  padding: 8px 12px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.action-btn i {
+  font-size: 14px;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.no-messages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #999;
+}
+
+.no-messages i {
+  font-size: 40px;
+  margin-bottom: 15px;
+  color: #ddd;
+}
+
+.no-messages p {
+  margin: 0;
+  font-size: 15px;
+}
+
+.message {
+  display: flex;
+  max-width: 70%;
+}
+
+.message.received {
+  align-self: flex-start;
+}
+
+.message.sent {
+  align-self: flex-end;
+}
+
+.message-content {
+  padding: 12px 16px;
+  border-radius: 18px;
+  position: relative;
+  line-height: 1.4;
+  font-size: 14px;
+}
+
+.message.received .message-content {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  color: #333;
+  border-bottom-left-radius: 5px;
+}
+
+.message.sent .message-content {
+  background-color: #6e8efb;
+  color: white;
+  border-bottom-right-radius: 5px;
+}
+
+.message-time {
+  display: block;
+  font-size: 11px;
+  color: #999;
+  margin-top: 5px;
+  text-align: right;
+}
+
+.message.sent .message-time {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.message-images {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.message-images img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.message-images img:hover {
+  transform: scale(1.05);
+}
+
+.message-input {
+  display: flex;
+  padding: 15px;
+  border-top: 1px solid #e0e0e0;
+  background-color: #fff;
+  align-items: center;
+  border-radius: 0 0 12px 12px;
+}
+
+.image-upload-chat {
+  position: relative;
+}
+
+.image-upload-chat input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.image-upload-chat label {
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  transition: all 0.2s ease;
+}
+
+.image-upload-chat label:hover {
+  background-color: #e0e0e0;
+}
+
+.image-upload-chat i {
+  color: #666;
+  font-size: 18px;
+}
+
+.message-input input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  margin: 0 10px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.message-input input:focus {
+  border-color: #6e8efb;
+  box-shadow: 0 0 0 2px rgba(110, 142, 251, 0.2);
+}
+
+.message-input button {
+  padding: 12px 20px;
+  background-color: #6e8efb;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.message-input button:hover {
+  background-color: #5b7de0;
+}
+
+.message-input button i {
+  font-size: 16px;
+}
+.btn-report {
+  background: none;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.btn-report:hover {
+  text-decoration: underline;
+}
+
+/* Scrollbar styling for chat messages */
+.chat-messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+    /* Error Messages */
+    .error-message {
+      color: var(--accent);
+      font-size: 12px;
+      margin-top: 5px;
+      display: none;
+    }
+
+    input:invalid, textarea:invalid, select:invalid {
+      border-color: var(--accent);
+    }
+
+    input:invalid + .error-message,
+    textarea:invalid + .error-message,
+    select:invalid + .error-message {
+      display: block;
+    }
+
+    /* Category Buttons */
+    .category-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .category-btn {
+      padding: 8px 12px;
+      background-color: #f0f0f0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .category-btn:hover {
+      background-color: #e0e0e0;
+    }
+
+    .category-btn.active {
+      background-color: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Image Upload */
+    .image-upload-container {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .image-upload-box {
+      width: 100px;
+      height: 100px;
+      border: 2px dashed #ddd;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .image-upload-box:hover {
+      border-color: var(--primary);
+      background: rgba(110, 142, 251, 0.05);
+    }
+
+    .image-upload-input {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .image-upload-text {
+      font-size: 12px;
+      text-align: center;
+      pointer-events: none;
+      padding: 0 5px;
+    }
+
+    .image-preview {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .remove-image {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      z-index: 2;
+    }
+
+    /* Trade/Sell Switch */
+    .switch-container {
+      margin: 20px 0;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 200px;
+      height: 34px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #2196F3;
+      transition: .4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+    background: #2196F3;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(166px);
+    }
+
+    .trade-text, .sell-text {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: white;
+      font-weight: bold;
+      pointer-events: none;
+    }
+
+    .trade-text {
+      left: 30px;
+    }
+
+    .sell-text {
+      right: 30px;
+    }
+
+    .price-input {
+      margin-top: 15px;
+    }
+
+    /* Submit Button */
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover {
+     background: #2196F3;
+      transform: translateY(-2px);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    .btn-submit.loading {
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    .btn-submit.loading::after {
+      content: "";
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      margin-left: 10px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s linear infinite;
+      vertical-align: middle;
+    }
+    .load-more-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.load-more-btn:hover {
+  background: var(--primary-dark);
+}
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Settings Modal Styles */
+    .profile-settings {
+      background: #fff;
+      border-radius: 10px;
+    }
+
+    .profile-settings h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+      text-align: center;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .profile-pic {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .profile-pic img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #2c3e50;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .profile-pic img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    /* Danger Zone Styling */
+    .danger-zone {
+      margin-top: 40px;
+      border-top: 2px solid #e74c3c;
+      padding-top: 20px;
+      text-align: center;
+    }
+
+    .danger-zone h3 {
+      color: #e74c3c;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .danger-zone p {
+      color: #c0392b;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .delete-btn {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 14px 25px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .delete-btn:hover {
+      background-color: #c0392b;
+    }
+
+    /* Welcome Modal */
+    .welcome-steps {
+      margin: 20px 0;
+    }
+
+    .welcome-steps .step {
+      margin: 15px 0;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      text-align: left;
+    }
+
+    .welcome-steps .step i {
+      font-size: 24px;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .welcome-steps .step h3 {
+      margin: 10px 0;
+      font-size: 18px;
+    }
+
+    .welcome-steps .step p {
+      color: var(--gray);
+      font-size: 14px;
+    }
+
+    .welcome-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      flex: 1;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: #2196F3;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      flex: 1;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: #f5f7fa;
+      transform: translateY(-2px);
+    }
+
+    /* Offline Indicator */
+    #offline-indicator {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: var(--accent);
+      color: white;
+      padding: 8px 15px;
+      border-radius: 4px;
+      z-index: 1000;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+      .listings-feed {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 15px 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .nav-menu {
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        margin-top: 10px;
+      }
+
+      .nav-item {
+        margin: 0 10px;
+        flex-shrink: 0;
+      }
+
+      .nav-link {
+        flex-direction: column;
+        padding: 8px 12px;
+        font-size: 12px;
+      }
+
+      .nav-link i {
+        margin-right: 0;
+        margin-bottom: 5px;
+        font-size: 16px;
+      }
+
+      .logo {
+        margin: 0 auto 10px;
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 15px;
+      }
+
+      .top-nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .search-bar {
+        max-width: 100%;
+      }
+
+      .user-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .user-info {
+        display: none;
+      }
+
+      .floating-post-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .modal-content {
+        padding: 20px 15px;
+      }
+
+      .category-buttons {
+        justify-content: center;
+      }
+
+      .image-upload-box {
+        width: 80px;
+        height: 80px;
+      }
+
+      .switch {
+        width: 180px;
+      }
+
+      input:checked + .slider:before {
+        transform: translateX(146px);
+      }
+
+      .welcome-actions {
+        flex-direction: column;
+      }
+
+      .btn-primary, .btn-secondary {
+        width: 100%;
+      }
+    }
+
+    /* Shepherd.js Custom Theme */
+    .shepherd-theme-custom {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+      max-width: 400px;
+    }
+
+    .shepherd-theme-custom .shepherd-header {
+      background: var(--primary);
+      color: white;
+      border-radius: 8px 8px 0 0;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .shepherd-theme-custom .shepherd-text {
+      padding: 15px;
+      color: var(--dark);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .shepherd-theme-custom .shepherd-footer {
+      padding: 0 15px 15px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .shepherd-theme-custom .shepherd-button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .shepherd-theme-custom .shepherd-button:hover {
+      background: #5b7de0;
+    }
+
+    .shepherd-theme-custom .shepherd-button-secondary {
+      background: white;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    .shepherd-theme-custom .shepherd-button-secondary:hover {
+      background: #f5f7fa;
+    }
+
+    /* Help Center Section Styles */
+/* Help Center Styles */
+.help-search {
+  display: flex;
+  margin: 20px 0;
+  max-width: 600px;
+}
+
+.help-search input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid var(--light-gray);
+  border-radius: 4px 0 0 4px;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.help-search button {
+  padding: 0 20px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+.help-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.category-card {
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  width: calc(33.33% - 10px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.category-card i {
+  font-size: 24px;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+.help-articles {
+  margin-top: 30px;
+}
+
+.article-card {
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+
+.article-card h3 {
+  color: var(--secondary);
+  margin-bottom: 5px;
+}
+
+.article-meta {
+  font-size: 14px;
+  color: var(--gray);
+  margin-bottom: 10px;
+}
+
+.article-detail {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  margin-top: 20px;
+}
+
+.back-to-list {
+  background: none;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.article-content {
+  line-height: 1.8;
+  margin: 20px 0;
+}
+
+.article-content p {
+  margin-bottom: 15px;
+}
+
+.article-feedback {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--light-gray);
+}
+
+.feedback-btn {
+  background: var(--light-gray);
+  border: none;
+  padding: 8px 15px;
+  margin-right: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.feedback-btn:hover {
+  background: var(--primary);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .category-card {
+    width: calc(50% - 10px);
+  }
+}
+
+@media (max-width: 480px) {
+  .category-card {
+    width: 100%;
+  }
+}
+    </style>
+  <script type="module" crossorigin src="/assets/index-DFhXeqJs.js"></script>
+</head>
+<body>
+  <!-- Welcome Modal -->
+  <div id="welcomeModal" class="modal">
+    <div class="modal-content" style="max-width: 500px; text-align: center;">
+      <h2>Welcome to TradeConnect! 👋</h2>
+      <p>We're excited to have you join our community marketplace. Let's get you started!</p>
+      
+      <div class="welcome-steps">
+        <div class="step">
+          <i class="fas fa-user-circle"></i>
+          <h3>Complete Your Profile</h3>
+          <p>Add your photo and location to build trust in the community.</p>
+        </div>
+        
+        <div class="step">
+          <i class="fas fa-store"></i>
+          <h3>Explore the Marketplace</h3>
+          <p>Browse items or post your own to start trading.</p>
+        </div>
+        
+        <div class="step">
+          <i class="fas fa-shield-alt"></i>
+          <h3>Safe Trading Practices</h3>
+          <p>Learn how to trade safely in our community.</p>
+        </div>
+      </div>
+      
+      <div class="welcome-actions">
+        <button class="btn-primary" onclick="startTour()">Take a Quick Tour</button>
+        <button class="btn-secondary" onclick="closeModal('welcomeModal')">Skip for Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Signup Modal -->
+  <div id="signupModal" class="modal">
+    <div class="modal-content" style="max-width: 500px;">
+      <!-- In your modal close buttons (replace existing ones) -->
+<span class="close" onclick="closeModal('welcomeModal')" aria-label="Close modal">&times;</span>
+<span class="close" onclick="closeModal('signupModal')" aria-label="Close modal">&times;</span>
+<span class="close" onclick="closeModal('addPostModal')" aria-label="Close modal">&times;</span>
+<!-- And all other modal close buttons -->
+      <h2>Complete Your Profile</h2>
+      <p>Help us personalize your experience by providing a few details.</p>
+      
+      <form id="signupForm">
+        <div class="form-group">
+          <label for="signupName">Full Name*</label>
+          <input type="text" id="signupName" required>
+          <div class="error-message">Please enter your name</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="signupEmail">Email*</label>
+          <input type="email" id="signupEmail" required>
+          <div class="error-message">Please enter a valid email</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="signupZone">Zone (Barangay Bulihan)*</label>
+          <select id="signupZone" required>
+            <option value="">Select your zone</option>
+            <option>Zone 1</option>
+            <option>Zone 2</option>
+            <option>Zone 3</option>
+            <option>Zone 4</option>
+            <option>Zone 5</option>
+            <option>Zone 6</option>
+            <option>Zone 7</option>
+            <option>Zone 8</option>
+            <option>Zone 9</option>
+            <option>Zone 10</option>
+            <option>Zone 11</option>
+          </select>
+          <div class="error-message">Please select your zone</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="signupContact">Contact Number*</label>
+          <input type="tel" id="signupContact" pattern="[0-9]{11}" required>
+          <div class="error-message">Please enter a valid 11-digit number</div>
+          <small>Format: 09XXXXXXXXX</small>
+        </div>
+        
+        <div class="form-group">
+          <label>Profile Picture</label>
+          <div class="image-upload-box" style="width: 120px; height: 120px; margin: 0 auto;">
+            <input type="file" id="signupPhoto" accept="image/*">
+            <span class="image-upload-text">+ Add Photo</span>
+            <img class="image-preview" style="width: 100%; height: 100%;">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="acceptTerms" required>
+            I agree to the <a href="#" onclick="openTerms()">Terms of Service</a> and <a href="#" onclick="openPrivacy()">Privacy Policy</a>
+          </label>
+          <div class="error-message">You must accept the terms</div>
+        </div>
+        
+        <button type="submit" class="btn-submit">Complete Sign Up</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
+      <div class="logo">
+        <img src="logo.png" alt="Logo">
+        <span class="logo-text">TradeConnect</span>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="javascript:void(0)" class="nav-link active" data-target="home">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="javascript:void(0)" class="nav-link" data-target="messages">
+            <i class="fas fa-comments"></i>
+            <span>Messages</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="javascript:void(0)" class="nav-link" data-target="marketplace">
+            <i class="fas fa-store"></i>
+            <span>Marketplace</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="javascript:void(0)" class="nav-link" data-target="community">
+            <i class="fas fa-users"></i>
+            <span>Community Forum</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="javascript:void(0)" class="nav-link" data-target="help">
+            <i class="fas fa-question-circle"></i>
+            <span>Help Center</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="main-content">
+      <div class="top-nav">
+        <div class="search-bar">
+          <input type="text" placeholder="Search for items or users...">
+          <i class="fas fa-search"></i>
+        </div>
+        <div class="user-actions">
+          <div class="notification" onclick="openModal('notificationsModal')">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge"></span>
+          </div>
+          <div class="user-profile">
+            <img id="userAvatar" src="https://via.placeholder.com/40" alt="User Avatar">
+            <div class="user-info">
+              <span id="userName"></span>
+              <span id="userEmail"></span>
+            </div>
+            <div class="user-dropdown">
+              <a href="javascript:void(0)" class="dropdown-item" onclick="openModal('settingsModal')">
+                <i class="fas fa-cog"></i> Settings
+              </a>
+              <a href="javascript:void(0)" class="dropdown-item" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="home" class="content-section active">
+        <div class="home-header">
+          <h2>Marketplace Listings</h2>
+          <p>Browse items available in your community</p>
+        </div>
+        
+        <!-- Categories Quick Access -->
+        <div class="categories-scroll">
+          <div class="category active">All Items</div>
+          <div class="category">Fashion & Apparel</div>
+          <div class="category">Electronics</div>
+          <div class="category">Food & Beverages</div>
+          <div class="category">DIY & Hardware</div>
+          <div class="category">Health & Beauty</div>
+        </div>
+
+        <!-- Live Listings Feed -->
+        <div class="listings-feed" id="homeListings">
+          <!-- Listings will be loaded here dynamically -->
+          <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i> Loading listings...
+          </div>
+        </div>
+
+        <!-- "Post Item" Floating Button -->
+        <button class="floating-post-btn" onclick="openModal('addPostModal')" title="Create new listing">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+
+      <div id="messages" class="content-section">
+        <h2>Messages</h2>
+        <p>Connect with other traders in your community</p>
+        
+        <!-- Chat Container -->
+        <div class="chat-container">
+          <!-- Chat Header -->
+          <div class="chat-header">
+            <div class="chat-partner-info">
+              <img src="https://via.placeholder.com/40" alt="User" class="partner-avatar">
+              <div>
+                <h3>User</h3>
+                <span class="status">Online</span>
+              </div>
+            </div>
+            <div class="chat-actions">
+              <button class="action-btn" id="clearChat">
+                <i class="fas fa-trash-alt"></i> Clear
+              </button>
+              <button class="action-btn" id="deleteChat">
+                <i class="fas fa-times"></i> Delete
+              </button>
+              <button class="action-btn" id="reportChat">
+                <i class="fas fa-flag"></i> Report
+              </button>
+              <button id="reportUserBtn" class="btn-report" data-user-id="USER_ID_HERE">
+  <i class="fas fa-flag"></i> Report User
+</button>
+            </div>
+          </div>
+          
+          <!-- Chat Messages -->
+          <div class="chat-messages" id="chatMessages">
+            <!-- Messages will appear here -->
+            <div class="no-messages">
+              <i class="fas fa-comment-slash"></i>
+              <p>No messages yet. Start a conversation!</p>
+            </div>
+          </div>
+          
+          <!-- Message Input -->
+          <div class="message-input">
+            <div class="image-upload-chat">
+              <input type="file" id="chatImageUpload" accept="image/*" multiple>
+              <label for="chatImageUpload" title="Attach images">
+                <i class="fas fa-image"></i>
+              </label>
+            </div>
+            <input type="text" id="messageInput" placeholder="Type your message...">
+            <button id="sendMessage">
+              <i class="fas fa-paper-plane"></i> Send
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="marketplace" class="content-section">
+        <div class="marketplace-header">
+          <h2>Marketplace</h2>
+          <p>Buy, sell, or trade items in your community</p>
+        </div>
+        
+        <button id="addPostBtn" class="btn-submit" onclick="openModal('addPostModal')">
+          <i class="fas fa-plus"></i> Create New Listing
+        </button>
+        
+        <div class="listings-feed" id="marketplaceListings">
+          <!-- Listings will be loaded here dynamically -->
+          <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i> Loading marketplace...
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Post Modal -->
+      <div id="addPostModal" class="modal">
+        <div class="modal-content">
+          <!-- In your modal close buttons (replace existing ones) -->
+<span class="close" onclick="closeModal('welcomeModal')" aria-label="Close modal">&times;</span>
+<span class="close" onclick="closeModal('signupModal')" aria-label="Close modal">&times;</span>
+<span class="close" onclick="closeModal('addPostModal')" aria-label="Close modal">&times;</span>
+<!-- And all other modal close buttons -->
+          <h3>Create New Listing</h3>
+          <p>Fill in the details of the item you want to list</p>
+
+          <!-- Toast Notification -->
+          <div id="postSuccessToast" class="toast">🎉 Item posted successfully!</div>
+
+          <form id="postForm">
+            <div class="form-group">
+              <label for="postTitle">Title*</label>
+              <input type="text" id="postTitle" required placeholder="What are you offering?">
+              <div class="error-message">Please enter a title</div>
+            </div>
+
+            <div class="form-group">
+              <label for="postDescription">Description*</label>
+              <textarea id="postDescription" required placeholder="Describe your item..."></textarea>
+              <div class="error-message">Please enter a description</div>
+            </div>
+
+            <div class="form-group">
+              <label>Categories*</label>
+              <div class="category-buttons">
+                <button type="button" class="category-btn" data-category="Fashion & Apparel">Fashion & Apparel</button>
+                <button type="button" class="category-btn" data-category="Electronics">Electronics</button>
+                <button type="button" class="category-btn" data-category="Food & Beverages">Food & Beverages</button>
+                <button type="button" class="category-btn" data-category="DIY & Hardware">DIY & Hardware</button>
+                <button type="button" class="category-btn" data-category="Health & Beauty">Health & Beauty</button>
+              </div>
+              <input type="hidden" id="selectedCategory" required>
+              <div class="error-message">Please select a category</div>
+            </div>
+
+            <div class="form-group">
+              <label for="postQuantity">Quantity*</label>
+              <input type="number" id="postQuantity" min="1" value="1" required>
+              <div class="error-message">Please enter a quantity</div>
+            </div>
+
+            <div class="form-group">
+              <label>Upload Images (Minimum 3)*</label>
+              <div class="image-upload-container" id="imageUploadContainer">
+                <div class="image-upload-box">
+                  <input type="file" accept="image/*" class="image-upload-input" required>
+                  <span class="image-upload-text">+ Add Image</span>
+                  <img class="image-preview">
+                </div>
+                <div class="image-upload-box">
+                  <input type="file" accept="image/*" class="image-upload-input" required>
+                  <span class="image-upload-text">+ Add Image</span>
+                  <img class="image-preview">
+                </div>
+                <div class="image-upload-box">
+                  <input type="file" accept="image/*" class="image-upload-input" required>
+                  <span class="image-upload-text">+ Add Image</span>
+                  <img class="image-preview">
+                </div>
+              </div>
+              <div class="error-message">Please upload at least 3 images</div>
+            </div>
+
+            <div class="form-group">
+              <label>I want to:*</label>
+              <div class="switch-container">
+                <label class="switch">
+                  <input type="checkbox" id="tradeOrSell">
+                  <span class="slider round">
+                    <span class="trade-text">Trade</span>
+                    <span class="sell-text">Sell</span>
+                  </span>
+                </label>
+              </div>
+              <div id="priceInput" class="price-input" style="display: none;">
+                <label for="itemPrice">Price (₱)*</label>
+                <input type="number" id="itemPrice" min="1" placeholder="Enter amount">
+                <div class="error-message">Please enter a price</div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-submit">
+              <i class="fas fa-upload"></i> Post Item
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Community Forum Section -->
+      <div id="community" class="content-section">
+        <h2>Community Forum</h2>
+        <p>Connect with other community members</p>
+        
+        <button id="addForumPostBtn" class="btn-submit" onclick="openModal('addForumPostModal')">
+          <i class="fas fa-plus"></i> Add Post
+        </button>
+        
+        <div class="forum-filters">
+          <select id="postTypeFilter">
+            <option value="all">All Posts</option>
+            <option value="review">✅ Review/Feedback</option>
+            <option value="scam">⚠️ Report a Scam</option>
+            <option value="question">💬 Question/Tips</option>
+            <option value="buy">🔎 Looking to Buy</option>
+          </select>
+          <button id="applyFilter" class="btn-submit" onclick="loadForumPosts()">
+            <i class="fas fa-filter"></i> Apply Filter
+          </button>
+        </div>
+        
+        <div class="forum-posts" id="forumPostsContainer">
+          <!-- Posts will be loaded here dynamically -->
+          <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i> Loading forum posts...
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Post Modal for Community Forum -->
+      <div id="addForumPostModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal('addForumPostModal')">&times;</span>
+          <h3>Create New Forum Post</h3>
+          <p>Share your thoughts or questions with the community</p>
+          <form id="forumPostForm">
+            <div class="form-group">
+              <label for="postType">Post Type*</label>
+              <select id="postType" required>
+                <option value="">Select a type</option>
+                <option value="review">✅ Review / Feedback</option>
+                <option value="scam">⚠️ Report a Scam</option>
+                <option value="question">💬 Question / Tips</option>
+                <option value="buy">🔎 Looking to Buy</option>
+              </select>
+              <div class="error-message">Please select a post type</div>
+            </div>
+            
+            <div class="form-group">
+              <label for="forumPostTitle">Title*</label>
+              <input type="text" id="forumPostTitle" required placeholder="Enter post title">
+              <div class="error-message">Please enter a title</div>
+            </div>
+            
+            <div class="form-group">
+              <label for="forumPostContent">Description*</label>
+              <textarea id="forumPostContent" required placeholder="Describe your post..."></textarea>
+              <div class="error-message">Please enter content</div>
+            </div>
+            
+            <div class="form-group" id="locationField">
+              <label for="postLocation">Location (optional)</label>
+              <input type="text" id="postLocation" placeholder="Where did this happen?">
+            </div>
+            
+            <div class="form-group" id="paymentMethodField" style="display:none;">
+              <label for="paymentMethod">Payment Method Used</label>
+              <select id="paymentMethod">
+                <option value="">Select method</option>
+                <option value="gcash">GCash</option>
+                <option value="cash">Cash</option>
+                <option value="barter">Barter</option>
+              </select>
+            </div>
+            
+            <div class="form-group" id="gcashField" style="display:none;">
+              <label for="gcashNumber">GCash Number (if relevant)</label>
+              <input type="text" id="gcashNumber" placeholder="09XXXXXXXXX">
+            </div>
+            
+            <div class="form-group">
+              <label>Attach Screenshot or Photo (optional)</label>
+              <div class="image-upload-container">
+                <div class="image-upload-box">
+                  <input type="file" accept="image/*" class="forum-image-upload">
+                  <span class="image-upload-text">+ Add Image</span>
+                  <img class="image-preview">
+                </div>
+              </div>
+            </div>
+            
+            <button type="submit" class="btn-submit">
+              <i class="fas fa-paper-plane"></i> Post / Submit
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Help Center Section -->
+     <div id="help" class="content-section">
+  <div class="help-center">
+    <h1><i class="fas fa-tools"></i> TradeConnect Help Center</h1>
+    <p>Find answers to common questions and learn how to use TradeConnect</p>
+    
+    <!-- Search functionality -->
+    <div class="help-search">
+      <input type="text" id="helpSearch" placeholder="Search help articles...">
+      <button id="searchHelpBtn"><i class="fas fa-search"></i></button>
+    </div>
+    
+    <!-- Categories will be loaded dynamically -->
+    <div class="help-categories" id="helpCategories"></div>
+    
+    <!-- Articles will be loaded dynamically -->
+    <div class="help-articles" id="helpArticles"></div>
+    
+    <!-- Article detail view (hidden by default) -->
+    <div class="article-detail" id="articleDetail" style="display: none;">
+      <button class="back-to-list" id="backToList"><i class="fas fa-arrow-left"></i> Back to list</button>
+      <h2 id="articleTitle"></h2>
+      <div class="article-meta">
+        <span id="articleCategory"></span>
+        <span id="articleDate"></span>
+      </div>
+      <div class="article-content" id="articleContent"></div>
+      <div class="article-feedback">
+        <p>Was this article helpful?</p>
+        <button class="feedback-btn" data-helpful="yes"><i class="fas fa-thumbs-up"></i> Yes</button>
+        <button class="feedback-btn" data-helpful="no"><i class="fas fa-thumbs-down"></i> No</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+  <!-- Notifications Modal -->
+  <div id="notificationsModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('notificationsModal')">&times;</span>
+      <h3>Notifications</h3>
+      <div class="notifications-list">
+        <div class="notification-item">
+          <div class="notification-icon">
+            <i class="fas fa-bell"></i>
+          </div>
+          <div class="notification-content">
+            <p></p>
+            <span class="notification-time"></span>
+          </div>
+        </div>
+        <div class="notification-item">
+          <div class="notification-icon">
+            <i class="fas fa-comment"></i>
+          </div>
+          <div class="notification-content">
+            <p></p>
+            <span class="notification-time"></span>
+          </div>
+        </div>
+        <div class="notification-item">
+          <div class="notification-icon">
+            <i class="fas fa-thumbs-up"></i>
+          </div>
+          <div class="notification-content">
+            <p></p>
+            <span class="notification-time"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="modal">
+    <div class="modal-content" style="max-width: 500px; padding: 30px;">
+      <span class="close" onclick="closeModal('settingsModal')">&times;</span>
+      
+      <div class="profile-settings">
+        <h2><i class="fas fa-user-cog"></i> Profile Settings</h2>
+
+        <div class="profile-pic">
+          <img src="https://via.placeholder.com/120" alt="Profile Picture" id="preview-img" title="Click to change picture" onclick="document.getElementById('profile-upload').click()" />
+          <input type="file" accept="image/*" onchange="previewImage(event)" style="display: none;" id="profile-upload" />
+          <button onclick="document.getElementById('profile-upload').click()" 
+                  style="margin-top:10px; padding:8px 15px; background:#f0f0f0; border:1px solid #ddd; border-radius:4px; cursor:pointer;">
+            <i class="fas fa-camera"></i> Change Photo
+          </button>
+        </div>
+
+        <div class="form-group">
+          <label for="nickname">Nickname / Name</label>
+          <input type="text" id="nickname" placeholder="Enter your nickname" />
+        </div>
+
+        <div class="form-group">
+          <label for="zone">Zone</label>
+          <select id="zone">
+            <option value="">Select your zone</option>
+            <option>Zone 1</option>
+            <option>Zone 2</option>
+            <option>Zone 3</option>
+            <option>Zone 4</option>
+            <option>Zone 5</option>
+            <option>Zone 6</option>
+            <option>Zone 7</option>
+            <option>Zone 8</option>
+            <option>Zone 9</option>
+            <option>Zone 10</option>
+            <option>Zone 11</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="contact">Contact Number</label>
+          <input type="text" id="contact" placeholder="09XXXXXXXXX" />
+        </div>
+
+        <div class="form-group">
+          <label for="gcash">GCash Number</label>
+          <input type="text" id="gcash" placeholder="09XXXXXXXXX" />
+        </div>
+
+        <button class="save-btn" onclick="saveProfileSettings()">
+          <i class="fas fa-save"></i> Save Changes
+        </button>
+
+        <div class="danger-zone">
+          <h3><i class="fas fa-exclamation-triangle"></i> Danger Zone</h3>
+          <p>Irreversible and destructive actions like deleting your account.</p>
+          <button class="delete-btn" onclick="confirmDelete()">
+            <i class="fas fa-trash-alt"></i> Delete Account
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report Modal -->
+  <div id="reportModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('reportModal')">&times;</span>
+      <h3>Report User or Trade</h3>
+      <form id="reportForm">
+        <div class="form-group">
+          <label>Reason for Report*</label>
+          <select id="reportReason" required>
+            <option value="">Select a reason</option>
+            <option value="scam">Scam/Fraud</option>
+            <option value="no_response">No Response</option>
+            <option value="item_mismatch">Item Not as Described</option>
+            <option value="rude_behavior">Rude Behavior</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="reportDetails">Details*</label>
+          <textarea id="reportDetails" required placeholder="Please provide details about the issue..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Upload Evidence (Optional)</label>
+          <input type="file" id="reportEvidence" accept="image/*">
+        </div>
+        <button type="submit" class="btn-submit">Submit Report</button>
+      </form>
+    </div>
+  </div>
+                                                                                                                                                                              <script src="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/js/shepherd.min.js"></script>
+</body>
+</html>

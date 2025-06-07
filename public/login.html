@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>TradeConnect - Login</title>
+  <style>
+    :root {
+      --primary: #4a6fa5; /* Deep blue */
+      --secondary: #166088; /* Darker blue */
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Times New Roman", Times, serif;
+    }
+
+    body {
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      max-width: 1000px;
+      width: 100%;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      flex-wrap: wrap;
+    }
+
+    .left-section {
+      flex: 1;
+      min-width: 300px;
+      padding: 50px 30px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+    }
+
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      background-color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .logo img {
+      width: 60px;
+      height: 60px;
+    }
+
+    .app-title {
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .description {
+      font-size: 16px;
+      max-width: 300px;
+      line-height: 1.5;
+    }
+
+    .right-section {
+      flex: 1;
+      min-width: 300px;
+      padding: 60px 40px;
+    }
+
+    .right-section h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 24px;
+      color: var(--secondary);
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 35px 12px 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+
+    .input-group input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 5px rgba(74, 111, 165, 0.5);
+    }
+
+    .input-group input.error {
+      border-color: #e74c3c;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #777;
+      z-index: 10;
+      display: none; /* Hidden by default */
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    button:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .remember-forgot {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .signup-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .signup-link a,
+    .remember-forgot a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .signup-link a:hover,
+    .remember-forgot a:hover {
+      text-decoration: underline;
+    }
+    
+    .error-message {
+      color: #e74c3c;
+      font-size: 14px;
+      margin-top: 5px;
+      display: none;
+    }
+    
+    @keyframes spinAndScale {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.1); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
+    .logo img {
+      animation: spinAndScale 3s linear infinite;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .left-section,
+      .right-section {
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left Section -->
+    <div class="left-section">
+      <div class="logo-container">
+        <div class="logo">
+          <img src="logo.png" alt="Logo"/>
+        </div>
+        <div class="app-title">TradeConnect</div>
+        <div class="description">Log in and discover new ways to trade with your neighbors.</div>
+      </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="right-section">
+      <h2>Login to Your Account</h2>
+      <form id="loginForm">
+        <div class="input-group">
+          <input type="email" id="email" placeholder="Email" required />
+          <div class="error-message" id="email-error"></div>
+        </div>
+        <div class="input-group">
+          <input type="password" id="password" placeholder="Password" required />
+          <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+          <div class="error-message" id="password-error"></div>
+        </div>
+        <div class="remember-forgot">
+          <div></div>
+          <a href="forgot.html">Forgot Password?</a>
+        </div>
+        <button type="submit" id="loginButton">Login</button>
+        <div class="signup-link">
+          Don't have an account? <a href="signup.html">Sign Up</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyCxaOGeOvHwS5dnPHRTpw3Lwn2surjXP1E",
+      authDomain: "tradeconnect-3c728.firebaseapp.com",
+      projectId: "tradeconnect-3c728",
+      storageBucket: "tradeconnect-3c728.appspot.com",
+      messagingSenderId: "299665603548",
+      appId: "1:299665603548:web:9ff10af44cd41605382d19",
+      databaseURL: "https://tradeconnect-3c728-default-rtdb.firebaseio.com"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // DOM Elements
+    const loginForm = document.getElementById('loginForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');
+    const loginButton = document.getElementById('loginButton');
+    const emailError = document.getElementById('email-error');
+    const passwordError = document.getElementById('password-error');
+
+    // Password visibility toggle
+    togglePassword.addEventListener('click', function() {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      this.classList.toggle('fa-eye-slash');
+      this.classList.toggle('fa-eye');
+    });
+
+    // Show/hide eye icon based on password input
+    passwordInput.addEventListener('input', function() {
+      togglePassword.style.display = this.value.length > 0 ? 'block' : 'none';
+    });
+
+    // Form validation
+    function validateForm() {
+      let isValid = true;
+      
+      // Email validation
+      if (!emailInput.value.trim()) {
+        emailError.textContent = 'Email is required';
+        emailError.style.display = 'block';
+        emailInput.classList.add('error');
+        isValid = false;
+      } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailInput.value.trim())) {
+        emailError.textContent = 'Please enter a valid email';
+        emailError.style.display = 'block';
+        emailInput.classList.add('error');
+        isValid = false;
+      } else {
+        emailError.style.display = 'none';
+        emailInput.classList.remove('error');
+      }
+      
+      // Password validation
+      if (!passwordInput.value) {
+        passwordError.textContent = 'Password is required';
+        passwordError.style.display = 'block';
+        passwordInput.classList.add('error');
+        isValid = false;
+      } else if (passwordInput.value.length < 6) {
+        passwordError.textContent = 'Password must be at least 6 characters';
+        passwordError.style.display = 'block';
+        passwordInput.classList.add('error');
+        isValid = false;
+      } else {
+        passwordError.style.display = 'none';
+        passwordInput.classList.remove('error');
+      }
+      
+      return isValid;
+    }
+
+    // Form submission
+    loginForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      if (!validateForm()) return;
+      
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+      
+      try {
+        loginButton.disabled = true;
+        loginButton.textContent = 'Logging in...';
+        
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Redirect based on user type
+        if (user.email === "admin@tradeconnect.com") {
+          window.location.href = "admin-home.html";
+        } else {
+          window.location.href = "index.html";
+        }
+      } catch (error) {
+        console.error("Login error:", error);
+        let errorMessage = "Login failed. Please try again.";
+        
+        switch (error.code) {
+          case "auth/invalid-email":
+            errorMessage = "Invalid email address";
+            break;
+          case "auth/user-disabled":
+            errorMessage = "This account has been disabled";
+            break;
+          case "auth/user-not-found":
+            errorMessage = "No account found with this email";
+            break;
+          case "auth/wrong-password":
+            errorMessage = "Incorrect password";
+            break;
+        }
+        
+        passwordError.textContent = errorMessage;
+        passwordError.style.display = 'block';
+        passwordInput.classList.add('error');
+      } finally {
+        loginButton.disabled = false;
+        loginButton.textContent = 'Login';
+      }
+    });
+
+    // Clear errors when typing
+    emailInput.addEventListener('input', () => {
+      emailError.style.display = 'none';
+      emailInput.classList.remove('error');
+    });
+    
+    passwordInput.addEventListener('input', () => {
+      passwordError.style.display = 'none';
+      passwordInput.classList.remove('error');
+    });
+  </script>
+</body>
+</html>

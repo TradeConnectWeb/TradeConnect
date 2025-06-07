@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>TradeConnect - Sign Up</title>
+  <link rel="stylesheet" href="signup.css" />
+  <style>
+   :root {
+  --primary: #4a6fa5; /* Deep blue */
+  --secondary: #166088; /* Darker blue */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Times New Roman", Times, serif;
+}
+
+body {
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  max-width: 1000px;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  flex-wrap: wrap;
+}
+
+.left-section {
+  flex: 1;
+  min-width: 300px;
+  padding: 50px 30px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+    color: white;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+.logo img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  animation: spinAndScale 3s linear infinite;
+}
+
+.app-title {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 16px;
+  line-height: 1.5;
+  max-width: 300px;
+}
+
+.right-section {
+  flex: 1;
+  min-width: 300px;
+  padding: 60px 40px;
+    color: black;
+}
+
+.right-section h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 24px;
+    color: white;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.input-group i {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 12px 20px 12px 45px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  border-color: #6be0e5;
+  outline: none;
+  box-shadow: 0 0 5px rgba(107, 224, 229, 0.5);
+}
+
+.password-toggle {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #777;
+  z-index: 2;
+  display: none;
+}
+
+.input-group input {
+  padding-right: 40px !important;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 20px;
+  color: #777;
+}
+
+.login-link a {
+  color: #488bdd;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+.admin-checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.admin-checkbox input {
+  margin-right: 10px;
+  width: auto;
+}
+
+.admin-checkbox label {
+  font-size: 14px;
+}
+
+@keyframes spinAndScale {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .left-section,
+  .right-section {
+    padding: 30px;
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left-section">
+      <div class="logo-container">
+        <div class="logo">
+          <img src="logo.png" alt="TradeConnect Logo"/>
+        </div>
+        <div class="app-title">TradeConnect</div>
+        <div class="description">Trade, Buy & Sell Within Barangay Bulihan, Silang Cavite</div>
+      </div>
+    </div>
+
+    <div class="right-section">
+      <h2>Sign Up</h2>
+      <form id="signupForm">
+        <div class="input-group">
+          <input type="text" id="username" placeholder="Username" required />
+        </div>
+
+        <div class="input-group">
+          <input type="email" id="email" placeholder="Email" required />
+        </div>
+
+        <div class="input-group">
+          <select id="zone" required>
+            <option value="">Select your Zone</option>
+            <option value="Zone 1">Zone 1</option>
+            <option value="Zone 2">Zone 2</option>
+            <option value="Zone 3">Zone 3</option>
+            <option value="Zone 4">Zone 4</option>
+            <option value="Zone 5">Zone 5</option>
+            <option value="Zone 6">Zone 6</option>
+            <option value="Zone 7">Zone 7</option>
+            <option value="Zone 8">Zone 8</option>
+            <option value="Zone 9">Zone 9</option>
+            <option value="Zone 10">Zone 10</option>
+            <option value="Zone 11">Zone 11</option>
+          </select>
+        </div>
+
+      <div class="input-group">
+  <input type="password" id="password" placeholder="Password" required />
+  <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+</div>
+
+<div class="input-group">
+  <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+  <i class="fas fa-eye password-toggle" id="toggleConfirmPassword"></i>
+</div>
+
+        <div class="admin-checkbox">
+          <input type="checkbox" id="isAdmin" />
+          <label for="isAdmin">Register as Admin (requires admin code)</label>
+        </div>
+
+        <div class="input-group" id="adminCodeGroup" style="display: none;">
+          <input type="password" id="adminCode" placeholder="Enter Admin Code" />
+        </div>
+
+        <button type="submit">Sign Up</button>
+      </form>
+
+      <div class="login-link">
+        Already have an account? <a href="login.html">Login</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module"> 
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+  import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+  import { sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCxaOGeOvHwS5dnPHRTpw3Lwn2surjXP1E",
+    authDomain: "tradeconnect-3c728.firebaseapp.com",
+    projectId: "tradeconnect-3c728",
+    storageBucket: "tradeconnect-3c728.appspot.com",
+    messagingSenderId: "299665603548",
+    appId: "1:299665603548:web:9ff10af44cd41605382d19"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getDatabase(app);
+
+  // Password toggle functionality
+document.getElementById('togglePassword').addEventListener('click', function() {
+  togglePassword('password', this);
+});
+
+document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
+  togglePassword('confirmPassword', this);
+});
+
+function togglePassword(fieldId, icon) {
+  const field = document.getElementById(fieldId);
+  if (field.type === "password") {
+    field.type = "text";
+    icon.classList.remove("fa-eye");
+    icon.classList.add("fa-eye-slash");
+  } else {
+    field.type = "password";
+    icon.classList.remove("fa-eye-slash");
+    icon.classList.add("fa-eye");
+  }
+}
+
+// Show eye icon only when there's input in password fields
+['password', 'confirmPassword'].forEach(id => {
+  const field = document.getElementById(id);
+  const icon = document.getElementById(`toggle${id.charAt(0).toUpperCase() + id.slice(1)}`);
+  
+  field.addEventListener('input', function() {
+    if (this.value.length > 0) {
+      icon.style.display = 'block';
+    } else {
+      icon.style.display = 'none';
+      // Reset to password type if field is empty
+      this.type = 'password';
+      icon.classList.remove('fa-eye-slash');
+      icon.classList.add('fa-eye');
+    }
+  });
+});
+
+  // Show/hide admin code field based on checkbox
+  document.getElementById("isAdmin").addEventListener("change", function() {
+    const adminCodeGroup = document.getElementById("adminCodeGroup");
+    adminCodeGroup.style.display = this.checked ? "block" : "none";
+    if (!this.checked) {
+      document.getElementById("adminCode").value = "";
+    }
+  });
+
+  document.getElementById("signupForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const zone = document.getElementById("zone").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const isAdmin = document.getElementById("isAdmin").checked;
+    const adminCode = document.getElementById("adminCode").value;
+
+    if (!zone || !zone.startsWith("Zone")) {
+      alert("You must select a valid Zone (1–11) from Barangay Bulihan.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    // Validate admin registration
+    if (isAdmin) {
+      if (adminCode !== "TRADEADMIN123") { 
+        alert("Invalid admin code. Please contact system administrator.");
+        return;
+      }
+    }
+
+    createUserWithEmailAndPassword(auth, email, password)
+       .then((userCredential) => {
+        const user = userCredential.user;
+
+        sendEmailVerification(user)
+          .then(() => {
+            alert("Verification email sent! Please check your inbox before logging in.");
+
+            let userRole = "user";
+            if (isAdmin || email === "admintradeconnect@gmail.com") {
+              userRole = "admin";
+            }
+
+            set(ref(db, 'users/' + user.uid), {
+              username: username,
+              email: email,
+              zone: zone,
+              role: userRole
+            });
+
+            signOut(auth).then(() => {
+              window.location.href = "login.html";
+            });
+
+          })
+          .catch((error) => {
+            alert("Error sending verification email: " + error.message);
+          });
+      })
+      .catch((error) => {
+        alert("Error: " + error.message);
+      });
+  });
+</script>
+</body>
+</html>
