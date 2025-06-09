@@ -5,218 +5,257 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <title>TradeConnect - Sign Up</title>
-  <link rel="stylesheet" href="signup.css" />
   <style>
-   :root {
-  --primary: #4a6fa5; /* Deep blue */
-  --secondary: #166088; /* Darker blue */
-}
+    :root {
+      --primary: #4a6fa5; /* Deep blue */
+      --secondary: #166088; /* Darker blue */
+      --error: #e74c3c;
+      --success: #2ecc71;
+      --light-gray: #f5f5f5;
+      --dark-gray: #333;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Times New Roman", Times, serif;
+    }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Times New Roman", Times, serif;
-}
+    body {
+      background-color: var(--light-gray);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
 
-body {
-  background-color: #f5f5f5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-}
+    .container {
+      display: flex;
+      max-width: 1000px;
+      width: 100%;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      flex-wrap: wrap;
+    }
 
-.container {
-  display: flex;
-  max-width: 1000px;
-  width: 100%;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  flex-wrap: wrap;
-}
+    .left-section {
+      flex: 1;
+      min-width: 300px;
+      padding: 50px 30px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+    }
 
-.left-section {
-  flex: 1;
-  min-width: 300px;
-  padding: 50px 30px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-    color: white;
-}
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
 
-.logo-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-}
+    .logo {
+      width: 80px;
+      height: 80px;
+      background-color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 15px;
+    }
 
-.logo {
-  width: 80px;
-  height: 80px;
-  background-color: white;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 15px;
-}
+    .logo img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      animation: spinAndScale 3s linear infinite;
+    }
 
-.logo img {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-  animation: spinAndScale 3s linear infinite;
-}
+    .app-title {
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
 
-.app-title {
-  font-size: 26px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
+    .description {
+      font-size: 16px;
+      line-height: 1.5;
+      max-width: 300px;
+    }
 
-.description {
-  font-size: 16px;
-  line-height: 1.5;
-  max-width: 300px;
-}
+    .right-section {
+      flex: 1;
+      min-width: 300px;
+      padding: 60px 40px;
+      color: var(--dark-gray);
+    }
 
-.right-section {
-  flex: 1;
-  min-width: 300px;
-  padding: 60px 40px;
-    color: black;
-}
+    .right-section h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 24px;
+      color: var(--secondary);
+    }
 
-.right-section h2 {
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 24px;
-    color: white;
-}
+    .input-group {
+      position: relative;
+      margin-bottom: 25px;
+    }
 
-.input-group {
-  position: relative;
-  margin-bottom: 25px;
-}
+    .input-group i {
+      display: none;
+    }
 
-.input-group i {
-  position: absolute;
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #777;
-}
+    .input-group input,
+    .input-group select {
+      width: 100%;
+      padding: 12px 40px 12px 15px; /* Reduced left padding, increased right padding */
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
 
-.input-group input,
-.input-group select {
-  width: 100%;
-  padding: 12px 20px 12px 45px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-}
+    .input-group input:focus,
+    .input-group select:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 5px rgba(74, 111, 165, 0.5);
+    }
 
-.input-group input:focus,
-.input-group select:focus {
-  border-color: #6be0e5;
-  outline: none;
-  box-shadow: 0 0 5px rgba(107, 224, 229, 0.5);
-}
+    .input-group input.error,
+    .input-group select.error {
+      border-color: var(--error);
+    }
 
-.password-toggle {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: #777;
-  z-index: 2;
-  display: none;
-}
+    .input-group input.success,
+    .input-group select.success {
+      border-color: var(--success);
+    }
 
-.input-group input {
-  padding-right: 40px !important;
-}
+    .password-container input {
+      width: 100%;
+      padding-right: 30px;
+    }
+    
+    .password-toggle {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #777;
+      z-index: 2;
+      display: none;
+    }
 
-button {
-  width: 100%;
-  padding: 12px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
+    .input-group input {
+      padding-right: 40px !important;
+    }
 
-button:hover {
-  transform: translateY(-2px);
-}
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
 
-.login-link {
-  text-align: center;
-  margin-top: 20px;
-  color: #777;
-}
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
 
-.login-link a {
-  color: #488bdd;
-  text-decoration: none;
-}
+    button:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
+      transform: none;
+    }
 
-.login-link a:hover {
-  text-decoration: underline;
-}
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+      color: #777;
+    }
 
-.admin-checkbox {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
+    .login-link a {
+      color: var(--primary);
+      text-decoration: none;
+    }
 
-.admin-checkbox input {
-  margin-right: 10px;
-  width: auto;
-}
+    .login-link a:hover {
+      text-decoration: underline;
+    }
 
-.admin-checkbox label {
-  font-size: 14px;
-}
+    .admin-checkbox {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
 
-@keyframes spinAndScale {
-  0% {
-    transform: rotate(0deg) scale(1);
-  }
-  50% {
-    transform: rotate(180deg) scale(1.1);
-  }
-  100% {
-    transform: rotate(360deg) scale(1);
-  }
-}
+    .admin-checkbox input {
+      margin-right: 10px;
+      width: auto;
+    }
 
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
+    .admin-checkbox label {
+      font-size: 14px;
+    }
 
-  .left-section,
-  .right-section {
-    padding: 30px;
-  }
-}
+    .error-message {
+      color: var(--error);
+      font-size: 14px;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    @keyframes spinAndScale {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.1); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .left-section,
+      .right-section {
+        padding: 30px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -235,14 +274,19 @@ button:hover {
       <h2>Sign Up</h2>
       <form id="signupForm">
         <div class="input-group">
+          <i class="fas fa-user"></i>
           <input type="text" id="username" placeholder="Username" required />
+          <div class="error-message" id="username-error"></div>
         </div>
 
         <div class="input-group">
+          <i class="fas fa-envelope"></i>
           <input type="email" id="email" placeholder="Email" required />
+          <div class="error-message" id="email-error"></div>
         </div>
 
         <div class="input-group">
+          <i class="fas fa-map-marker-alt"></i>
           <select id="zone" required>
             <option value="">Select your Zone</option>
             <option value="Zone 1">Zone 1</option>
@@ -257,16 +301,20 @@ button:hover {
             <option value="Zone 10">Zone 10</option>
             <option value="Zone 11">Zone 11</option>
           </select>
+          <div class="error-message" id="zone-error"></div>
         </div>
 
-      <div class="input-group">
+        <!-- In the password input groups, remove the left icon and keep only the right toggle icon -->
+<div class="input-group">
   <input type="password" id="password" placeholder="Password" required />
   <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+  <div class="error-message" id="password-error"></div>
 </div>
 
 <div class="input-group">
   <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
   <i class="fas fa-eye password-toggle" id="toggleConfirmPassword"></i>
+  <div class="error-message" id="confirmPassword-error"></div>
 </div>
 
         <div class="admin-checkbox">
@@ -275,10 +323,14 @@ button:hover {
         </div>
 
         <div class="input-group" id="adminCodeGroup" style="display: none;">
+          <i class="fas fa-key"></i>
           <input type="password" id="adminCode" placeholder="Enter Admin Code" />
+          <div class="error-message" id="adminCode-error"></div>
         </div>
 
-        <button type="submit">Sign Up</button>
+        <button type="submit" id="signupButton">
+          <span id="buttonText">Sign Up</span>
+        </button>
       </form>
 
       <div class="login-link">
@@ -288,25 +340,43 @@ button:hover {
   </div>
 
   <script type="module"> 
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-  import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-  import { sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { 
+      getAuth, 
+      createUserWithEmailAndPassword,
+      sendEmailVerification,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { 
+      getDatabase, 
+      ref, 
+      set 
+    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCxaOGeOvHwS5dnPHRTpw3Lwn2surjXP1E",
-    authDomain: "tradeconnect-3c728.firebaseapp.com",
-    projectId: "tradeconnect-3c728",
-    storageBucket: "tradeconnect-3c728.appspot.com",
-    messagingSenderId: "299665603548",
-    appId: "1:299665603548:web:9ff10af44cd41605382d19"
-  };
+    // Firebase configuration - should be moved to environment variables in production
+    const firebaseConfig = {
+      apiKey: "AIzaSyCxaOGeOvHwS5dnPHRTpw3Lwn2surjXP1E",
+      authDomain: "tradeconnect-3c728.firebaseapp.com",
+      projectId: "tradeconnect-3c728",
+      storageBucket: "tradeconnect-3c728.appspot.com",
+      messagingSenderId: "299665603548",
+      appId: "1:299665603548:web:9ff10af44cd41605382d19",
+      databaseURL: "https://tradeconnect-3c728-default-rtdb.firebaseio.com"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getDatabase(app);
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
 
-  // Password toggle functionality
+    // DOM Elements
+    const signupForm = document.getElementById('signupForm');
+    const signupButton = document.getElementById('signupButton');
+    const buttonText = document.getElementById('buttonText');
+    const isAdminCheckbox = document.getElementById('isAdmin');
+    const adminCodeGroup = document.getElementById('adminCodeGroup');
+    
+    // Password toggle functionality remains the same
 document.getElementById('togglePassword').addEventListener('click', function() {
   togglePassword('password', this);
 });
@@ -345,78 +415,214 @@ function togglePassword(fieldId, icon) {
     }
   });
 });
-
-  // Show/hide admin code field based on checkbox
-  document.getElementById("isAdmin").addEventListener("change", function() {
-    const adminCodeGroup = document.getElementById("adminCodeGroup");
-    adminCodeGroup.style.display = this.checked ? "block" : "none";
-    if (!this.checked) {
-      document.getElementById("adminCode").value = "";
-    }
-  });
-
-  document.getElementById("signupForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const username = document.getElementById("username").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const zone = document.getElementById("zone").value;
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
-    const isAdmin = document.getElementById("isAdmin").checked;
-    const adminCode = document.getElementById("adminCode").value;
-
-    if (!zone || !zone.startsWith("Zone")) {
-      alert("You must select a valid Zone (1–11) from Barangay Bulihan.");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      alert("Passwords do not match.");
-      return;
-    }
-
-    // Validate admin registration
-    if (isAdmin) {
-      if (adminCode !== "TRADEADMIN123") { 
-        alert("Invalid admin code. Please contact system administrator.");
-        return;
+    // Show/hide admin code field based on checkbox
+    isAdminCheckbox.addEventListener("change", function() {
+      adminCodeGroup.style.display = this.checked ? "block" : "none";
+      if (!this.checked) {
+        document.getElementById("adminCode").value = "";
+        clearError(document.getElementById('adminCode-error'), document.getElementById('adminCode'));
       }
+    });
+
+    // Form validation
+    function validateForm() {
+      let isValid = true;
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const zone = document.getElementById("zone").value;
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const isAdmin = isAdminCheckbox.checked;
+      const adminCode = document.getElementById("adminCode").value;
+
+      // Username validation
+      if (!username) {
+        showError('username-error', 'username', 'Username is required');
+        isValid = false;
+      } else if (username.length < 3) {
+        showError('username-error', 'username', 'Username must be at least 3 characters');
+        isValid = false;
+      } else {
+        clearError('username-error', 'username');
+      }
+
+      // Email validation
+      if (!email) {
+        showError('email-error', 'email', 'Email is required');
+        isValid = false;
+      } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+        showError('email-error', 'email', 'Please enter a valid email');
+        isValid = false;
+      } else {
+        clearError('email-error', 'email');
+      }
+
+      // Zone validation
+      if (!zone || !zone.startsWith("Zone")) {
+        showError('zone-error', 'zone', 'Please select your zone');
+        isValid = false;
+      } else {
+        clearError('zone-error', 'zone');
+      }
+
+      // Password validation
+      if (!password) {
+        showError('password-error', 'password', 'Password is required');
+        isValid = false;
+      } else if (password.length < 6) {
+        showError('password-error', 'password', 'Password must be at least 6 characters');
+        isValid = false;
+      } else {
+        clearError('password-error', 'password');
+      }
+
+      // Confirm Password validation
+      if (!confirmPassword) {
+        showError('confirmPassword-error', 'confirmPassword', 'Please confirm your password');
+        isValid = false;
+      } else if (password !== confirmPassword) {
+        showError('confirmPassword-error', 'confirmPassword', 'Passwords do not match');
+        isValid = false;
+      } else {
+        clearError('confirmPassword-error', 'confirmPassword');
+      }
+
+      // Admin code validation
+      if (isAdmin && !adminCode) {
+        showError('adminCode-error', 'adminCode', 'Admin code is required');
+        isValid = false;
+      } else if (isAdmin && adminCode !== "TRADEADMIN123") {
+        showError('adminCode-error', 'adminCode', 'Invalid admin code');
+        isValid = false;
+      } else {
+        clearError('adminCode-error', 'adminCode');
+      }
+
+      return isValid;
     }
 
-    createUserWithEmailAndPassword(auth, email, password)
-       .then((userCredential) => {
+    function showError(errorId, inputId, message) {
+      const errorElement = document.getElementById(errorId);
+      const inputElement = document.getElementById(inputId);
+      
+      errorElement.textContent = message;
+      errorElement.style.display = 'block';
+      inputElement.classList.add('error');
+      inputElement.classList.remove('success');
+    }
+
+    function clearError(errorId, inputId) {
+      const errorElement = document.getElementById(errorId);
+      const inputElement = document.getElementById(inputId);
+      
+      errorElement.style.display = 'none';
+      inputElement.classList.remove('error');
+      inputElement.classList.add('success');
+    }
+
+    // Form submission
+    signupForm.addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      if (!validateForm()) return;
+
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const zone = document.getElementById("zone").value;
+      const password = document.getElementById("password").value;
+      const isAdmin = isAdminCheckbox.checked;
+
+      try {
+        // Show loading state
+        signupButton.disabled = true;
+        buttonText.innerHTML = `<span class="loading-spinner"></span> Creating account...`;
+
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        sendEmailVerification(user)
-          .then(() => {
-            alert("Verification email sent! Please check your inbox before logging in.");
+        // Send email verification
+        await sendEmailVerification(user);
+        
+        // Determine user role
+        let userRole = "user";
+        if (isAdmin || email === "admintradeconnect@gmail.com") {
+          userRole = "admin";
+        }
 
-            let userRole = "user";
-            if (isAdmin || email === "admintradeconnect@gmail.com") {
-              userRole = "admin";
-            }
+        // Save user data to database
+        await set(ref(db, 'users/' + user.uid), {
+          username: username,
+          email: email,
+          zone: zone,
+          role: userRole,
+          createdAt: new Date().toISOString()
+        });
 
-            set(ref(db, 'users/' + user.uid), {
-              username: username,
-              email: email,
-              zone: zone,
-              role: userRole
-            });
+        // Show success message and redirect
+        alert("Account created successfully! A verification email has been sent to your email address. Please verify your email before logging in.");
+        
+        // Sign out and redirect to login
+        await signOut(auth);
+        window.location.href = "login.html";
 
-            signOut(auth).then(() => {
-              window.location.href = "login.html";
-            });
+      } catch (error) {
+        console.error("Signup error:", error);
+        handleSignupError(error);
+      } finally {
+        // Reset button state
+        signupButton.disabled = false;
+        buttonText.textContent = 'Sign Up';
+      }
+    });
 
-          })
-          .catch((error) => {
-            alert("Error sending verification email: " + error.message);
-          });
-      })
-      .catch((error) => {
-        alert("Error: " + error.message);
+    function handleSignupError(error) {
+      let errorMessage = "Signup failed. Please try again.";
+      let errorField = 'email'; // Default field for errors
+      
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          errorMessage = "This email is already registered";
+          errorField = 'email';
+          break;
+        case "auth/invalid-email":
+          errorMessage = "Invalid email address";
+          errorField = 'email';
+          break;
+        case "auth/weak-password":
+          errorMessage = "Password should be at least 6 characters";
+          errorField = 'password';
+          break;
+        case "auth/operation-not-allowed":
+          errorMessage = "Account creation is currently disabled";
+          break;
+        case "auth/network-request-failed":
+          errorMessage = "Network error. Please check your connection";
+          break;
+      }
+      
+      showError(`${errorField}-error`, errorField, errorMessage);
+    }
+
+    // Clear errors when typing
+    document.querySelectorAll('input, select').forEach(element => {
+      element.addEventListener('input', () => {
+        const errorId = `${element.id}-error`;
+        if (document.getElementById(errorId)) {
+          clearError(errorId, element.id);
+        }
       });
-  });
-</script>
+    });
+
+    // Service worker registration for PWA capabilities
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(registration => {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }).catch(err => {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+  </script>
 </body>
 </html>

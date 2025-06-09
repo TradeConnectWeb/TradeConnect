@@ -9,6 +9,8 @@
     :root {
       --primary: #4a6fa5; /* Deep blue */
       --secondary: #166088; /* Darker blue */
+      --error: #e74c3c;
+      --success: #2ecc71;
     }
     
     * {
@@ -120,7 +122,11 @@
     }
 
     .input-group input.error {
-      border-color: #e74c3c;
+      border-color: var(--error);
+    }
+
+    .input-group input.success {
+      border-color: var(--success);
     }
 
     .password-toggle {
@@ -131,7 +137,7 @@
       cursor: pointer;
       color: #777;
       z-index: 10;
-      display: none; /* Hidden by default */
+      display: none;
     }
 
     button {
@@ -183,7 +189,14 @@
     }
     
     .error-message {
-      color: #e74c3c;
+      color: var(--error);
+      font-size: 14px;
+      margin-top: 5px;
+      display: none;
+    }
+    
+    .success-message {
+      color: var(--success);
       font-size: 14px;
       margin-top: 5px;
       display: none;
@@ -197,6 +210,22 @@
 
     .logo img {
       animation: spinAndScale 3s linear infinite;
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
     @media (max-width: 768px) {
@@ -216,7 +245,7 @@
     <div class="left-section">
       <div class="logo-container">
         <div class="logo">
-          <img src="logo.png" alt="Logo"/>
+          <img src="logo.png" alt="TradeConnect Logo"/>
         </div>
         <div class="app-title">TradeConnect</div>
         <div class="description">Log in and discover new ways to trade with your neighbors.</div>
@@ -237,10 +266,15 @@
           <div class="error-message" id="password-error"></div>
         </div>
         <div class="remember-forgot">
-          <div></div>
-          <a href="forgot.html">Forgot Password?</a>
+          <div class="checkbox-container">
+            <input type="checkbox" id="rememberMe">
+            <label for="rememberMe">Remember me</label>
+          </div>
+          <a href="forgot-password.html">Forgot Password?</a>
         </div>
-        <button type="submit" id="loginButton">Login</button>
+        <button type="submit" id="loginButton">
+          <span id="buttonText">Login</span>
+        </button>
         <div class="signup-link">
           Don't have an account? <a href="signup.html">Sign Up</a>
         </div>
@@ -250,9 +284,15 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { 
+      getAuth, 
+      signInWithEmailAndPassword,
+      setPersistence,
+      browserSessionPersistence,
+      browserLocalPersistence
+    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
-    // Firebase config
+    // Firebase configuration - should be moved to environment variables in production
     const firebaseConfig = {
       apiKey: "AIzaSyCxaOGeOvHwS5dnPHRTpw3Lwn2surjXP1E",
       authDomain: "tradeconnect-3c728.firebaseapp.com",
@@ -273,8 +313,23 @@
     const passwordInput = document.getElementById('password');
     const togglePassword = document.getElementById('togglePassword');
     const loginButton = document.getElementById('loginButton');
+    const buttonText = document.getElementById('buttonText');
     const emailError = document.getElementById('email-error');
     const passwordError = document.getElementById('password-error');
+    const rememberMeCheckbox = document.getElementById('rememberMe');
+
+    // Check for saved credentials on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedEmail = localStorage.getItem('tradeConnectEmail');
+      const savedPassword = localStorage.getItem('tradeConnectPassword');
+      
+      if (savedEmail && savedPassword) {
+        emailInput.value = savedEmail;
+        passwordInput.value = savedPassword;
+        rememberMeCheckbox.checked = true;
+        passwordInput.dispatchEvent(new Event('input')); // Trigger eye icon visibility
+      }
+    });
 
     // Password visibility toggle
     togglePassword.addEventListener('click', function() {
@@ -295,37 +350,40 @@
       
       // Email validation
       if (!emailInput.value.trim()) {
-        emailError.textContent = 'Email is required';
-        emailError.style.display = 'block';
-        emailInput.classList.add('error');
+        showError(emailError, emailInput, 'Email is required');
         isValid = false;
       } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailInput.value.trim())) {
-        emailError.textContent = 'Please enter a valid email';
-        emailError.style.display = 'block';
-        emailInput.classList.add('error');
+        showError(emailError, emailInput, 'Please enter a valid email');
         isValid = false;
       } else {
-        emailError.style.display = 'none';
-        emailInput.classList.remove('error');
+        clearError(emailError, emailInput);
       }
       
       // Password validation
       if (!passwordInput.value) {
-        passwordError.textContent = 'Password is required';
-        passwordError.style.display = 'block';
-        passwordInput.classList.add('error');
+        showError(passwordError, passwordInput, 'Password is required');
         isValid = false;
       } else if (passwordInput.value.length < 6) {
-        passwordError.textContent = 'Password must be at least 6 characters';
-        passwordError.style.display = 'block';
-        passwordInput.classList.add('error');
+        showError(passwordError, passwordInput, 'Password must be at least 6 characters');
         isValid = false;
       } else {
-        passwordError.style.display = 'none';
-        passwordInput.classList.remove('error');
+        clearError(passwordError, passwordInput);
       }
       
       return isValid;
+    }
+
+    function showError(errorElement, inputElement, message) {
+      errorElement.textContent = message;
+      errorElement.style.display = 'block';
+      inputElement.classList.add('error');
+      inputElement.classList.remove('success');
+    }
+
+    function clearError(errorElement, inputElement) {
+      errorElement.style.display = 'none';
+      inputElement.classList.remove('error');
+      inputElement.classList.add('success');
     }
 
     // Form submission
@@ -338,56 +396,93 @@
       const password = passwordInput.value;
       
       try {
+        // Show loading state
         loginButton.disabled = true;
-        loginButton.textContent = 'Logging in...';
+        buttonText.innerHTML = `<span class="loading-spinner"></span> Logging in...`;
+        
+        // Set persistence based on "Remember me" selection
+        const persistence = rememberMeCheckbox.checked ? 
+          browserLocalPersistence : 
+          browserSessionPersistence;
+        
+        await setPersistence(auth, persistence);
         
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // Redirect based on user type
-        if (user.email === "admin@tradeconnect.com") {
-          window.location.href = "admin-home.html";
+        // Save credentials if "Remember me" is checked
+        if (rememberMeCheckbox.checked) {
+          localStorage.setItem('tradeConnectEmail', email);
+          localStorage.setItem('tradeConnectPassword', password);
         } else {
-          window.location.href = "index.html";
+          localStorage.removeItem('tradeConnectEmail');
+          localStorage.removeItem('tradeConnectPassword');
         }
+
+        // Redirect based on user type
+        const redirectPath = user.email === "admin@tradeconnect.com" ? 
+          "admin-home.html" : 
+          "index.html";
+        
+        window.location.href = redirectPath;
       } catch (error) {
         console.error("Login error:", error);
-        let errorMessage = "Login failed. Please try again.";
-        
-        switch (error.code) {
-          case "auth/invalid-email":
-            errorMessage = "Invalid email address";
-            break;
-          case "auth/user-disabled":
-            errorMessage = "This account has been disabled";
-            break;
-          case "auth/user-not-found":
-            errorMessage = "No account found with this email";
-            break;
-          case "auth/wrong-password":
-            errorMessage = "Incorrect password";
-            break;
-        }
-        
-        passwordError.textContent = errorMessage;
-        passwordError.style.display = 'block';
-        passwordInput.classList.add('error');
+        handleLoginError(error);
       } finally {
+        // Reset button state
         loginButton.disabled = false;
-        loginButton.textContent = 'Login';
+        buttonText.textContent = 'Login';
       }
     });
 
+    function handleLoginError(error) {
+      let errorMessage = "Login failed. Please try again.";
+      
+      switch (error.code) {
+        case "auth/invalid-email":
+          errorMessage = "Invalid email address";
+          showError(emailError, emailInput, errorMessage);
+          break;
+        case "auth/user-disabled":
+          errorMessage = "This account has been disabled";
+          showError(emailError, emailInput, errorMessage);
+          break;
+        case "auth/user-not-found":
+          errorMessage = "No account found with this email";
+          showError(emailError, emailInput, errorMessage);
+          break;
+        case "auth/wrong-password":
+          errorMessage = "Incorrect password";
+          showError(passwordError, passwordInput, errorMessage);
+          break;
+        case "auth/too-many-requests":
+          errorMessage = "Too many attempts. Please try again later.";
+          showError(passwordError, passwordInput, errorMessage);
+          break;
+        default:
+          showError(passwordError, passwordInput, errorMessage);
+      }
+    }
+
     // Clear errors when typing
     emailInput.addEventListener('input', () => {
-      emailError.style.display = 'none';
-      emailInput.classList.remove('error');
+      clearError(emailError, emailInput);
     });
     
     passwordInput.addEventListener('input', () => {
-      passwordError.style.display = 'none';
-      passwordInput.classList.remove('error');
+      clearError(passwordError, passwordInput);
     });
+
+    // Service worker registration for PWA capabilities
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(registration => {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }).catch(err => {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
   </script>
 </body>
 </html>
