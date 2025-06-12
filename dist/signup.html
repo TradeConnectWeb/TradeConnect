@@ -113,17 +113,13 @@
     }
 
     .input-group i {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #777;
+      display: none;
     }
 
     .input-group input,
     .input-group select {
       width: 100%;
-      padding: 12px 20px 12px 45px;
+      padding: 12px 40px 12px 15px; /* Reduced left padding, increased right padding */
       border: 1px solid #ccc;
       border-radius: 5px;
       font-size: 16px;
@@ -147,6 +143,11 @@
       border-color: var(--success);
     }
 
+    .password-container input {
+      width: 100%;
+      padding-right: 30px;
+    }
+    
     .password-toggle {
       position: absolute;
       right: 15px;
@@ -303,19 +304,18 @@
           <div class="error-message" id="zone-error"></div>
         </div>
 
-        <div class="input-group">
-          <i class="fas fa-lock"></i>
-          <input type="password" id="password" placeholder="Password" required />
-          <i class="fas fa-eye password-toggle" id="togglePassword"></i>
-          <div class="error-message" id="password-error"></div>
-        </div>
+        <!-- In the password input groups, remove the left icon and keep only the right toggle icon -->
+<div class="input-group">
+  <input type="password" id="password" placeholder="Password" required />
+  <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+  <div class="error-message" id="password-error"></div>
+</div>
 
-        <div class="input-group">
-          <i class="fas fa-lock"></i>
-          <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
-          <i class="fas fa-eye password-toggle" id="toggleConfirmPassword"></i>
-          <div class="error-message" id="confirmPassword-error"></div>
-        </div>
+<div class="input-group">
+  <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+  <i class="fas fa-eye password-toggle" id="toggleConfirmPassword"></i>
+  <div class="error-message" id="confirmPassword-error"></div>
+</div>
 
         <div class="admin-checkbox">
           <input type="checkbox" id="isAdmin" />
@@ -376,46 +376,45 @@
     const isAdminCheckbox = document.getElementById('isAdmin');
     const adminCodeGroup = document.getElementById('adminCodeGroup');
     
-    // Password toggle functionality
-    document.getElementById('togglePassword').addEventListener('click', function() {
-      togglePassword('password', this);
-    });
+    // Password toggle functionality remains the same
+document.getElementById('togglePassword').addEventListener('click', function() {
+  togglePassword('password', this);
+});
 
-    document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
-      togglePassword('confirmPassword', this);
-    });
+document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
+  togglePassword('confirmPassword', this);
+});
 
-    function togglePassword(fieldId, icon) {
-      const field = document.getElementById(fieldId);
-      if (field.type === "password") {
-        field.type = "text";
-        icon.classList.remove("fa-eye");
-        icon.classList.add("fa-eye-slash");
-      } else {
-        field.type = "password";
-        icon.classList.remove("fa-eye-slash");
-        icon.classList.add("fa-eye");
-      }
+function togglePassword(fieldId, icon) {
+  const field = document.getElementById(fieldId);
+  if (field.type === "password") {
+    field.type = "text";
+    icon.classList.remove("fa-eye");
+    icon.classList.add("fa-eye-slash");
+  } else {
+    field.type = "password";
+    icon.classList.remove("fa-eye-slash");
+    icon.classList.add("fa-eye");
+  }
+}
+
+// Show eye icon only when there's input in password fields
+['password', 'confirmPassword'].forEach(id => {
+  const field = document.getElementById(id);
+  const icon = document.getElementById(`toggle${id.charAt(0).toUpperCase() + id.slice(1)}`);
+  
+  field.addEventListener('input', function() {
+    if (this.value.length > 0) {
+      icon.style.display = 'block';
+    } else {
+      icon.style.display = 'none';
+      // Reset to password type if field is empty
+      this.type = 'password';
+      icon.classList.remove('fa-eye-slash');
+      icon.classList.add('fa-eye');
     }
-
-    // Show eye icon only when there's input in password fields
-    ['password', 'confirmPassword'].forEach(id => {
-      const field = document.getElementById(id);
-      const icon = document.getElementById(`toggle${id.charAt(0).toUpperCase() + id.slice(1)}`);
-      
-      field.addEventListener('input', function() {
-        if (this.value.length > 0) {
-          icon.style.display = 'block';
-        } else {
-          icon.style.display = 'none';
-          // Reset to password type if field is empty
-          this.type = 'password';
-          icon.classList.remove('fa-eye-slash');
-          icon.classList.add('fa-eye');
-        }
-      });
-    });
-
+  });
+});
     // Show/hide admin code field based on checkbox
     isAdminCheckbox.addEventListener("change", function() {
       adminCodeGroup.style.display = this.checked ? "block" : "none";
