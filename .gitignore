@@ -67,3 +67,5 @@ node_modules/
 
 # dataconnect generated files
 .dataconnect
+*.msi
+OpenJDK21U-jdk_x64_windows_hotspot_21.0.7_6.msi 
