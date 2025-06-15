@@ -7,11 +7,12 @@
   <meta name="description" content="TradeConnect - Barter and Marketplace System for Barangay Bulihan">
   <meta name="keywords" content="TradeConnect, Barter, Marketplace, Silang, Cavite, Bulihan">
   <meta name="author" content="Maricar Caratao">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <!-- Fixed favicon link -->
+  <link rel="icon" href="/favicon.ico" />
   <title>TradeConnect</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/css/shepherd.css"/>
-   <style>
+  <style>
     :root {
       --primary: #4a6fa5; /* Deep blue */
       --secondary: #166088; /* Darker blue */
@@ -68,7 +69,7 @@
       padding: 0 10px;
       margin-left: 18px;
     }
-  .logo img {
+    .logo img {
       width: 20px;
       margin-right: 25px;
       animation: spinAndScale 3s linear infinite;
@@ -577,303 +578,303 @@
     }
 
     /* Messages Section Styles */
-#messages {
-  padding: 20px;
-}
+    #messages {
+      padding: 20px;
+    }
 
-.chat-container {
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  max-width: 1000px;
-  margin: 0 auto;
-  height: 70vh;
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
+    .chat-container {
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      max-width: 1000px;
+      margin: 0 auto;
+      height: 70vh;
+      display: flex;
+      flex-direction: column;
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
 
-.chat-header {
-  padding: 15px 20px;
-  border-bottom: 1px solid #e0e0e0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f9f9f9;
-  border-radius: 12px 12px 0 0;
-}
+    .chat-header {
+      padding: 15px 20px;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f9f9f9;
+      border-radius: 12px 12px 0 0;
+    }
 
-.chat-partner-info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+    .chat-partner-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-.partner-avatar {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #fff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+    .partner-avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
 
-.chat-partner-info h3 {
-  margin: 0;
-  font-size: 16px;
-  color: #333;
-}
+    .chat-partner-info h3 {
+      margin: 0;
+      font-size: 16px;
+      color: #333;
+    }
 
-.status {
-  font-size: 12px;
-  color: #4CAF50;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
+    .status {
+      font-size: 12px;
+      color: #4CAF50;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
 
-.status::before {
-  content: "";
-  width: 8px;
-  height: 8px;
-  background-color: #4CAF50;
-  border-radius: 50%;
-  display: inline-block;
-}
+    .status::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background-color: #4CAF50;
+      border-radius: 50%;
+      display: inline-block;
+    }
 
-.chat-actions {
-  display: flex;
-  gap: 10px;
-}
+    .chat-actions {
+      display: flex;
+      gap: 10px;
+    }
 
-.action-btn {
-  padding: 8px 12px;
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: all 0.2s ease;
-}
+    .action-btn {
+      padding: 8px 12px;
+      background-color: #f0f0f0;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+    }
 
-.action-btn:hover {
-  background-color: #e0e0e0;
-}
+    .action-btn:hover {
+      background-color: #e0e0e0;
+    }
 
-.action-btn i {
-  font-size: 14px;
-}
+    .action-btn i {
+      font-size: 14px;
+    }
 
-.chat-messages {
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
-  background-color: #f9f9f9;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
+    .chat-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
 
-.no-messages {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  color: #999;
-}
+    .no-messages {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: #999;
+    }
 
-.no-messages i {
-  font-size: 40px;
-  margin-bottom: 15px;
-  color: #ddd;
-}
+    .no-messages i {
+      font-size: 40px;
+      margin-bottom: 15px;
+      color: #ddd;
+    }
 
-.no-messages p {
-  margin: 0;
-  font-size: 15px;
-}
+    .no-messages p {
+      margin: 0;
+      font-size: 15px;
+    }
 
-.message {
-  display: flex;
-  max-width: 70%;
-}
+    .message {
+      display: flex;
+      max-width: 70%;
+    }
 
-.message.received {
-  align-self: flex-start;
-}
+    .message.received {
+      align-self: flex-start;
+    }
 
-.message.sent {
-  align-self: flex-end;
-}
+    .message.sent {
+      align-self: flex-end;
+    }
 
-.message-content {
-  padding: 12px 16px;
-  border-radius: 18px;
-  position: relative;
-  line-height: 1.4;
-  font-size: 14px;
-}
+    .message-content {
+      padding: 12px 16px;
+      border-radius: 18px;
+      position: relative;
+      line-height: 1.4;
+      font-size: 14px;
+    }
 
-.message.received .message-content {
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
-  color: #333;
-  border-bottom-left-radius: 5px;
-}
+    .message.received .message-content {
+      background-color: #fff;
+      border: 1px solid #e0e0e0;
+      color: #333;
+      border-bottom-left-radius: 5px;
+    }
 
-.message.sent .message-content {
-  background-color: #6e8efb;
-  color: white;
-  border-bottom-right-radius: 5px;
-}
+    .message.sent .message-content {
+      background-color: #6e8efb;
+      color: white;
+      border-bottom-right-radius: 5px;
+    }
 
-.message-time {
-  display: block;
-  font-size: 11px;
-  color: #999;
-  margin-top: 5px;
-  text-align: right;
-}
+    .message-time {
+      display: block;
+      font-size: 11px;
+      color: #999;
+      margin-top: 5px;
+      text-align: right;
+    }
 
-.message.sent .message-time {
-  color: rgba(255, 255, 255, 0.7);
-}
+    .message.sent .message-time {
+      color: rgba(255, 255, 255, 0.7);
+    }
 
-.message-images {
-  display: flex;
-  gap: 8px;
-  margin-top: 10px;
-  flex-wrap: wrap;
-}
+    .message-images {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
 
-.message-images img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
+    .message-images img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
 
-.message-images img:hover {
-  transform: scale(1.05);
-}
+    .message-images img:hover {
+      transform: scale(1.05);
+    }
 
-.message-input {
-  display: flex;
-  padding: 15px;
-  border-top: 1px solid #e0e0e0;
-  background-color: #fff;
-  align-items: center;
-  border-radius: 0 0 12px 12px;
-}
+    .message-input {
+      display: flex;
+      padding: 15px;
+      border-top: 1px solid #e0e0e0;
+      background-color: #fff;
+      align-items: center;
+      border-radius: 0 0 12px 12px;
+    }
 
-.image-upload-chat {
-  position: relative;
-}
+    .image-upload-chat {
+      position: relative;
+    }
 
-.image-upload-chat input {
-  position: absolute;
-  opacity: 0;
-  width: 1px;
-  height: 1px;
-}
+    .image-upload-chat input {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+    }
 
-.image-upload-chat label {
-  padding: 10px;
-  background-color: #f0f0f0;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  transition: all 0.2s ease;
-}
+    .image-upload-chat label {
+      padding: 10px;
+      background-color: #f0f0f0;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      transition: all 0.2s ease;
+    }
 
-.image-upload-chat label:hover {
-  background-color: #e0e0e0;
-}
+    .image-upload-chat label:hover {
+      background-color: #e0e0e0;
+    }
 
-.image-upload-chat i {
-  color: #666;
-  font-size: 18px;
-}
+    .image-upload-chat i {
+      color: #666;
+      font-size: 18px;
+    }
 
-.message-input input {
-  flex: 1;
-  padding: 12px 15px;
-  border: 1px solid #ddd;
-  border-radius: 25px;
-  margin: 0 10px;
-  font-size: 14px;
-  outline: none;
-  transition: all 0.2s ease;
-}
+    .message-input input {
+      flex: 1;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 25px;
+      margin: 0 10px;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
 
-.message-input input:focus {
-  border-color: #6e8efb;
-  box-shadow: 0 0 0 2px rgba(110, 142, 251, 0.2);
-}
+    .message-input input:focus {
+      border-color: #6e8efb;
+      box-shadow: 0 0 0 2px rgba(110, 142, 251, 0.2);
+    }
 
-.message-input button {
-  padding: 12px 20px;
-  background-color: #6e8efb;
-  color: white;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.2s ease;
-}
+    .message-input button {
+      padding: 12px 20px;
+      background-color: #6e8efb;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
 
-.message-input button:hover {
-  background-color: #5b7de0;
-}
+    .message-input button:hover {
+      background-color: #5b7de0;
+    }
 
-.message-input button i {
-  font-size: 16px;
-}
-.btn-report {
-  background: none;
-  border: none;
-  color: var(--accent);
-  cursor: pointer;
-  padding: 5px 10px;
-  font-size: 14px;
-}
+    .message-input button i {
+      font-size: 16px;
+    }
+    .btn-report {
+      background: none;
+      border: none;
+      color: var(--accent);
+      cursor: pointer;
+      padding: 5px 10px;
+      font-size: 14px;
+    }
 
-.btn-report:hover {
-  text-decoration: underline;
-}
+    .btn-report:hover {
+      text-decoration: underline;
+    }
 
-/* Scrollbar styling for chat messages */
-.chat-messages::-webkit-scrollbar {
-  width: 8px;
-}
+    /* Scrollbar styling for chat messages */
+    .chat-messages::-webkit-scrollbar {
+      width: 8px;
+    }
 
-.chat-messages::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
+    .chat-messages::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
 
-.chat-messages::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 10px;
-}
+    .chat-messages::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 10px;
+    }
 
-.chat-messages::-webkit-scrollbar-thumb:hover {
-  background: #aaa;
-}
+    .chat-messages::-webkit-scrollbar-thumb:hover {
+      background: #aaa;
+    }
 
     /* Error Messages */
     .error-message {
@@ -1030,7 +1031,7 @@
     }
 
     input:checked + .slider {
-    background: #2196F3;
+      background: #2196F3;
     }
 
     input:checked + .slider:before {
@@ -1073,7 +1074,7 @@
     }
 
     .btn-submit:hover {
-     background: #2196F3;
+      background: #2196F3;
       transform: translateY(-2px);
     }
 
@@ -1099,19 +1100,19 @@
       vertical-align: middle;
     }
     .load-more-btn {
-  display: block;
-  margin: 20px auto;
-  padding: 10px 20px;
-  background: var(--primary);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-.load-more-btn:hover {
-  background: var(--primary-dark);
-}
+    .load-more-btn:hover {
+      background: var(--primary-dark);
+    }
 
     @keyframes spin {
       to { transform: rotate(360deg); }
@@ -1443,139 +1444,151 @@
     }
 
     /* Help Center Section Styles */
-/* Help Center Styles */
-.help-search {
-  display: flex;
-  margin: 20px 0;
-  max-width: 600px;
-}
+    /* Help Center Styles */
+    .help-search {
+      display: flex;
+      margin: 20px 0;
+      max-width: 600px;
+    }
 
-.help-search input {
-  flex: 1;
-  padding: 12px 15px;
-  border: 1px solid var(--light-gray);
-  border-radius: 4px 0 0 4px;
-  font-family: "Times New Roman", Times, serif;
-}
+    .help-search input {
+      flex: 1;
+      padding: 12px 15px;
+      border: 1px solid var(--light-gray);
+      border-radius: 4px 0 0 4px;
+      font-family: "Times New Roman", Times, serif;
+    }
 
-.help-search button {
-  padding: 0 20px;
-  background: var(--primary);
-  color: white;
-  border: none;
-  border-radius: 0 4px 4px 0;
-  cursor: pointer;
-}
+    .help-search button {
+      padding: 0 20px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+    }
 
-.help-categories {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 20px 0;
-}
+    .help-categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0;
+    }
 
-.category-card {
-  background: white;
-  border-radius: 8px;
-  padding: 15px;
-  width: calc(33.33% - 10px);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+    .category-card {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      width: calc(33.33% - 10px);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-.category-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
+    .category-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
 
-.category-card i {
-  font-size: 24px;
-  color: var(--primary);
-  margin-bottom: 10px;
-}
+    .category-card i {
+      font-size: 24px;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
 
-.help-articles {
-  margin-top: 30px;
-}
+    .help-articles {
+      margin-top: 30px;
+    }
 
-.article-card {
-  background: white;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  cursor: pointer;
-}
+    .article-card {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
 
-.article-card h3 {
-  color: var(--secondary);
-  margin-bottom: 5px;
-}
+    .article-card h3 {
+      color: var(--secondary);
+      margin-bottom: 5px;
+    }
 
-.article-meta {
-  font-size: 14px;
-  color: var(--gray);
-  margin-bottom: 10px;
-}
+    .article-meta {
+      font-size: 14px;
+      color: var(--gray);
+      margin-bottom: 10px;
+    }
 
-.article-detail {
-  background: white;
-  border-radius: 8px;
-  padding: 30px;
-  margin-top: 20px;
-}
+    .article-detail {
+      background: white;
+      border-radius: 8px;
+      padding: 30px;
+      margin-top: 20px;
+    }
 
-.back-to-list {
-  background: none;
-  border: none;
-  color: var(--primary);
-  cursor: pointer;
-  margin-bottom: 20px;
-  font-family: "Times New Roman", Times, serif;
-}
+    .back-to-list {
+      background: none;
+      border: none;
+      color: var(--primary);
+      cursor: pointer;
+      margin-bottom: 20px;
+      font-family: "Times New Roman", Times, serif;
+    }
 
-.article-content {
-  line-height: 1.8;
-  margin: 20px 0;
-}
+    .article-content {
+      line-height: 1.8;
+      margin: 20px 0;
+    }
 
-.article-content p {
-  margin-bottom: 15px;
-}
+    .article-content p {
+      margin-bottom: 15px;
+    }
 
-.article-feedback {
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid var(--light-gray);
-}
+    .article-feedback {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--light-gray);
+    }
 
-.feedback-btn {
-  background: var(--light-gray);
-  border: none;
-  padding: 8px 15px;
-  margin-right: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-}
+    .feedback-btn {
+      background: var(--light-gray);
+      border: none;
+      padding: 8px 15px;
+      margin-right: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
 
-.feedback-btn:hover {
-  background: var(--primary);
-  color: white;
-}
+    .feedback-btn:hover {
+      background: var(--primary);
+      color: white;
+    }
 
-@media (max-width: 768px) {
-  .category-card {
-    width: calc(50% - 10px);
-  }
-}
+    @media (max-width: 768px) {
+      .category-card {
+        width: calc(50% - 10px);
+      }
+    }
 
-@media (max-width: 480px) {
-  .category-card {
-    width: 100%;
-  }
-}
-    </style>
+    @media (max-width: 480px) {
+      .category-card {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    window.handleGlobalError = function(error) {
+      console.error("Global error:", error);
+      const toast = document.createElement('div');
+      toast.className = 'error-toast';
+      toast.textContent = 'An error occurred. Please refresh the page.';
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 5000);
+    };
+    window.addEventListener('error', handleGlobalError);
+    window.addEventListener('unhandledrejection', handleGlobalError);
+  </script>
 </head>
 <body>
   <!-- Welcome Modal -->
@@ -1615,10 +1628,10 @@
   <div id="signupModal" class="modal">
     <div class="modal-content" style="max-width: 500px;">
       <!-- In your modal close buttons (replace existing ones) -->
-<span class="close" onclick="closeModal('welcomeModal')" aria-label="Close modal">&times;</span>
-<span class="close" onclick="closeModal('signupModal')" aria-label="Close modal">&times;</span>
-<span class="close" onclick="closeModal('addPostModal')" aria-label="Close modal">&times;</span>
-<!-- And all other modal close buttons -->
+      <span class="close" onclick="closeModal('welcomeModal')" aria-label="Close modal">&times;</span>
+      <span class="close" onclick="closeModal('signupModal')" aria-label="Close modal">&times;</span>
+      <span class="close" onclick="closeModal('addPostModal')" aria-label="Close modal">&times;</span>
+      <!-- And all other modal close buttons -->
       <h2>Complete Your Profile</h2>
       <p>Help us personalize your experience by providing a few details.</p>
       
@@ -1686,7 +1699,8 @@
   <div class="container">
     <div class="sidebar">
       <div class="logo">
-        <img src="logo.png" alt="Logo">
+        <!-- Fixed placeholder.com URL -->
+        <img src="logo.png" alt="Logo" onerror="this.src='https://placehold.co/40'">
         <span class="logo-text">TradeConnect</span>
       </div>
       <ul class="nav-menu">
@@ -1735,7 +1749,8 @@
             <span class="notification-badge"></span>
           </div>
           <div class="user-profile">
-            <img id="userAvatar" src="https://via.placeholder.com/40" alt="User Avatar">
+            <!-- Fixed placeholder.com URL -->
+            <img id="userAvatar" src="https://placehold.co/40" alt="User Avatar">
             <div class="user-info">
               <span id="userName"></span>
               <span id="userEmail"></span>
@@ -1791,7 +1806,8 @@
           <!-- Chat Header -->
           <div class="chat-header">
             <div class="chat-partner-info">
-              <img src="https://via.placeholder.com/40" alt="User" class="partner-avatar">
+              <!-- Fixed placeholder.com URL -->
+              <img src="https://placehold.co/40" alt="User" class="partner-avatar">
               <div>
                 <h3>User</h3>
                 <span class="status">Online</span>
@@ -1808,8 +1824,8 @@
                 <i class="fas fa-flag"></i> Report
               </button>
               <button id="reportUserBtn" class="btn-report" data-user-id="USER_ID_HERE">
-  <i class="fas fa-flag"></i> Report User
-</button>
+                <i class="fas fa-flag"></i> Report User
+              </button>
             </div>
           </div>
           
@@ -1860,10 +1876,10 @@
       <div id="addPostModal" class="modal">
         <div class="modal-content">
           <!-- In your modal close buttons (replace existing ones) -->
-<span class="close" onclick="closeModal('welcomeModal')" aria-label="Close modal">&times;</span>
-<span class="close" onclick="closeModal('signupModal')" aria-label="Close modal">&times;</span>
-<span class="close" onclick="closeModal('addPostModal')" aria-label="Close modal">&times;</span>
-<!-- And all other modal close buttons -->
+          <span class="close" onclick="closeModal('welcomeModal')" aria-label="Close modal">&times;</span>
+          <span class="close" onclick="closeModal('signupModal')" aria-label="Close modal">&times;</span>
+          <span class="close" onclick="closeModal('addPostModal')" aria-label="Close modal">&times;</span>
+          <!-- And all other modal close buttons -->
           <h3>Create New Listing</h3>
           <p>Fill in the details of the item you want to list</p>
 
@@ -2049,43 +2065,42 @@
       </div>
 
       <!-- Help Center Section -->
-     <div id="help" class="content-section">
-  <div class="help-center">
-    <h1><i class="fas fa-tools"></i> TradeConnect Help Center</h1>
-    <p>Find answers to common questions and learn how to use TradeConnect</p>
-    
-    <!-- Search functionality -->
-    <div class="help-search">
-      <input type="text" id="helpSearch" placeholder="Search help articles...">
-      <button id="searchHelpBtn"><i class="fas fa-search"></i></button>
-    </div>
-    
-    <!-- Categories will be loaded dynamically -->
-    <div class="help-categories" id="helpCategories"></div>
-    
-    <!-- Articles will be loaded dynamically -->
-    <div class="help-articles" id="helpArticles"></div>
-    
-    <!-- Article detail view (hidden by default) -->
-    <div class="article-detail" id="articleDetail" style="display: none;">
-      <button class="back-to-list" id="backToList"><i class="fas fa-arrow-left"></i> Back to list</button>
-      <h2 id="articleTitle"></h2>
-      <div class="article-meta">
-        <span id="articleCategory"></span>
-        <span id="articleDate"></span>
-      </div>
-      <div class="article-content" id="articleContent"></div>
-      <div class="article-feedback">
-        <p>Was this article helpful?</p>
-        <button class="feedback-btn" data-helpful="yes"><i class="fas fa-thumbs-up"></i> Yes</button>
-        <button class="feedback-btn" data-helpful="no"><i class="fas fa-thumbs-down"></i> No</button>
+      <div id="help" class="content-section">
+        <div class="help-center">
+          <h1><i class="fas fa-tools"></i> TradeConnect Help Center</h1>
+          <p>Find answers to common questions and learn how to use TradeConnect</p>
+          
+          <!-- Search functionality -->
+          <div class="help-search">
+            <input type="text" id="helpSearch" placeholder="Search help articles...">
+            <button id="searchHelpBtn"><i class="fas fa-search"></i></button>
+          </div>
+          
+          <!-- Categories will be loaded dynamically -->
+          <div class="help-categories" id="helpCategories"></div>
+          
+          <!-- Articles will be loaded dynamically -->
+          <div class="help-articles" id="helpArticles"></div>
+          
+          <!-- Article detail view (hidden by default) -->
+          <div class="article-detail" id="articleDetail" style="display: none;">
+            <button class="back-to-list" id="backToList"><i class="fas fa-arrow-left"></i> Back to list</button>
+            <h2 id="articleTitle"></h2>
+            <div class="article-meta">
+              <span id="articleCategory"></span>
+              <span id="articleDate"></span>
+            </div>
+            <div class="article-content" id="articleContent"></div>
+            <div class="article-feedback">
+              <p>Was this article helpful?</p>
+              <button class="feedback-btn" data-helpful="yes"><i class="fas fa-thumbs-up"></i> Yes</button>
+              <button class="feedback-btn" data-helpful="no"><i class="fas fa-thumbs-down"></i> No</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
-</div>
-</div>
-</div>
 
   <!-- Notifications Modal -->
   <div id="notificationsModal" class="modal">
@@ -2133,7 +2148,8 @@
         <h2><i class="fas fa-user-cog"></i> Profile Settings</h2>
 
         <div class="profile-pic">
-          <img src="https://via.placeholder.com/120" alt="Profile Picture" id="preview-img" title="Click to change picture" onclick="document.getElementById('profile-upload').click()" />
+          <!-- Fixed placeholder.com URL -->
+          <img src="https://placehold.co/120" alt="Profile Picture" id="preview-img" title="Click to change picture" onclick="document.getElementById('profile-upload').click()" />
           <input type="file" accept="image/*" onchange="previewImage(event)" style="display: none;" id="profile-upload" />
           <button onclick="document.getElementById('profile-upload').click()" 
                   style="margin-top:10px; padding:8px 15px; background:#f0f0f0; border:1px solid #ddd; border-radius:4px; cursor:pointer;">
@@ -2218,1742 +2234,1554 @@
       </form>
     </div>
   </div>
-                                                                                                                                                                              <script src="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/js/shepherd.min.js"></script>
-<script type="module">
-import { 
-  initializeApp 
-} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { 
-  getAuth, 
-  onAuthStateChanged, 
-  signOut,
-  updateEmail,
-  deleteUser,
-  sendEmailVerification, 
-  sendPasswordResetEmail 
-} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-import { 
-  getDatabase, 
-  ref, 
-  get,
-  update,
-  remove,
-  set
-} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import { 
-  orderBy, limit, startAfter, increment,
-  updateDoc, doc, setDoc,
-  getFirestore, 
-  collection, 
-  addDoc, 
-  serverTimestamp, 
-  getDocs,
-  query,
-  where
-} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-import { 
-  getStorage, 
-  ref as storageRef, 
-  uploadBytes, 
-  getDownloadURL 
-} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
-import { enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+  
+  <script src="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/js/shepherd.min.js"></script>
+  <script type="module">
+    // Firebase imports
+    import { 
+      initializeApp 
+    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { 
+      getAuth, 
+      onAuthStateChanged, 
+      signOut,
+      updateEmail,
+      deleteUser,
+      sendEmailVerification, 
+      sendPasswordResetEmail 
+    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { 
+      getDatabase, 
+      ref, 
+      get,
+      update,
+      remove,
+      set
+    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+    import { 
+      orderBy, limit, startAfter, increment,
+      updateDoc, doc, setDoc,
+      getFirestore, 
+      collection, 
+      addDoc, 
+      serverTimestamp, 
+      getDocs,
+      query,
+      where
+    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+    import { 
+      getStorage, 
+      ref as storageRef, 
+      uploadBytes, 
+      getDownloadURL 
+    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
+    import { enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+    import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
-/**
- * Firebase configuration and initialization
- */
-const firebaseConfig = {
+    /**
+     * Updated Firebase Configuration
+     */
+  const firebaseConfig = {
   apiKey: "AIzaSyCxaOGeOvHwS5dnPHRTpw3Lwn2surjXP1E",
   authDomain: "tradeconnect-3c728.firebaseapp.com",
   projectId: "tradeconnect-3c728",
   storageBucket: "tradeconnect-3c728.appspot.com",
   messagingSenderId: "299665603548",
   appId: "1:299665603548:web:9ff10af44cd41605382d19",
-  databaseURL: "https://tradeconnect-3c728-default-rtdb.firebaseio.com"
+  databaseURL: "https://tradeconnect-3c728-default-rtdb.asia-southeast1.firebasedatabase.app"
 };
+    
+    // Initialize Firebase services
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+    const realtimeDb = getDatabase(app);
 
-// Initialize Firebase services
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const storage = getStorage(app);
-const realtimeDb = getDatabase(app);
-
-/**
- * UI Component: Modal Manager
- * Handles all modal operations with proper event delegation
- */
-const ModalManager = {
-  init() {
-    // Event delegation for closing modals
-    document.addEventListener('click', (e) => {
-      // Close when clicking outside modal content
-      if (e.target.classList.contains('modal')) {
-        this.close(e.target.id);
-      }
-      
-      // Close when clicking close buttons
-      if (e.target.closest('[data-modal-close]')) {
-        const modalId = e.target.closest('[data-modal-close]').dataset.modalClose;
-        this.close(modalId);
-      }
-    });
-    
-    // Close with ESC key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        const openModal = document.querySelector('.modal[style*="display: flex"]');
-        if (openModal) this.close(openModal.id);
-      }
-    });
-  },
-  
-  open(id) {
-    const modal = document.getElementById(id);
-    if (modal) {
-      modal.style.display = 'flex';
-      document.body.classList.add('modal-open');
-      
-      // Focus first input if exists
-      const firstInput = modal.querySelector('input, textarea, button');
-      if (firstInput) firstInput.focus();
-    }
-  },
-  
-  close(id) {
-    const modal = document.getElementById(id);
-    if (modal) {
-      modal.style.display = 'none';
-      document.body.classList.remove('modal-open');
-    }
-  }
-};
-
-/**
- * UI Component: Toast Notification System
- */
-const Toast = {
-  show(message, type = 'success', duration = 3000) {
-    // Remove existing toasts
-    document.querySelectorAll('.toast').forEach(toast => toast.remove());
-    
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    toast.setAttribute('role', 'alert');
-    toast.setAttribute('aria-live', 'assertive');
-    toast.innerHTML = `
-      <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
-      <span>${message}</span>
-    `;
-    
-    document.body.appendChild(toast);
-    
-    // Animate in
-    setTimeout(() => toast.classList.add('show'), 10);
-    
-    // Auto-dismiss
-    setTimeout(() => {
-      toast.classList.remove('show');
-      setTimeout(() => toast.remove(), 300);
-    }, duration);
-    
-    // Allow manual dismissal
-    toast.addEventListener('click', () => {
-      toast.classList.remove('show');
-      setTimeout(() => toast.remove(), 300);
-    });
-  }
-};
-
-/**
- * Utility Functions
- */
-const Utils = {
-  // Format dates using Intl API
-  formatDate(timestamp) {
-    if (!timestamp) return "Recently";
-    
-    try {
-      const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-      if (isNaN(date.getTime())) return "Invalid date";
-      
-      const now = new Date();
-      const diff = now - date;
-      const seconds = Math.floor(diff / 1000);
-      const minutes = Math.floor(seconds / 60);
-      const hours = Math.floor(minutes / 60);
-      const days = Math.floor(hours / 24);
-      
-      if (seconds < 60) return "Just now";
-      if (minutes < 60) return `${minutes} min ago`;
-      if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`;
-      if (days < 7) return `${days} day${days === 1 ? '' : 's'} ago`;
-      
-      return new Intl.DateTimeFormat(navigator.language, {
-        month: 'short',
-        day: 'numeric',
-        year: days > 365 ? 'numeric' : undefined
-      }).format(date);
-    } catch (e) {
-      console.error('Date formatting error:', e);
-      return "Recently";
-    }
-  },
-  
-  // Basic HTML escaping for security
-  escapeHtml(unsafe) {
-    if (!unsafe) return '';
-    return unsafe
-      .toString()
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  },
-  
-  // Get current time in HH:MM format
-  getCurrentTime() {
-    const now = new Date();
-    return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  },
-  
-  // Debounce function for limiting rapid calls
-  debounce(func, delay) {
-    let timeout;
-    return (...args) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(this, args), delay);
-    };
-  },
-  
-  // Image compression utility
-  async compressImage(file, maxWidth = 800, quality = 0.7) {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const img = new Image();
-        img.src = e.target.result;
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const scale = Math.min(maxWidth / img.width, 1);
-          canvas.width = img.width * scale;
-          canvas.height = img.height * scale;
+    /**
+     * Enhanced Modal Manager
+     */
+    const ModalManager = {
+      init() {
+        document.addEventListener('click', (e) => {
+          if (e.target.classList.contains('modal')) {
+            this.close(e.target.id);
+          }
           
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          
-          canvas.toBlob(
-            (blob) => resolve(new File([blob], file.name, { type: 'image/jpeg' })),
-            'image/jpeg',
-            quality
-          );
-        };
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-};
-
-/**
- * Database Service Layer
- * Encapsulates all Firebase database operations
- */
-const DatabaseService = {
-  // Rate limiting for reports
-  lastReportTimes: {},
-  
-  /**
-   * Get user data from Realtime Database
-   * @param {string} uid - User ID
-   * @returns {Promise<Object|null>} User data or null if not found
-   */
-  async getUserData(uid) {
-    try {
-      const snapshot = await get(ref(realtimeDb, `users/${uid}`));
-      return snapshot.exists() ? snapshot.val() : null;
-    } catch (error) {
-      console.error("Error getting user data:", error);
-      throw error;
-    }
-  },
-  
-  /**
-   * Update user data in Realtime Database
-   * @param {string} uid - User ID
-   * @param {Object} data - Data to update
-   * @returns {Promise<boolean>} True if successful
-   */
-  async updateUserData(uid, data) {
-    try {
-      await update(ref(realtimeDb, `users/${uid}`), {
-        ...data,
-        lastUpdated: serverTimestamp()
-      });
-      return true;
-    } catch (error) {
-      console.error("Error updating user data:", error);
-      throw error;
-    }
-  },
-
-  /**
-   * Report a user with rate limiting
-   * @param {string} reporterId - Reporting user ID
-   * @param {string} reportedId - Reported user ID
-   * @param {string} reason - Reason for report
-   * @returns {Promise<boolean>} True if report was submitted
-   */
-  async reportUser(reporterId, reportedId, reason) {
-    const now = Date.now();
-    const lastReport = this.lastReportTimes[reporterId] || 0;
-    
-    if (now - lastReport < 24 * 60 * 60 * 1000) {
-      throw new Error("You can only submit one report per day.");
-    }
-
-    try {
-      await addDoc(collection(db, "reports"), {
-        reporterId,
-        reportedId,
-        reason,
-        timestamp: serverTimestamp(),
-        status: "pending"
-      });
-      
-      this.lastReportTimes[reporterId] = now;
-      return true;
-    } catch (error) {
-      console.error("Error submitting report:", error);
-      throw error;
-    }
-  },
-  
-  /**
-   * Get forum posts with optional filtering
-   * @param {Object} filters - Filter criteria
-   * @returns {Promise<Array>} Array of forum posts
-   */
-  async getForumPosts(filters = {}) {
-    try {
-      let q = collection(db, "forumPosts");
-      
-      if (filters.type && filters.type !== 'all') {
-        q = query(q, where('type', '==', filters.type));
-      }
-      
-      const snapshot = await getDocs(q);
-      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    } catch (error) {
-      console.error("Error getting forum posts:", error);
-      throw error;
-    }
-  },
-  
-  /**
-   * Create a new forum post
-   * @param {Object} postData - Post data
-   * @returns {Promise<string>} ID of the created post
-   */
-  async createForumPost(postData) {
-    try {
-      const docRef = await addDoc(collection(db, "forumPosts"), {
-        ...postData,
-        createdAt: serverTimestamp(),
-        likes: 0,
-        comments: 0,
-        status: 'active'
-      });
-      return docRef.id;
-    } catch (error) {
-      console.error("Error creating forum post:", error);
-      throw error;
-    }
-  },
-  
-  /**
-   * Upload image with optional compression
-   * @param {File} file - Image file
-   * @param {string} path - Storage path
-   * @param {boolean} compress - Whether to compress image
-   * @returns {Promise<string>} Download URL
-   */
-  async uploadImage(file, path, compress = true) {
-    try {
-      const fileToUpload = compress ? await Utils.compressImage(file) : file;
-      const storageRef = ref(storage, `${path}/${Date.now()}_${fileToUpload.name}`);
-      await uploadBytes(storageRef, fileToUpload);
-      return getDownloadURL(storageRef);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-      throw error;
-    }
-  },
-
-  /**
-   * Get marketplace items with pagination
-   * @param {Object} filters - Filter criteria
-   * @param {Object|null} lastDoc - Last document for pagination
-   * @param {number} limit - Number of items to fetch
-   * @returns {Promise<Object>} { items: Array, lastDoc: Object|null }
-   */
-  async getMarketplaceItems(filters = {}, lastDoc = null, limit = 10) {
-    try {
-      let q = collection(db, "marketplaceItems");
-      
-      if (filters.category && filters.category !== 'All Items') {
-        q = query(q, where('category', '==', filters.category));
-      }
-      
-      if (filters.userId) {
-        q = query(q, where('uid', '==', filters.userId));
-      }
-      
-      q = query(q, orderBy('createdAt', 'desc'), limit(limit));
-      
-      if (lastDoc) {
-        q = query(q, startAfter(lastDoc));
-      }
-      
-      const snapshot = await getDocs(q);
-      return {
-        items: snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
-        lastDoc: snapshot.docs[snapshot.docs.length - 1] || null
-      };
-    } catch (error) {
-      console.error("Error getting marketplace items:", error);
-      throw error;
-    }
-  },
-
-  /**
-   * Create a new marketplace item
-   * @param {Object} itemData - Item data
-   * @returns {Promise<string>} ID of the created item
-   */
-  async createMarketplaceItem(itemData) {
-    try {
-      const docRef = await addDoc(collection(db, "marketplaceItems"), {
-        ...itemData,
-        createdAt: serverTimestamp(),
-        views: 0
-      });
-      return docRef.id;
-    } catch (error) {
-      console.error("Error creating marketplace item:", error);
-      throw error;
-    }
-  }
-};
-
-/**
- * Image Upload Handler
- * Manages image uploads with validation and preview
- */
-const ImageUploader = {
-  /**
-   * Initialize image upload elements
-   */
-  init() {
-    document.querySelectorAll('.image-upload-box').forEach(box => {
-      const input = box.querySelector('input[type="file"]');
-      const preview = box.querySelector('.image-preview');
-      const text = box.querySelector('.image-upload-text');
-      
-      if (!input || !preview || !text) return;
-      
-      input.addEventListener('change', (e) => this.handleFileSelect(e, preview, text, box));
-      
-      // Drag and drop support
-      box.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        box.style.borderColor = 'var(--primary)';
-        box.style.backgroundColor = 'rgba(110, 142, 251, 0.1)';
-      });
-      
-      box.addEventListener('dragleave', () => {
-        box.style.borderColor = '';
-        box.style.backgroundColor = '';
-      });
-      
-      box.addEventListener('drop', (e) => {
-        e.preventDefault();
-        box.style.borderColor = '';
-        box.style.backgroundColor = '';
-        
-        if (e.dataTransfer.files.length) {
-          input.files = e.dataTransfer.files;
-          const event = new Event('change');
-          input.dispatchEvent(event);
-        }
-      });
-    });
-  },
-  
-  /**
-   * Handle file selection and preview
-   * @param {Event} event - File input change event
-   * @param {HTMLElement} preview - Image preview element
-   * @param {HTMLElement} text - Upload text element
-   * @param {HTMLElement} container - Container element
-   */
-  handleFileSelect(event, preview, text, container) {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      
-      // Validate file type
-      const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
-      if (!validTypes.includes(file.type)) {
-        Toast.show('Invalid file type. Only JPEG, PNG, and WebP are allowed.', 'error');
-        return;
-      }
-      
-      // Validate file size (max 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        Toast.show('File too large. Maximum size is 5MB.', 'error');
-        return;
-      }
-      
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        preview.src = e.target.result;
-        preview.style.display = 'block';
-        text.style.display = 'none';
-        
-        this.addRemoveButton(container, preview, text, event.target);
-      };
-      reader.readAsDataURL(file);
-    }
-  },
-  
-  /**
-   * Add remove button to image upload
-   * @param {HTMLElement} container - Container element
-   * @param {HTMLElement} preview - Image preview element
-   * @param {HTMLElement} text - Upload text element
-   * @param {HTMLElement} input - File input element
-   */
-  addRemoveButton(container, preview, text, input) {
-    // Remove existing button if any
-    const existingBtn = container.querySelector('.remove-image');
-    if (existingBtn) existingBtn.remove();
-    
-    const removeBtn = document.createElement('button');
-    removeBtn.className = 'remove-image';
-    removeBtn.innerHTML = '&times;';
-    removeBtn.setAttribute('aria-label', 'Remove image');
-    
-    // Style the button
-    removeBtn.style.cssText = `
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-    `;
-    
-    removeBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      preview.src = '';
-      preview.style.display = 'none';
-      text.style.display = 'flex';
-      input.value = '';
-      removeBtn.remove();
-    });
-    
-    container.appendChild(removeBtn);
-  }
-};
-
-/**
- * Form Validator
- * Handles form validation with error messages
- */
-const FormValidator = {
-  /**
-   * Validate a form
-   * @param {string} formId - ID of the form to validate
-   * @returns {boolean} True if form is valid
-   */
-  validate(formId) {
-    const form = document.getElementById(formId);
-    if (!form) return false;
-    
-    const inputs = form.querySelectorAll('[required]');
-    let isValid = true;
-    
-    inputs.forEach(input => {
-      if (!input.value.trim()) {
-        this.showError(input, 'This field is required');
-        isValid = false;
-      } else {
-        this.clearError(input);
-        
-        // Additional validation for specific fields
-        if (input.type === 'email' && !this.validateEmail(input.value)) {
-          this.showError(input, 'Please enter a valid email');
-          isValid = false;
-        }
-        
-        if (input.type === 'password' && input.value.length < 6) {
-          this.showError(input, 'Password must be at least 6 characters');
-          isValid = false;
-        }
-      }
-    });
-    
-    return isValid;
-  },
-  
-  /**
-   * Validate email format
-   * @param {string} email - Email to validate
-   * @returns {boolean} True if email is valid
-   */
-  validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  },
-  
-  /**
-   * Show error message for an input
-   * @param {HTMLElement} input - Input element
-   * @param {string} message - Error message
-   */
-  showError(input, message) {
-    input.style.borderColor = 'var(--accent)';
-    
-    // Add error message if not already present
-    if (!input.nextElementSibling || !input.nextElementSibling.classList.contains('error-message')) {
-      const error = document.createElement('div');
-      error.className = 'error-message';
-      error.textContent = message;
-      error.style.cssText = `
-        color: var(--accent);
-        font-size: 12px;
-        margin-top: 5px;
-      `;
-      input.after(error);
-    }
-  },
-  
-  /**
-   * Clear error message for an input
-   * @param {HTMLElement} input - Input element
-   */
-  clearError(input) {
-    input.style.borderColor = '';
-    if (input.nextElementSibling && input.nextElementSibling.classList.contains('error-message')) {
-      input.nextElementSibling.remove();
-    }
-  }
-};
-
-/**
- * Marketplace Manager
- * Handles marketplace listing operations
- */
-const MarketplaceManager = {
-  lastVisibleDoc: null,
-  currentCategory: 'All Items',
-  isLoading: false,
-  
-  /**
-   * Initialize marketplace functionality
-   */
-  init() {
-    this.setupEventListeners();
-    this.loadListings();
-  },
-  
-  /**
-   * Set up marketplace event listeners
-   */
-  setupEventListeners() {
-    // Category selection
-    document.querySelectorAll(".category-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll(".category-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        this.currentCategory = btn.dataset.category;
-        this.loadListings();
-      });
-    });
-    
-    // Trade/Sell toggle
-    const tradeOrSell = document.getElementById("tradeOrSell");
-    if (tradeOrSell) {
-      tradeOrSell.addEventListener("change", () => {
-        const priceInput = document.getElementById("priceInput");
-        if (priceInput) {
-          priceInput.style.display = tradeOrSell.checked ? "block" : "none";
-          document.getElementById("itemPrice").required = tradeOrSell.checked;
-        }
-      });
-    }
-    
-    // Initialize infinite scroll
-    this.initInfiniteScroll();
-  },
-  
-  /**
-   * Initialize infinite scroll observer
-   */
-  initInfiniteScroll() {
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && this.lastVisibleDoc && !this.isLoading) {
-        this.loadMoreListings();
-      }
-    }, { threshold: 0.1 });
-    
-    const sentinel = document.createElement('div');
-    sentinel.id = 'scrollSentinel';
-    document.getElementById('marketplaceListings').appendChild(sentinel);
-    observer.observe(sentinel);
-  },
-  
-  /**
-   * Load marketplace listings
-   * @param {boolean} loadMore - Whether to append to existing listings
-   */
-  async loadListings(loadMore = false) {
-    if (this.isLoading) return;
-    
-    this.isLoading = true;
-    const listingsContainer = document.getElementById("marketplaceListings");
-    
-    try {
-      if (!loadMore) {
-        this.lastVisibleDoc = null;
-        listingsContainer.innerHTML = `
-          <div class="loading-spinner" aria-live="polite">
-            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i> 
-            Loading listings...
-          </div>
-        `;
-      }
-      
-      const { items, lastDoc } = await DatabaseService.getMarketplaceItems(
-        { category: this.currentCategory },
-        this.lastVisibleDoc
-      );
-      
-      this.lastVisibleDoc = lastDoc;
-      
-      if (items.length === 0 && !loadMore) {
-        listingsContainer.innerHTML = `
-          <div class="no-listings" aria-live="polite">
-            <i class="fas fa-box-open" aria-hidden="true"></i>
-            <p>No listings found in this category</p>
-          </div>
-        `;
-        return;
-      }
-      
-      this.renderListings(items, loadMore);
-      this.updateLoadMoreButton(!!lastDoc);
-      
-    } catch (error) {
-      console.error("Error loading listings:", error);
-      Toast.show("Failed to load listings", "error");
-    } finally {
-      this.isLoading = false;
-    }
-  },
-  
-  /**
-   * Load more listings for infinite scroll
-   */
-  async loadMoreListings() {
-    await this.loadListings(true);
-  },
-  
-  /**
-   * Render marketplace listings
-   * @param {Array} items - Listings to render
-   * @param {boolean} append - Whether to append to existing listings
-   */
-  renderListings(items, append = false) {
-    const listingsContainer = document.getElementById("marketplaceListings");
-    
-    if (!append) {
-      listingsContainer.innerHTML = '';
-    }
-    
-    items.forEach(item => {
-      const listing = document.createElement("div");
-      listing.className = "product-card";
-      listing.dataset.id = item.id;
-      listing.setAttribute('role', 'article');
-      
-      listing.innerHTML = `
-        <span class="product-badge ${item.isSelling ? '' : 'trade'}" aria-label="${item.isSelling ? 'For Sale' : 'For Trade'}">
-          ${item.isSelling ? 'For Sale' : 'For Trade'}
-        </span>
-        <img src="${item.images[0] || 'https://via.placeholder.com/250'}" 
-             alt="${Utils.escapeHtml(item.title)}" 
-             loading="lazy"
-             onerror="this.src='https://via.placeholder.com/250'">
-        <div class="product-info">
-          <h3>${Utils.escapeHtml(item.title)}</h3>
-          <div class="price">${item.isSelling ? `₱${item.price.toFixed(2)}` : 'Trade Only'}</div>
-          <div class="location">
-            <i class="fas fa-map-marker-alt" aria-hidden="true"></i> Bulihan, Silang, Cavite
-          </div>
-          <div class="product-meta">
-            <span>${Utils.formatDate(item.createdAt)}</span>
-            <span><i class="fas fa-eye" aria-hidden="true"></i> ${item.views || 0}</span>
-          </div>
-        </div>
-      `;
-      
-      listing.addEventListener('click', () => {
-        this.viewListingDetails(item);
-      });
-      
-      // Add keyboard navigation
-      listing.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          this.viewListingDetails(item);
-        }
-      });
-      
-      listing.tabIndex = 0;
-      listingsContainer.appendChild(listing);
-    });
-  },
-  
-  /**
-   * Update the load more button based on pagination state
-   * @param {boolean} hasMore - Whether there are more items to load
-   */
-  updateLoadMoreButton(hasMore) {
-    let btn = document.getElementById('loadMoreBtn');
-    
-    if (hasMore && !btn) {
-      btn = document.createElement('button');
-      btn.id = 'loadMoreBtn';
-      btn.className = 'load-more-btn';
-      btn.textContent = 'Load More';
-      btn.addEventListener('click', () => this.loadMoreListings());
-      document.getElementById("marketplaceContainer").appendChild(btn);
-    } else if (!hasMore && btn) {
-      btn.remove();
-    }
-  },
-  
-  /**
-   * View detailed listing
-   * @param {Object} item - Listing data
-   */
-  viewListingDetails(item) {
-    // Implementation for viewing listing details
-    console.log('Viewing listing:', item);
-    // This would open a modal with detailed view
-  }
-};
-
-/**
- * Forum Manager
- * Handles forum post operations
- */
-const ForumManager = {
-  /**
-   * Initialize forum functionality
-   */
-  init() {
-    this.setupEventListeners();
-    this.loadPosts();
-  },
-  
-  /**
-   * Set up forum event listeners
-   */
-  setupEventListeners() {
-    // Post type filter
-    const filterElement = document.getElementById('postTypeFilter');
-    if (filterElement) {
-      filterElement.addEventListener('change', () => this.loadPosts());
-    }
-    
-    // Post type change handler
-    const postType = document.getElementById("postType");
-    if (postType) {
-      postType.addEventListener("change", () => {
-        const paymentField = document.getElementById('paymentMethodField');
-        const gcashField = document.getElementById('gcashField');
-        
-        if (paymentField && gcashField) {
-          paymentField.style.display = (postType.value === 'scam' || postType.value === 'review') ? 'block' : 'none';
-          gcashField.style.display = 'none';
-        }
-      });
-    }
-    
-    // Payment method change handler
-    const paymentMethod = document.getElementById("paymentMethod");
-    if (paymentMethod) {
-      paymentMethod.addEventListener("change", () => {
-        const gcashField = document.getElementById('gcashField');
-        if (gcashField) {
-          gcashField.style.display = paymentMethod.value === 'gcash' ? 'block' : 'none';
-        }
-      });
-    }
-  },
-  
-  /**
-   * Load forum posts
-   */
-  async loadPosts() {
-    const postsContainer = document.getElementById('forumPostsContainer');
-    if (!postsContainer) return;
-    
-    try {
-      // Show loading state
-      postsContainer.innerHTML = `
-        <div class="loading-spinner" aria-live="polite">
-          <i class="fas fa-spinner fa-spin" aria-hidden="true"></i> 
-          Loading posts...
-        </div>
-      `;
-      
-      // Get filter value
-      const filterElement = document.getElementById('postTypeFilter');
-      const filter = filterElement ? filterElement.value : 'all';
-      
-      // Fetch posts with timeout
-      const posts = await Promise.race([
-        DatabaseService.getForumPosts({ type: filter === 'all' ? null : filter }),
-        new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Request timeout')), 10000)
-        )
-      ]);
-      
-      // Handle empty state
-      if (!posts || posts.length === 0) {
-        postsContainer.innerHTML = `
-          <div class="no-posts" aria-live="polite">
-            <i class="fas fa-comment-slash" aria-hidden="true"></i>
-            <p>No posts found</p>
-          </div>
-        `;
-        return;
-      }
-      
-      // Clear container
-      postsContainer.innerHTML = '';
-      
-      // Render posts
-      posts.forEach(post => {
-        if (!post.id || !post.type || !post.title || !post.content) {
-          console.warn('Invalid post data:', post);
-          return;
-        }
-        
-        const postElement = document.createElement('div');
-        postElement.className = 'forum-post';
-        postElement.dataset.id = post.id;
-        postElement.setAttribute('role', 'article');
-        
-        const typeEmoji = {
-          review: '✅',
-          scam: '⚠️',
-          question: '💬',
-          buy: '🔎'
-        }[post.type] || '';
-        
-        postElement.innerHTML = `
-          <div class="post-header">
-            <span class="post-type">${typeEmoji} ${post.type.toUpperCase()}</span>
-            <span class="post-date">${Utils.formatDate(post.createdAt)}</span>
-          </div>
-          <h3 class="post-title">${Utils.escapeHtml(post.title)}</h3>
-          <p class="post-content">${Utils.escapeHtml(post.content)}</p>
-          
-          ${post.location ? `
-            <div class="post-meta">
-              <i class="fas fa-map-marker-alt" aria-hidden="true"></i> 
-              ${Utils.escapeHtml(post.location)}
-            </div>
-          ` : ''}
-          
-          ${post.imageUrl ? `
-            <img src="${Utils.escapeHtml(post.imageUrl)}" 
-                 class="post-image" 
-                 alt="Post image" 
-                 loading="lazy"
-                 onerror="this.style.display='none'">
-          ` : ''}
-          
-          <div class="post-actions">
-            <button class="comment-btn" aria-label="Comment">
-              <i class="far fa-comment" aria-hidden="true"></i> 
-              Comment (${post.comments || 0})
-            </button>
-            <button class="like-btn" aria-label="Like">
-              <i class="far fa-heart" aria-hidden="true"></i> 
-              Like (${post.likes || 0})
-            </button>
-          </div>
-        `;
-        
-        // Add keyboard navigation
-        postElement.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            this.viewPostDetails(post);
+          if (e.target.closest('[data-modal-close]')) {
+            const modalId = e.target.closest('[data-modal-close]').dataset.modalClose;
+            this.close(modalId);
           }
         });
         
-        postElement.tabIndex = 0;
-        postsContainer.appendChild(postElement);
-      });
-      
-    } catch (error) {
-      console.error('Error loading forum posts:', error);
-      postsContainer.innerHTML = `
-        <div class="error-state" aria-live="polite">
-          <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
-          <p>Failed to load posts. Please try again.</p>
-          <button onclick="ForumManager.loadPosts()">Retry</button>
-        </div>
-      `;
-    }
-  },
-  
-  /**
-   * View detailed forum post
-   * @param {Object} post - Post data
-   */
-  viewPostDetails(post) {
-    // Implementation for viewing post details
-    console.log('Viewing post:', post);
-    // This would open a modal with detailed view
-  }
-};
-
-/**
- * User Profile Manager
- * Handles user profile operations
- */
-const ProfileManager = {
-  /**
-   * Initialize profile functionality
-   */
-  init() {
-    this.setupEventListeners();
-    this.loadProfile();
-  },
-  
-  /**
-   * Set up profile event listeners
-   */
-  setupEventListeners() {
-    // Profile image preview
-    const profileUpload = document.getElementById('profile-upload');
-    if (profileUpload) {
-      profileUpload.addEventListener('change', (e) => {
-        const previewImg = document.getElementById('preview-img');
-        const userAvatar = document.getElementById('userAvatar');
-        if (previewImg && userAvatar) {
-          const reader = new FileReader();
-          reader.onload = function() {
-            previewImg.src = reader.result;
-            userAvatar.src = reader.result;
-          };
-          reader.readAsDataURL(e.target.files[0]);
-        }
-      });
-    }
-    
-    // Save profile button
-    const saveBtn = document.querySelector('.save-btn');
-    if (saveBtn) {
-      saveBtn.addEventListener('click', () => this.saveProfile());
-    }
-    
-    // Delete account button
-    const deleteBtn = document.querySelector('.delete-btn');
-    if (deleteBtn) {
-      deleteBtn.addEventListener('click', () => this.confirmDelete());
-    }
-  },
-  
-  /**
-   * Load user profile data
-   */
-  async loadProfile() {
-    const user = auth.currentUser;
-    if (!user) return;
-    
-    try {
-      const userData = await DatabaseService.getUserData(user.uid);
-      if (!userData) return;
-      
-      // Update UI elements
-      const elements = {
-        userName: userData.username || "User",
-        userEmail: user.email || "No email",
-        userZone: userData.zone || "No zone",
-        userAvatar: userData.photoURL || "https://via.placeholder.com/40",
-        nicknameInput: userData.username || '',
-        zoneSelect: userData.zone || '',
-        contactInput: userData.contact || '',
-        gcashInput: userData.gcash || '',
-        previewImg: userData.photoURL || "https://via.placeholder.com/120"
-      };
-      
-      Object.entries(elements).forEach(([id, value]) => {
-        const element = document.getElementById(id);
-        if (element) {
-          if (id.endsWith('Avatar') || id.endsWith('Img')) {
-            element.src = value;
-          } else {
-            element.textContent = value;
-            element.value = value;
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            const openModal = document.querySelector('.modal[style*="display: flex"]');
+            if (openModal) this.close(openModal.id);
           }
+        });
+      },
+      
+      open(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+          modal.style.display = 'flex';
+          document.body.classList.add('modal-open');
+          const firstInput = modal.querySelector('input, textarea, button');
+          if (firstInput) firstInput.focus();
         }
-      });
+      },
       
-      // Show welcome modal for new users
-      if (userData.isNewUser) {
-        setTimeout(() => ModalManager.open('welcomeModal'), 1000);
+      close(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+          modal.style.display = 'none';
+          document.body.classList.remove('modal-open');
+        }
+      },
+      
+      // Legacy support
+      openModal(id) {
+        console.warn('openModal() is deprecated. Use ModalManager.open() instead.');
+        this.open(id);
       }
+    };
+
+    // Initialize and expose for legacy support
+    ModalManager.init();
+    window.openModal = ModalManager.openModal.bind(ModalManager);
+    window.ModalManager = ModalManager;
+
+    /**
+     * Toast Notification System
+     */
+    const Toast = {
+      show(message, type = 'success', duration = 3000) {
+        document.querySelectorAll('.toast').forEach(toast => toast.remove());
+        
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.setAttribute('role', 'alert');
+        toast.setAttribute('aria-live', 'assertive');
+        toast.innerHTML = `
+          <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+          <span>${message}</span>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => toast.classList.add('show'), 10);
+        
+        setTimeout(() => {
+          toast.classList.remove('show');
+          setTimeout(() => toast.remove(), 300);
+        }, duration);
+        
+        toast.addEventListener('click', () => {
+          toast.classList.remove('show');
+          setTimeout(() => toast.remove(), 300);
+        });
+      }
+    };
+
+    /**
+     * Utility Functions
+     */
+    const Utils = {
+      formatDate(timestamp) {
+        if (!timestamp) return "Recently";
+        
+        try {
+          const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+          if (isNaN(date.getTime())) return "Invalid date";
+          
+          const now = new Date();
+          const diff = now - date;
+          const seconds = Math.floor(diff / 1000);
+          const minutes = Math.floor(seconds / 60);
+          const hours = Math.floor(minutes / 60);
+          const days = Math.floor(hours / 24);
+          
+          if (seconds < 60) return "Just now";
+          if (minutes < 60) return `${minutes} min ago`;
+          if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+          if (days < 7) return `${days} day${days === 1 ? '' : 's'} ago`;
+          
+          return new Intl.DateTimeFormat(navigator.language, {
+            month: 'short',
+            day: 'numeric',
+            year: days > 365 ? 'numeric' : undefined
+          }).format(date);
+        } catch (e) {
+          console.error('Date formatting error:', e);
+          return "Recently";
+        }
+      },
       
-    } catch (error) {
-      console.error("Error loading profile:", error);
-      Toast.show("Error loading profile data", "error");
-    }
-  },
-  
-  /**
-   * Save profile changes
-   */
-  async saveProfile() {
-    const user = auth.currentUser;
-    if (!user) return;
-    
-    const nickname = document.getElementById('nickname').value;
-    const zone = document.getElementById('zone').value;
-    const contact = document.getElementById('contact').value;
-    const gcash = document.getElementById('gcash').value;
-    const profilePic = document.getElementById('profile-upload').files[0];
-    const saveBtn = document.querySelector('.save-btn');
-    
-    if (!saveBtn) return;
-    
-    try {
-      saveBtn.disabled = true;
-      saveBtn.classList.add('loading');
-      saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+      escapeHtml(unsafe) {
+        if (!unsafe) return '';
+        return unsafe
+          .toString()
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      },
       
-      const updates = {
-        username: nickname,
-        zone: zone,
-        contact: contact,
-        gcash: gcash
+      getCurrentTime() {
+        const now = new Date();
+        return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      },
+      
+      debounce(func, delay) {
+        let timeout;
+        return (...args) => {
+          clearTimeout(timeout);
+          timeout = setTimeout(() => func.apply(this, args), delay);
+        };
+      },
+      
+      async compressImage(file, maxWidth = 800, quality = 0.7) {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const img = new Image();
+            img.src = e.target.result;
+            img.onload = () => {
+              const canvas = document.createElement('canvas');
+              const scale = Math.min(maxWidth / img.width, 1);
+              canvas.width = img.width * scale;
+              canvas.height = img.height * scale;
+              
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+              
+              canvas.toBlob(
+                (blob) => resolve(new File([blob], file.name, { type: 'image/jpeg' })),
+                'image/jpeg',
+                quality
+              );
+            };
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+    };
+
+    /**
+     * Enhanced Database Service
+     */
+    const DatabaseService = {
+      // Rate limiting for reports
+      lastReportTimes: {},
+      
+      async getUserData(uid) {
+        try {
+          const snapshot = await get(ref(realtimeDb, `users/${uid}`));
+          return snapshot.exists() ? snapshot.val() : null;
+        } catch (error) {
+          console.error("Error getting user data:", error);
+          throw error;
+        }
+      },
+      
+      async updateUserData(uid, data) {
+        try {
+          await update(ref(realtimeDb, `users/${uid}`), {
+            ...data,
+            lastUpdated: serverTimestamp()
+          });
+          return true;
+        } catch (error) {
+          console.error("Error updating user data:", error);
+          throw error;
+        }
+      },
+
+      async reportUser(reporterId, reportedId, reason) {
+        const now = Date.now();
+        const lastReport = this.lastReportTimes[reporterId] || 0;
+        
+        if (now - lastReport < 24 * 60 * 60 * 1000) {
+          throw new Error("You can only submit one report per day.");
+        }
+
+        try {
+          await addDoc(collection(db, "reports"), {
+            reporterId,
+            reportedId,
+            reason,
+            timestamp: serverTimestamp(),
+            status: "pending"
+          });
+          
+          this.lastReportTimes[reporterId] = now;
+          return true;
+        } catch (error) {
+          console.error("Error submitting report:", error);
+          throw error;
+        }
+      },
+      
+      async getForumPosts(filters = {}) {
+        try {
+          let q = collection(db, "forumPosts");
+          
+          if (filters.type && filters.type !== 'all') {
+            q = query(q, where('type', '==', filters.type));
+          }
+          
+          const snapshot = await getDocs(q);
+          return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        } catch (error) {
+          console.error("Error getting forum posts:", error);
+          throw error;
+        }
+      },
+      
+      async createForumPost(postData) {
+        try {
+          const docRef = await addDoc(collection(db, "forumPosts"), {
+            ...postData,
+            createdAt: serverTimestamp(),
+            likes: 0,
+            comments: 0,
+            status: 'active'
+          });
+          return docRef.id;
+        } catch (error) {
+          console.error("Error creating forum post:", error);
+          throw error;
+        }
+      },
+      
+      async uploadImage(file, path, compress = true) {
+        try {
+          const fileToUpload = compress ? await Utils.compressImage(file) : file;
+          const storageRef = ref(storage, `${path}/${Date.now()}_${fileToUpload.name}`);
+          await uploadBytes(storageRef, fileToUpload);
+          return getDownloadURL(storageRef);
+        } catch (error) {
+          console.error("Error uploading image:", error);
+          throw error;
+        }
+      },
+
+      /**
+       * Enhanced getMarketplaceItems with better error handling and default values
+       */
+      async getMarketplaceItems(filters = {}, lastDoc = null, limit = 10) {
+        try {
+          let q = collection(db, "marketplaceItems");
+          
+          if (filters.category && filters.category !== 'All Items') {
+            q = query(q, where('category', '==', filters.category));
+          }
+          
+          if (filters.userId) {
+            q = query(q, where('uid', '==', filters.userId));
+          }
+          
+          q = query(q, orderBy('createdAt', 'desc'), limit(limit));
+          
+          if (lastDoc) {
+            q = query(q, startAfter(lastDoc));
+          }
+          
+          const snapshot = await getDocs(q);
+          
+          if (!snapshot || !snapshot.docs) {
+            throw new Error("Invalid snapshot returned");
+          }
+          
+          // Add default values for safety
+          return {
+            items: snapshot.docs.map(doc => {
+              const data = doc.data();
+              return {
+                id: doc.id,
+                title: data.title || 'Untitled',
+                price: data.price || 0,
+                images: data.images || [],
+                isSelling: data.isSelling || false,
+                createdAt: data.createdAt || serverTimestamp(),
+                views: data.views || 0,
+                category: data.category || 'Other'
+              };
+            }),
+            lastDoc: snapshot.docs[snapshot.docs.length - 1] || null
+          };
+        } catch (error) {
+          console.error("Database Error:", error);
+          throw new Error("Failed to load marketplace items. Please try again later.");
+        }
+      },
+
+      async createMarketplaceItem(itemData) {
+        try {
+          const docRef = await addDoc(collection(db, "marketplaceItems"), {
+            ...itemData,
+            createdAt: serverTimestamp(),
+            views: 0
+          });
+          return docRef.id;
+        } catch (error) {
+          console.error("Error creating marketplace item:", error);
+          throw error;
+        }
+      }
+    };
+
+    /**
+     * Robust Auth State Handler with Retries
+     */
+    const MAX_RETRIES = 3;
+    const RETRY_DELAY = 1000; // 1 second
+
+    auth.onAuthStateChanged(async (user) => {
+      const authStateHandler = async (retryCount = 0) => {
+        try {
+          if (user) {
+            // Verify email if needed
+            if (!user.emailVerified && user.email) {
+              await sendEmailVerification(user);
+            }
+
+            const userData = await Promise.race([
+              DatabaseService.getUserData(user.uid),
+              new Promise((_, reject) => 
+                setTimeout(() => reject(new Error('Timeout loading user data')), 5000)
+              )
+            ]);
+
+            if (!userData) {
+              ModalManager.open('signupModal');
+              return;
+            }
+
+            ProfileManager.loadProfile();
+            
+          } else {
+            window.location.href = "login.html";
+          }
+        } catch (error) {
+          if (retryCount < MAX_RETRIES) {
+            console.log(`Retrying auth state (attempt ${retryCount + 1})`);
+            await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * (retryCount + 1)));
+            return authStateHandler(retryCount + 1);
+          }
+          console.error("Auth state error:", error);
+          Toast.show("Error loading user data. Please refresh.", "error");
+        }
       };
-      
-      if (profilePic) {
-        const url = await DatabaseService.uploadImage(profilePic, `profilePictures/${user.uid}`);
-        updates.photoURL = url;
-      }
-      
-      await DatabaseService.updateUserData(user.uid, updates);
-      
-      // Update UI
-      const userName = document.getElementById('userName');
-      const userZone = document.getElementById('userZone');
-      const userAvatar = document.getElementById('userAvatar');
-      
-      if (userName) userName.textContent = nickname;
-      if (userZone) userZone.textContent = zone;
-      if (userAvatar && updates.photoURL) {
-        userAvatar.src = updates.photoURL;
-      }
-      
-      Toast.show('Profile updated successfully!');
-      ModalManager.close('settingsModal');
-      
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      Toast.show('Failed to update profile. Please try again.', 'error');
-    } finally {
-      saveBtn.disabled = false;
-      saveBtn.classList.remove('loading');
-      saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Changes';
-    }
-  },
-  
-  /**
-   * Confirm account deletion
-   */
-  confirmDelete() {
-    if (confirm("Are you sure you want to DELETE your account? This action cannot be undone.")) {
-      this.deleteAccount();
-    }
-  },
-  
-  /**
-   * Delete user account
-   */
-  async deleteAccount() {
-    const user = auth.currentUser;
-    if (!user) return;
-    
-    const deleteBtn = document.querySelector('.delete-btn');
-    if (!deleteBtn) return;
-    
-    try {
-      deleteBtn.disabled = true;
-      deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting...';
-      
-      await remove(ref(realtimeDb, `users/${user.uid}`));
-      await deleteUser(user);
-      
-      Toast.show("Account deleted successfully.");
-      window.location.href = "login.html";
-    } catch (error) {
-      console.error("Error deleting account:", error);
-      Toast.show("Failed to delete account. Please try again.", "error");
-      deleteBtn.disabled = false;
-      deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Delete Account';
-    }
-  }
-};
 
-/**
- * Chat Manager
- * Handles chat functionality with rate limiting
- */
-const ChatManager = {
-  lastMessageTime: 0,
-  MESSAGE_RATE_LIMIT: 1000, // 1 second
-  
-  /**
-   * Initialize chat functionality
-   */
-  init() {
-    this.setupEventListeners();
-  },
-  
-  /**
-   * Set up chat event listeners
-   */
-  setupEventListeners() {
-    const sendButton = document.getElementById("sendMessage");
-    if (sendButton) {
-      sendButton.addEventListener("click", () => this.sendMessage());
-    }
-    
-    const messageInput = document.getElementById("messageInput");
-    if (messageInput) {
-      messageInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          this.sendMessage();
-        }
-      });
-    }
-  },
-  
-  /**
-   * Send a chat message with rate limiting
-   */
-  sendMessage() {
-    const now = Date.now();
-    if (now - this.lastMessageTime < this.MESSAGE_RATE_LIMIT) {
-      Toast.show('Please wait before sending another message', 'warning');
-      return;
-    }
-    this.lastMessageTime = now;
-    
-    const messageInput = document.getElementById("messageInput");
-    const chatMessages = document.getElementById("chatMessages");
-    
-    if (!messageInput || !chatMessages) return;
-    
-    const messageText = messageInput.value.trim();
-    if (!messageText) {
-      Toast.show('Message cannot be empty', 'warning');
-      return;
-    }
-    
-    if (messageText.length > 500) {
-      Toast.show('Message is too long (max 500 characters)', 'warning');
-      return;
-    }
-    
-    // Create message element
-    const messageElement = document.createElement("div");
-    messageElement.className = "message sent";
-    messageElement.setAttribute('role', 'log');
-    messageElement.setAttribute('aria-live', 'polite');
-    messageElement.innerHTML = `
-      <div class="message-content">
-        <p>${Utils.escapeHtml(messageText)}</p>
-        <span class="message-time">${Utils.getCurrentTime()}</span>
-      </div>
-    `;
-    
-    chatMessages.appendChild(messageElement);
-    messageInput.value = "";
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-    
-    // Simulate reply with delay
-    setTimeout(() => {
-      const replyElement = document.createElement("div");
-      replyElement.className = "message received";
-      replyElement.setAttribute('role', 'log');
-      replyElement.setAttribute('aria-live', 'polite');
-      replyElement.innerHTML = `
-        <div class="message-content">
-          <p>Thanks for your message! Our team will respond shortly.</p>
-          <span class="message-time">${Utils.getCurrentTime()}</span>
-        </div>
-      `;
-      chatMessages.appendChild(replyElement);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }, 1500);
-  }
-};
+      await authStateHandler();
+    });
 
-/**
- * Help Center Manager
- * Handles help center functionality
- */
-const HelpCenterManager = {
-  /**
-   * Initialize help center functionality
-   */
-  init() {
-    this.renderCategories();
-    this.setupEventListeners();
-  },
-  
-  /**
-   * Render help categories
-   */
-  renderCategories() {
-    const container = document.getElementById('helpCategories');
-    if (!container) return;
-    
-    container.innerHTML = '';
-    
-    helpCenterData.categories.forEach(category => {
-      const categoryCard = document.createElement('div');
-      categoryCard.className = 'category-card';
-      categoryCard.dataset.categoryId = category.id;
-      categoryCard.setAttribute('role', 'button');
-      categoryCard.tabIndex = 0;
-      categoryCard.innerHTML = `
-        <i class="${category.icon}" aria-hidden="true"></i>
-        <h3>${category.title}</h3>
-        <p>${category.description}</p>
-      `;
-      container.appendChild(categoryCard);
-    });
-  },
-  
-  /**
-   * Set up help center event listeners
-   */
-  setupEventListeners() {
-    // Category click
-    document.addEventListener('click', (e) => {
-      const categoryCard = e.target.closest('.category-card');
-      if (categoryCard) {
-        const categoryId = categoryCard.dataset.categoryId;
-        this.renderArticles(categoryId);
-        document.getElementById('helpArticles').scrollIntoView({ behavior: 'smooth' });
-      }
-      
-      const articleCard = e.target.closest('.article-card');
-      if (articleCard) {
-        this.renderArticleDetail(articleCard.dataset.articleId);
-      }
-    });
-    
-    // Back to list button
-    const backButton = document.getElementById('backToList');
-    if (backButton) {
-      backButton.addEventListener('click', () => {
-        document.getElementById('articleDetail').style.display = 'none';
-        document.getElementById('helpArticles').style.display = 'block';
-        document.getElementById('helpCategories').style.display = 'flex';
-      });
-    }
-    
-    // Search functionality
-    const searchButton = document.getElementById('searchHelpBtn');
-    if (searchButton) {
-      searchButton.addEventListener('click', () => {
-        const searchTerm = document.getElementById('helpSearch').value;
-        this.renderArticles(null, searchTerm);
-      });
-    }
-    
-    const searchInput = document.getElementById('helpSearch');
-    if (searchInput) {
-      searchInput.addEventListener('keyup', (e) => {
-        if (e.key === 'Enter') {
-          const searchTerm = document.getElementById('helpSearch').value;
-          this.renderArticles(null, searchTerm);
+    /**
+     * Offline Persistence with Better Error Handling
+     */
+    async function initializeOfflinePersistence() {
+      try {
+        await enableIndexedDbPersistence(db, {
+          forceOwnership: true
+        });
+        console.log("Offline persistence enabled");
+      } catch (err) {
+        if (err.code === 'failed-precondition') {
+          console.warn("Offline persistence already enabled in another tab");
+        } else if (err.code === 'unimplemented') {
+          console.warn("Offline persistence not supported in this browser");
+        } else {
+          console.error("Offline persistence error:", err);
         }
-      });
+      }
     }
-    
-    // Feedback buttons
-    document.querySelectorAll('.feedback-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const articleId = document.getElementById('articleDetail').dataset.articleId;
-        const isHelpful = btn.dataset.helpful === 'yes';
+
+    /**
+     * Image Upload Handler
+     */
+    const ImageUploader = {
+      init() {
+        document.querySelectorAll('.image-upload-box').forEach(box => {
+          const input = box.querySelector('input[type="file"]');
+          const preview = box.querySelector('.image-preview');
+          const text = box.querySelector('.image-upload-text');
+          
+          if (!input || !preview || !text) return;
+          
+          input.addEventListener('change', (e) => this.handleFileSelect(e, preview, text, box));
+          
+          // Drag and drop support
+          box.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            box.style.borderColor = 'var(--primary)';
+            box.style.backgroundColor = 'rgba(110, 142, 251, 0.1)';
+          });
+          
+          box.addEventListener('dragleave', () => {
+            box.style.borderColor = '';
+            box.style.backgroundColor = '';
+          });
+          
+          box.addEventListener('drop', (e) => {
+            e.preventDefault();
+            box.style.borderColor = '';
+            box.style.backgroundColor = '';
+            
+            if (e.dataTransfer.files.length) {
+              input.files = e.dataTransfer.files;
+              const event = new Event('change');
+              input.dispatchEvent(event);
+            }
+          });
+        });
+      },
+      
+      handleFileSelect(event, preview, text, container) {
+        if (event.target.files && event.target.files[0]) {
+          const file = event.target.files[0];
+          
+          // Validate file type
+          const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+          if (!validTypes.includes(file.type)) {
+            Toast.show('Invalid file type. Only JPEG, PNG, and WebP are allowed.', 'error');
+            return;
+          }
+          
+          // Validate file size (max 5MB)
+          if (file.size > 5 * 1024 * 1024) {
+            Toast.show('File too large. Maximum size is 5MB.', 'error');
+            return;
+          }
+          
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+            text.style.display = 'none';
+            
+            this.addRemoveButton(container, preview, text, event.target);
+          };
+          reader.readAsDataURL(file);
+        }
+      },
+      
+      addRemoveButton(container, preview, text, input) {
+        const existingBtn = container.querySelector('.remove-image');
+        if (existingBtn) existingBtn.remove();
         
-        Toast.show(`Thank you for your feedback! Article marked as ${isHelpful ? 'helpful' : 'not helpful'}`);
-      });
-    });
-  },
-  
-  /**
-   * Render help articles
-   * @param {string|null} categoryId - Category ID to filter by
-   * @param {string} searchTerm - Search term to filter by
-   */
-  renderArticles(categoryId = null, searchTerm = '') {
-    const container = document.getElementById('helpArticles');
-    if (!container) return;
-    
-    container.innerHTML = '';
-    
-    // Filter articles
-    let articles = helpCenterData.articles;
-    if (categoryId) {
-      articles = articles.filter(article => article.category === categoryId);
-    }
-    
-    if (searchTerm) {
-      const term = searchTerm.toLowerCase();
-      articles = articles.filter(article => 
-        article.title.toLowerCase().includes(term) || 
-        article.content.toLowerCase().includes(term)
-      );
-    }
-    
-    // Handle empty state
-    if (articles.length === 0) {
-      container.innerHTML = `
-        <div class="no-articles" aria-live="polite">
-          <i class="fas fa-info-circle" aria-hidden="true"></i>
-          <p>No articles found</p>
-        </div>
-      `;
-      return;
-    }
-    
-    // Render articles
-    articles.forEach(article => {
-      const articleCard = document.createElement('div');
-      articleCard.className = 'article-card';
-      articleCard.dataset.articleId = article.id;
-      articleCard.setAttribute('role', 'button');
-      articleCard.tabIndex = 0;
-      articleCard.innerHTML = `
-        <h3>${article.title}</h3>
-        <div class="article-meta">
-          <span>${this.getCategoryName(article.category)}</span>
-          <span> • ${Utils.formatDate(article.date)}</span>
-        </div>
-      `;
-      container.appendChild(articleCard);
-    });
-  },
-  
-  /**
-   * Render detailed article view
-   * @param {string} articleId - Article ID to display
-   */
-  renderArticleDetail(articleId) {
-    const article = helpCenterData.articles.find(a => a.id === articleId);
-    if (!article) return;
-    
-    const articlesEl = document.getElementById('helpArticles');
-    const categoriesEl = document.getElementById('helpCategories');
-    const detailEl = document.getElementById('articleDetail');
-    
-    if (articlesEl && categoriesEl && detailEl) {
-      articlesEl.style.display = 'none';
-      categoriesEl.style.display = 'none';
-      detailEl.style.display = 'block';
-      
-      document.getElementById('articleTitle').textContent = article.title;
-      document.getElementById('articleCategory').textContent = this.getCategoryName(article.category);
-      document.getElementById('articleDate').textContent = Utils.formatDate(article.date);
-      document.getElementById('articleContent').innerHTML = article.content;
-    }
-  },
-  
-  /**
-   * Get category name by ID
-   * @param {string} categoryId - Category ID
-   * @returns {string} Category name
-   */
-  getCategoryName(categoryId) {
-    const category = helpCenterData.categories.find(c => c.id === categoryId);
-    return category ? category.title : '';
-  }
-};
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'remove-image';
+        removeBtn.innerHTML = '&times;';
+        removeBtn.setAttribute('aria-label', 'Remove image');
+        
+        removeBtn.style.cssText = `
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          background: var(--accent);
+          color: white;
+          border: none;
+          border-radius: 50%;
+          width: 20px;
+          height: 20px;
+          cursor: pointer;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 12px;
+        `;
+        
+        removeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          preview.src = '';
+          preview.style.display = 'none';
+          text.style.display = 'flex';
+          input.value = '';
+          removeBtn.remove();
+        });
+        
+        container.appendChild(removeBtn);
+      }
+    };
 
-/**
- * Main Application Initialization
- */
-document.addEventListener('DOMContentLoaded', function() {
-  // Initialize all managers
-  ModalManager.init();
-  ImageUploader.init();
-  
-  // Initialize feature-specific managers if their elements exist
-  if (document.getElementById('marketplaceListings')) {
-    MarketplaceManager.init();
-  }
-  
-  if (document.getElementById('forumPostsContainer')) {
-    ForumManager.init();
-  }
-  
-  if (document.getElementById('userAvatar')) {
-    ProfileManager.init();
-  }
-  
-  if (document.getElementById('chatMessages')) {
-    ChatManager.init();
-  }
-  
-  if (document.getElementById('helpCategories')) {
-    HelpCenterManager.init();
-  }
-  
-  // Auth state change handler
-  auth.onAuthStateChanged(async (user) => {
-    try {
-      if (user) {
-        // Verify email if needed
-        if (!user.emailVerified && user.email) {
-          await sendEmailVerification(user);
+    /**
+     * Form Validator
+     */
+    const FormValidator = {
+      validate(formId) {
+        const form = document.getElementById(formId);
+        if (!form) return false;
+        
+        const inputs = form.querySelectorAll('[required]');
+        let isValid = true;
+        
+        inputs.forEach(input => {
+          if (!input.value.trim()) {
+            this.showError(input, 'This field is required');
+            isValid = false;
+          } else {
+            this.clearError(input);
+            
+            if (input.type === 'email' && !this.validateEmail(input.value)) {
+              this.showError(input, 'Please enter a valid email');
+              isValid = false;
+            }
+            
+            if (input.type === 'password' && input.value.length < 6) {
+              this.showError(input, 'Password must be at least 6 characters');
+              isValid = false;
+            }
+          }
+        });
+        
+        return isValid;
+      },
+      
+      validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+      },
+      
+      showError(input, message) {
+        input.style.borderColor = 'var(--accent)';
+        
+        if (!input.nextElementSibling || !input.nextElementSibling.classList.contains('error-message')) {
+          const error = document.createElement('div');
+          error.className = 'error-message';
+          error.textContent = message;
+          error.style.cssText = `
+            color: var(--accent);
+            font-size: 12px;
+            margin-top: 5px;
+          `;
+          input.after(error);
+        }
+      },
+      
+      clearError(input) {
+        input.style.borderColor = '';
+        if (input.nextElementSibling && input.nextElementSibling.classList.contains('error-message')) {
+          input.nextElementSibling.remove();
+        }
+      }
+    };
+
+    /**
+     * Marketplace Manager
+     */
+    const MarketplaceManager = {
+      lastVisibleDoc: null,
+      currentCategory: 'All Items',
+      isLoading: false,
+      
+      init() {
+        this.setupEventListeners();
+        this.loadListings();
+      },
+      
+      setupEventListeners() {
+        document.querySelectorAll(".category-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            document.querySelectorAll(".category-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            this.currentCategory = btn.dataset.category;
+            this.loadListings();
+          });
+        });
+        
+        const tradeOrSell = document.getElementById("tradeOrSell");
+        if (tradeOrSell) {
+          tradeOrSell.addEventListener("change", () => {
+            const priceInput = document.getElementById("priceInput");
+            if (priceInput) {
+              priceInput.style.display = tradeOrSell.checked ? "block" : "none";
+              document.getElementById("itemPrice").required = tradeOrSell.checked;
+            }
+          });
         }
         
-        // Load user data with timeout
-        const userData = await Promise.race([
-          DatabaseService.getUserData(user.uid),
-          new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Timeout loading user data')), 5000)
-          )
-        ]);
+        this.initInfiniteScroll();
+      },
+      
+      initInfiniteScroll() {
+        const observer = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting && this.lastVisibleDoc && !this.isLoading) {
+            this.loadMoreListings();
+          }
+        }, { threshold: 0.1 });
         
-        if (!userData) {
-          ModalManager.open('signupModal');
+        const sentinel = document.createElement('div');
+        sentinel.id = 'scrollSentinel';
+        document.getElementById('marketplaceListings').appendChild(sentinel);
+        observer.observe(sentinel);
+      },
+      
+      async loadListings(loadMore = false) {
+        if (this.isLoading) return;
+        
+        this.isLoading = true;
+        const listingsContainer = document.getElementById("marketplaceListings");
+        
+        try {
+          if (!loadMore) {
+            this.lastVisibleDoc = null;
+            listingsContainer.innerHTML = `
+              <div class="loading-spinner" aria-live="polite">
+                <i class="fas fa-spinner fa-spin" aria-hidden="true"></i> 
+                Loading listings...
+              </div>
+            `;
+          }
+          
+          const { items, lastDoc } = await DatabaseService.getMarketplaceItems(
+            { category: this.currentCategory },
+            this.lastVisibleDoc
+          );
+          
+          this.lastVisibleDoc = lastDoc;
+          
+          if (items.length === 0 && !loadMore) {
+            listingsContainer.innerHTML = `
+              <div class="no-listings" aria-live="polite">
+                <i class="fas fa-box-open" aria-hidden="true"></i>
+                <p>No listings found in this category</p>
+              </div>
+            `;
+            return;
+          }
+          
+          this.renderListings(items, loadMore);
+          this.updateLoadMoreButton(!!lastDoc);
+          
+        } catch (error) {
+          console.error("Error loading listings:", error);
+          Toast.show("Failed to load listings", "error");
+        } finally {
+          this.isLoading = false;
+        }
+      },
+      
+      async loadMoreListings() {
+        await this.loadListings(true);
+      },
+      
+      renderListings(items, append = false) {
+        const listingsContainer = document.getElementById("marketplaceListings");
+        
+        if (!append) {
+          listingsContainer.innerHTML = '';
+        }
+        
+        items.forEach(item => {
+          const listing = document.createElement("div");
+          listing.className = "product-card";
+          listing.dataset.id = item.id;
+          listing.setAttribute('role', 'article');
+          
+          listing.innerHTML = `
+            <span class="product-badge ${item.isSelling ? '' : 'trade'}" aria-label="${item.isSelling ? 'For Sale' : 'For Trade'}">
+              ${item.isSelling ? 'For Sale' : 'For Trade'}
+            </span>
+            <img src="${item.images[0] || 'https://placehold.co/250'}" 
+                 alt="${Utils.escapeHtml(item.title)}" 
+                 loading="lazy"
+                 onerror="this.src='https://placehold.co/250'">
+            <div class="product-info">
+              <h3>${Utils.escapeHtml(item.title)}</h3>
+              <div class="price">${item.isSelling ? `₱${item.price.toFixed(2)}` : 'Trade Only'}</div>
+              <div class="location">
+                <i class="fas fa-map-marker-alt" aria-hidden="true"></i> Bulihan, Silang, Cavite
+              </div>
+              <div class="product-meta">
+                <span>${Utils.formatDate(item.createdAt)}</span>
+                <span><i class="fas fa-eye" aria-hidden="true"></i> ${item.views || 0}</span>
+              </div>
+            </div>
+          `;
+          
+          listing.addEventListener('click', () => {
+            this.viewListingDetails(item);
+          });
+          
+          listing.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              this.viewListingDetails(item);
+            }
+          });
+          
+          listing.tabIndex = 0;
+          listingsContainer.appendChild(listing);
+        });
+      },
+      
+      updateLoadMoreButton(hasMore) {
+        let btn = document.getElementById('loadMoreBtn');
+        
+        if (hasMore && !btn) {
+          btn = document.createElement('button');
+          btn.id = 'loadMoreBtn';
+          btn.className = 'load-more-btn';
+          btn.textContent = 'Load More';
+          btn.addEventListener('click', () => this.loadMoreListings());
+          document.getElementById("marketplaceContainer").appendChild(btn);
+        } else if (!hasMore && btn) {
+          btn.remove();
+        }
+      },
+      
+      viewListingDetails(item) {
+        console.log('Viewing listing:', item);
+      }
+    };
+
+    /**
+     * Forum Manager
+     */
+    const ForumManager = {
+      init() {
+        this.setupEventListeners();
+        this.loadPosts();
+      },
+      
+      setupEventListeners() {
+        const filterElement = document.getElementById('postTypeFilter');
+        if (filterElement) {
+          filterElement.addEventListener('change', () => this.loadPosts());
+        }
+        
+        const postType = document.getElementById("postType");
+        if (postType) {
+          postType.addEventListener("change", () => {
+            const paymentField = document.getElementById('paymentMethodField');
+            const gcashField = document.getElementById('gcashField');
+            
+            if (paymentField && gcashField) {
+              paymentField.style.display = (postType.value === 'scam' || postType.value === 'review') ? 'block' : 'none';
+              gcashField.style.display = 'none';
+            }
+          });
+        }
+        
+        const paymentMethod = document.getElementById("paymentMethod");
+        if (paymentMethod) {
+          paymentMethod.addEventListener("change", () => {
+            const gcashField = document.getElementById('gcashField');
+            if (gcashField) {
+              gcashField.style.display = paymentMethod.value === 'gcash' ? 'block' : 'none';
+            }
+          });
+        }
+      },
+      
+      async loadPosts() {
+        const postsContainer = document.getElementById('forumPostsContainer');
+        if (!postsContainer) return;
+        
+        try {
+          postsContainer.innerHTML = `
+            <div class="loading-spinner" aria-live="polite">
+              <i class="fas fa-spinner fa-spin" aria-hidden="true"></i> 
+              Loading posts...
+            </div>
+          `;
+          
+          const filterElement = document.getElementById('postTypeFilter');
+          const filter = filterElement ? filterElement.value : 'all';
+          
+          const posts = await Promise.race([
+            DatabaseService.getForumPosts({ type: filter === 'all' ? null : filter }),
+            new Promise((_, reject) => 
+              setTimeout(() => reject(new Error('Request timeout')), 10000)
+            )
+          ]);
+          
+          if (!posts || posts.length === 0) {
+            postsContainer.innerHTML = `
+              <div class="no-posts" aria-live="polite">
+                <i class="fas fa-comment-slash" aria-hidden="true"></i>
+                <p>No posts found</p>
+              </div>
+            `;
+            return;
+          }
+          
+          postsContainer.innerHTML = '';
+          
+          posts.forEach(post => {
+            if (!post.id || !post.type || !post.title || !post.content) {
+              console.warn('Invalid post data:', post);
+              return;
+            }
+            
+            const postElement = document.createElement('div');
+            postElement.className = 'forum-post';
+            postElement.dataset.id = post.id;
+            postElement.setAttribute('role', 'article');
+            
+            const typeEmoji = {
+              review: '✅',
+              scam: '⚠️',
+              question: '💬',
+              buy: '🔎'
+            }[post.type] || '';
+            
+            postElement.innerHTML = `
+              <div class="post-header">
+                <span class="post-type">${typeEmoji} ${post.type.toUpperCase()}</span>
+                <span class="post-date">${Utils.formatDate(post.createdAt)}</span>
+              </div>
+              <h3 class="post-title">${Utils.escapeHtml(post.title)}</h3>
+              <p class="post-content">${Utils.escapeHtml(post.content)}</p>
+              
+              ${post.location ? `
+                <div class="post-meta">
+                  <i class="fas fa-map-marker-alt" aria-hidden="true"></i> 
+                  ${Utils.escapeHtml(post.location)}
+                </div>
+              ` : ''}
+              
+              ${post.imageUrl ? `
+                <img src="${Utils.escapeHtml(post.imageUrl)}" 
+                     class="post-image" 
+                     alt="Post image" 
+                     loading="lazy"
+                     onerror="this.style.display='none'">
+              ` : ''}
+              
+              <div class="post-actions">
+                <button class="comment-btn" aria-label="Comment">
+                  <i class="far fa-comment" aria-hidden="true"></i> 
+                  Comment (${post.comments || 0})
+                </button>
+                <button class="like-btn" aria-label="Like">
+                  <i class="far fa-heart" aria-hidden="true"></i> 
+                  Like (${post.likes || 0})
+                </button>
+              </div>
+            `;
+            
+            postElement.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.viewPostDetails(post);
+              }
+            });
+            
+            postElement.tabIndex = 0;
+            postsContainer.appendChild(postElement);
+          });
+          
+        } catch (error) {
+          console.error('Error loading forum posts:', error);
+          postsContainer.innerHTML = `
+            <div class="error-state" aria-live="polite">
+              <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+              <p>Failed to load posts. Please try again.</p>
+              <button onclick="ForumManager.loadPosts()">Retry</button>
+            </div>
+          `;
+        }
+      },
+      
+      viewPostDetails(post) {
+        console.log('Viewing post:', post);
+      }
+    };
+
+    /**
+     * User Profile Manager
+     */
+    const ProfileManager = {
+      init() {
+        this.setupEventListeners();
+        this.loadProfile();
+      },
+      
+      setupEventListeners() {
+        const profileUpload = document.getElementById('profile-upload');
+        if (profileUpload) {
+          profileUpload.addEventListener('change', (e) => {
+            const previewImg = document.getElementById('preview-img');
+            const userAvatar = document.getElementById('userAvatar');
+            if (previewImg && userAvatar) {
+              const reader = new FileReader();
+              reader.onload = function() {
+                previewImg.src = reader.result;
+                userAvatar.src = reader.result;
+              };
+              reader.readAsDataURL(e.target.files[0]);
+            }
+          });
+        }
+        
+        const saveBtn = document.querySelector('.save-btn');
+        if (saveBtn) {
+          saveBtn.addEventListener('click', () => this.saveProfile());
+        }
+        
+        const deleteBtn = document.querySelector('.delete-btn');
+        if (deleteBtn) {
+          deleteBtn.addEventListener('click', () => this.confirmDelete());
+        }
+      },
+      
+      async loadProfile() {
+        const user = auth.currentUser;
+        if (!user) return;
+        
+        try {
+          const userData = await DatabaseService.getUserData(user.uid);
+          if (!userData) return;
+          
+          const elements = {
+            userName: userData.username || "User",
+            userEmail: user.email || "No email",
+            userZone: userData.zone || "No zone",
+            userAvatar: userData.photoURL || "https://placehold.co/40",
+            nicknameInput: userData.username || '',
+            zoneSelect: userData.zone || '',
+            contactInput: userData.contact || '',
+            gcashInput: userData.gcash || '',
+            previewImg: userData.photoURL || "https://placehold.co/120"
+          };
+          
+          Object.entries(elements).forEach(([id, value]) => {
+            const element = document.getElementById(id);
+            if (element) {
+              if (id.endsWith('Avatar') || id.endsWith('Img')) {
+                element.src = value;
+              } else {
+                element.textContent = value;
+                element.value = value;
+              }
+            }
+          });
+          
+          if (userData.isNewUser) {
+            setTimeout(() => ModalManager.open('welcomeModal'), 1000);
+          }
+          
+        } catch (error) {
+          console.error("Error loading profile:", error);
+          Toast.show("Error loading profile data", "error");
+        }
+      },
+      
+      async saveProfile() {
+        const user = auth.currentUser;
+        if (!user) return;
+        
+        const nickname = document.getElementById('nickname').value;
+        const zone = document.getElementById('zone').value;
+        const contact = document.getElementById('contact').value;
+        const gcash = document.getElementById('gcash').value;
+        const profilePic = document.getElementById('profile-upload').files[0];
+        const saveBtn = document.querySelector('.save-btn');
+        
+        if (!saveBtn) return;
+        
+        try {
+          saveBtn.disabled = true;
+          saveBtn.classList.add('loading');
+          saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+          
+          const updates = {
+            username: nickname,
+            zone: zone,
+            contact: contact,
+            gcash: gcash
+          };
+          
+          if (profilePic) {
+            const url = await DatabaseService.uploadImage(profilePic, `profilePictures/${user.uid}`);
+            updates.photoURL = url;
+          }
+          
+          await DatabaseService.updateUserData(user.uid, updates);
+          
+          const userName = document.getElementById('userName');
+          const userZone = document.getElementById('userZone');
+          const userAvatar = document.getElementById('userAvatar');
+          
+          if (userName) userName.textContent = nickname;
+          if (userZone) userZone.textContent = zone;
+          if (userAvatar && updates.photoURL) {
+            userAvatar.src = updates.photoURL;
+          }
+          
+          Toast.show('Profile updated successfully!');
+          ModalManager.close('settingsModal');
+          
+        } catch (error) {
+          console.error('Error updating profile:', error);
+          Toast.show('Failed to update profile. Please try again.', 'error');
+        } finally {
+          saveBtn.disabled = false;
+          saveBtn.classList.remove('loading');
+          saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+        }
+      },
+      
+      confirmDelete() {
+        if (confirm("Are you sure you want to DELETE your account? This action cannot be undone.")) {
+          this.deleteAccount();
+        }
+      },
+      
+      async deleteAccount() {
+        const user = auth.currentUser;
+        if (!user) return;
+        
+        const deleteBtn = document.querySelector('.delete-btn');
+        if (!deleteBtn) return;
+        
+        try {
+          deleteBtn.disabled = true;
+          deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting...';
+          
+          await remove(ref(realtimeDb, `users/${user.uid}`));
+          await deleteUser(user);
+          
+          Toast.show("Account deleted successfully.");
+          window.location.href = "login.html";
+        } catch (error) {
+          console.error("Error deleting account:", error);
+          Toast.show("Failed to delete account. Please try again.", "error");
+          deleteBtn.disabled = false;
+          deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Delete Account';
+        }
+      }
+    };
+
+    /**
+     * Chat Manager
+     */
+    const ChatManager = {
+      lastMessageTime: 0,
+      MESSAGE_RATE_LIMIT: 1000, // 1 second
+      
+      init() {
+        this.setupEventListeners();
+      },
+      
+      setupEventListeners() {
+        const sendButton = document.getElementById("sendMessage");
+        if (sendButton) {
+          sendButton.addEventListener("click", () => this.sendMessage());
+        }
+        
+        const messageInput = document.getElementById("messageInput");
+        if (messageInput) {
+          messageInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+              this.sendMessage();
+            }
+          });
+        }
+      },
+      
+      sendMessage() {
+        const now = Date.now();
+        if (now - this.lastMessageTime < this.MESSAGE_RATE_LIMIT) {
+          Toast.show('Please wait before sending another message', 'warning');
+          return;
+        }
+        this.lastMessageTime = now;
+        
+        const messageInput = document.getElementById("messageInput");
+        const chatMessages = document.getElementById("chatMessages");
+        
+        if (!messageInput || !chatMessages) return;
+        
+        const messageText = messageInput.value.trim();
+        if (!messageText) {
+          Toast.show('Message cannot be empty', 'warning');
           return;
         }
         
-        // Update UI with user data
-        ProfileManager.loadProfile();
+        if (messageText.length > 500) {
+          Toast.show('Message is too long (max 500 characters)', 'warning');
+          return;
+        }
         
-      } else {
-        // Redirect to login if not authenticated
-        window.location.href = "login.html";
+        const messageElement = document.createElement("div");
+        messageElement.className = "message sent";
+        messageElement.setAttribute('role', 'log');
+        messageElement.setAttribute('aria-live', 'polite');
+        messageElement.innerHTML = `
+          <div class="message-content">
+            <p>${Utils.escapeHtml(messageText)}</p>
+            <span class="message-time">${Utils.getCurrentTime()}</span>
+          </div>
+        `;
+        
+        chatMessages.appendChild(messageElement);
+        messageInput.value = "";
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        
+        setTimeout(() => {
+          const replyElement = document.createElement("div");
+          replyElement.className = "message received";
+          replyElement.setAttribute('role', 'log');
+          replyElement.setAttribute('aria-live', 'polite');
+          replyElement.innerHTML = `
+            <div class="message-content">
+              <p>Thanks for your message! Our team will respond shortly.</p>
+              <span class="message-time">${Utils.getCurrentTime()}</span>
+            </div>
+          `;
+          chatMessages.appendChild(replyElement);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 1500);
       }
-    } catch (error) {
-      console.error("Auth state error:", error);
-      Toast.show("Error loading user data. Please refresh.", "error");
-    }
-  });
-  
-  // Enable offline persistence
-  async function enableOffline() {
-    try {
-      await enableIndexedDbPersistence(db);
-      console.log("Offline persistence enabled");
-    } catch (err) {
-      if (err.code == 'failed-precondition') {
-        console.warn("Offline persistence can only be enabled in one tab at a time.");
-      } else if (err.code == 'unimplemented') {
-        console.warn("Offline persistence is not supported in this browser.");
-      }
-    }
-  }
-  
-  enableOffline();
-  
-  // Browser compatibility check
-  function checkCompatibility() {
-    const requiredFeatures = {
-      'ES6 Promise': 'Promise' in window,
-      'Fetch API': 'fetch' in window,
-      'IntersectionObserver': 'IntersectionObserver' in window,
-      'Web Storage': 'localStorage' in window,
-      'Internationalization': 'Intl' in window
     };
-    
-    const missingFeatures = Object.entries(requiredFeatures)
-      .filter(([_, available]) => !available)
-      .map(([name]) => name);
-    
-    if (missingFeatures.length > 0) {
-      const warning = `Your browser is missing: ${missingFeatures.join(', ')}. 
-        Some features may not work properly. Consider updating your browser.`;
+
+    /**
+     * Help Center Manager
+     */
+    const HelpCenterManager = {
+      init() {
+        this.renderCategories();
+        this.setupEventListeners();
+      },
       
-      Toast.show(warning, 'warning', 10000);
-      console.warn('Missing browser features:', missingFeatures);
-    }
-  }
-  
-  checkCompatibility();
-});
+      renderCategories() {
+        const container = document.getElementById('helpCategories');
+        if (!container) return;
+        
+        container.innerHTML = '';
+        
+        helpCenterData.categories.forEach(category => {
+          const categoryCard = document.createElement('div');
+          categoryCard.className = 'category-card';
+          categoryCard.dataset.categoryId = category.id;
+          categoryCard.setAttribute('role', 'button');
+          categoryCard.tabIndex = 0;
+          categoryCard.innerHTML = `
+            <i class="${category.icon}" aria-hidden="true"></i>
+            <h3>${category.title}</h3>
+            <p>${category.description}</p>
+          `;
+          container.appendChild(categoryCard);
+        });
+      },
+      
+      setupEventListeners() {
+        document.addEventListener('click', (e) => {
+          const categoryCard = e.target.closest('.category-card');
+          if (categoryCard) {
+            const categoryId = categoryCard.dataset.categoryId;
+            this.renderArticles(categoryId);
+            document.getElementById('helpArticles').scrollIntoView({ behavior: 'smooth' });
+          }
+          
+          const articleCard = e.target.closest('.article-card');
+          if (articleCard) {
+            this.renderArticleDetail(articleCard.dataset.articleId);
+          }
+        });
+        
+        const backButton = document.getElementById('backToList');
+        if (backButton) {
+          backButton.addEventListener('click', () => {
+            document.getElementById('articleDetail').style.display = 'none';
+            document.getElementById('helpArticles').style.display = 'block';
+            document.getElementById('helpCategories').style.display = 'flex';
+          });
+        }
+        
+        const searchButton = document.getElementById('searchHelpBtn');
+        if (searchButton) {
+          searchButton.addEventListener('click', () => {
+            const searchTerm = document.getElementById('helpSearch').value;
+            this.renderArticles(null, searchTerm);
+          });
+        }
+        
+        const searchInput = document.getElementById('helpSearch');
+        if (searchInput) {
+          searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+              const searchTerm = document.getElementById('helpSearch').value;
+              this.renderArticles(null, searchTerm);
+            }
+          });
+        }
+        
+        document.querySelectorAll('.feedback-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const articleId = document.getElementById('articleDetail').dataset.articleId;
+            const isHelpful = btn.dataset.helpful === 'yes';
+            
+            Toast.show(`Thank you for your feedback! Article marked as ${isHelpful ? 'helpful' : 'not helpful'}`);
+          });
+        });
+      },
+      
+      renderArticles(categoryId = null, searchTerm = '') {
+        const container = document.getElementById('helpArticles');
+        if (!container) return;
+        
+        container.innerHTML = '';
+        
+        let articles = helpCenterData.articles;
+        if (categoryId) {
+          articles = articles.filter(article => article.category === categoryId);
+        }
+        
+        if (searchTerm) {
+          const term = searchTerm.toLowerCase();
+          articles = articles.filter(article => 
+            article.title.toLowerCase().includes(term) || 
+            article.content.toLowerCase().includes(term)
+          );
+        }
+        
+        if (articles.length === 0) {
+          container.innerHTML = `
+            <div class="no-articles" aria-live="polite">
+              <i class="fas fa-info-circle" aria-hidden="true"></i>
+              <p>No articles found</p>
+            </div>
+          `;
+          return;
+        }
+        
+        articles.forEach(article => {
+          const articleCard = document.createElement('div');
+          articleCard.className = 'article-card';
+          articleCard.dataset.articleId = article.id;
+          articleCard.setAttribute('role', 'button');
+          articleCard.tabIndex = 0;
+          articleCard.innerHTML = `
+            <h3>${article.title}</h3>
+            <div class="article-meta">
+              <span>${this.getCategoryName(article.category)}</span>
+              <span> • ${Utils.formatDate(article.date)}</span>
+            </div>
+          `;
+          container.appendChild(articleCard);
+        });
+      },
+      
+      renderArticleDetail(articleId) {
+        const article = helpCenterData.articles.find(a => a.id === articleId);
+        if (!article) return;
+        
+        const articlesEl = document.getElementById('helpArticles');
+        const categoriesEl = document.getElementById('helpCategories');
+        const detailEl = document.getElementById('articleDetail');
+        
+        if (articlesEl && categoriesEl && detailEl) {
+          articlesEl.style.display = 'none';
+          categoriesEl.style.display = 'none';
+          detailEl.style.display = 'block';
+          
+          document.getElementById('articleTitle').textContent = article.title;
+          document.getElementById('articleCategory').textContent = this.getCategoryName(article.category);
+          document.getElementById('articleDate').textContent = Utils.formatDate(article.date);
+          document.getElementById('articleContent').innerHTML = article.content;
+        }
+      },
+      
+      getCategoryName(categoryId) {
+        const category = helpCenterData.categories.find(c => c.id === categoryId);
+        return category ? category.title : '';
+      }
+    };
 
-// Help Center Data Structure
-const helpCenterData = {
-  categories: [
-    {
-      id: 'getting-started',
-      title: 'Getting Started',
-      icon: 'fas fa-book',
-      description: 'Learn how to begin using TradeConnect'
-    },
-    {
-      id: 'trading',
-      title: 'Trading Guide',
-      icon: 'fas fa-exchange-alt',
-      description: 'How to trade items in the marketplace'
-    },
-    {
-      id: 'buying-selling',
-      title: 'Buying & Selling',
-      icon: 'fas fa-money-bill-wave',
-      description: 'Guide to buying and selling items'
-    },
-    {
-      id: 'messages',
-      title: 'Messages',
-      icon: 'fas fa-comments',
-      description: 'How to use the messaging system'
-    },
-    {
-      id: 'community',
-      title: 'Community Forum',
-      icon: 'fas fa-users',
-      description: 'Using the community features'
-    },
-    {
-      id: 'account',
-      title: 'Account & Settings',
-      icon: 'fas fa-cog',
-      description: 'Manage your account settings'
-    }
-  ],
-  articles: [
-    {
-      id: 'what-is-tradeconnect',
-      category: 'getting-started',
-      title: 'What is TradeConnect?',
-      content: '<p>TradeConnect is a web app that allows users in Barangay Bulihan, Silang, Cavite (Zones 1-11) to trade, buy, and sell items safely and directly.</p>',
-      date: '2023-10-15',
-      helpful: 42,
-      notHelpful: 3
-    },
-    {
-      id: 'how-to-create-account',
-      category: 'getting-started',
-      title: 'How to create an account?',
-      content: '<p>Go to the registration page, fill in your details, and verify your number to get started.</p>',
-      date: '2023-10-15',
-      helpful: 38,
-      notHelpful: 2
-    },
-    {
-      id: 'how-to-trade',
-      category: 'trading',
-      title: 'How to trade?',
-      content: '<p>Click on a post with a "Trade" label. It will open a direct chat to negotiate the swap.</p>',
-      date: '2023-10-16',
-      helpful: 28,
-      notHelpful: 1
-    },
-    {
-      id: 'how-to-buy',
-      category: 'buying-selling',
-      title: 'How to buy items?',
-      content: '<p>Click "Buy" on a listing and proceed directly to payment (GCash or Cash method).</p>',
-      date: '2023-10-17',
-      helpful: 35,
-      notHelpful: 4
-    }
-  ]
-};
-
-// Signup form handler
-document.getElementById('signupForm')?.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  if (!FormValidator.validate('signupForm')) return;
-
-  const name = document.getElementById('signupName').value;
-  const email = document.getElementById('signupEmail').value;
-  const password = document.getElementById('signupPassword').value;
-  const zone = document.getElementById('signupZone').value;
-  const contact = document.getElementById('signupContact').value;
-  const photoFile = document.getElementById('signupPhoto').files[0];
-
-  try {
-    // 1. Create user in Firebase Auth
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const uid = userCredential.user.uid;
-
-    // 2. Upload profile photo (if any)
-    let photoURL = '';
-    if (photoFile) {
-      photoURL = await DatabaseService.uploadImage(photoFile, `profilePictures/${uid}`);
-    }
-
-    // 3. Save user data in Firestore
-    await setDoc(doc(db, 'users', uid), {
-      username: name,
-      email,
-      zone,
-      contact,
-      photoURL,
-      isNewUser: true
+    /**
+     * Main Application Initialization
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize all managers
+      ModalManager.init();
+      ImageUploader.init();
+      
+      // Initialize feature-specific managers if their elements exist
+      if (document.getElementById('marketplaceListings')) {
+        MarketplaceManager.init();
+      }
+      
+      if (document.getElementById('forumPostsContainer')) {
+        ForumManager.init();
+      }
+      
+      if (document.getElementById('userAvatar')) {
+        ProfileManager.init();
+      }
+      
+      if (document.getElementById('chatMessages')) {
+        ChatManager.init();
+      }
+      
+      if (document.getElementById('helpCategories')) {
+        HelpCenterManager.init();
+      }
+      
+      // Enable offline persistence
+      initializeOfflinePersistence();
+      
+      // Browser compatibility check
+      function checkCompatibility() {
+        const requiredFeatures = {
+          'ES6 Promise': 'Promise' in window,
+          'Fetch API': 'fetch' in window,
+          'IntersectionObserver': 'IntersectionObserver' in window,
+          'Web Storage': 'localStorage' in window,
+          'Internationalization': 'Intl' in window
+        };
+        
+        const missingFeatures = Object.entries(requiredFeatures)
+          .filter(([_, available]) => !available)
+          .map(([name]) => name);
+        
+        if (missingFeatures.length > 0) {
+          const warning = `Your browser is missing: ${missingFeatures.join(', ')}. 
+            Some features may not work properly. Consider updating your browser.`;
+          
+          Toast.show(warning, 'warning', 10000);
+          console.warn('Missing browser features:', missingFeatures);
+        }
+      }
+      
+      checkCompatibility();
     });
 
-    // 4. Redirect to dashboard
-    window.location.href = 'index.html';
+    // Help Center Data Structure
+    const helpCenterData = {
+      categories: [
+        {
+          id: 'getting-started',
+          title: 'Getting Started',
+          icon: 'fas fa-book',
+          description: 'Learn how to begin using TradeConnect'
+        },
+        {
+          id: 'trading',
+          title: 'Trading Guide',
+          icon: 'fas fa-exchange-alt',
+          description: 'How to trade items in the marketplace'
+        },
+        {
+          id: 'buying-selling',
+          title: 'Buying & Selling',
+          icon: 'fas fa-money-bill-wave',
+          description: 'Guide to buying and selling items'
+        },
+        {
+          id: 'messages',
+          title: 'Messages',
+          icon: 'fas fa-comments',
+          description: 'How to use the messaging system'
+        },
+        {
+          id: 'community',
+          title: 'Community Forum',
+          icon: 'fas fa-users',
+          description: 'Using the community features'
+        },
+        {
+          id: 'account',
+          title: 'Account & Settings',
+          icon: 'fas fa-cog',
+          description: 'Manage your account settings'
+        }
+      ],
+      articles: [
+        {
+          id: 'what-is-tradeconnect',
+          category: 'getting-started',
+          title: 'What is TradeConnect?',
+          content: '<p>TradeConnect is a web app that allows users in Barangay Bulihan, Silang, Cavite (Zones 1-11) to trade, buy, and sell items safely and directly.</p>',
+          date: '2023-10-15',
+          helpful: 42,
+          notHelpful: 3
+        },
+        {
+          id: 'how-to-create-account',
+          category: 'getting-started',
+          title: 'How to create an account?',
+          content: '<p>Go to the registration page, fill in your details, and verify your number to get started.</p>',
+          date: '2023-10-15',
+          helpful: 38,
+          notHelpful: 2
+        },
+        {
+          id: 'how-to-trade',
+          category: 'trading',
+          title: 'How to trade?',
+          content: '<p>Click on a post with a "Trade" label. It will open a direct chat to negotiate the swap.</p>',
+          date: '2023-10-16',
+          helpful: 28,
+          notHelpful: 1
+        },
+        {
+          id: 'how-to-buy',
+          category: 'buying-selling',
+          title: 'How to buy items?',
+          content: '<p>Click "Buy" on a listing and proceed directly to payment (GCash or Cash method).</p>',
+          date: '2023-10-17',
+          helpful: 35,
+          notHelpful: 4
+        }
+      ]
+    };
 
-  } catch (error) {
-    console.error('Signup failed:', error);
-    Toast.show(`Signup failed: ${error.message}`, 'error');
-  }
-});
+    // Signup form handler
+    document.getElementById('signupForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-// Global logout function
-window.logout = async function() {
-  try {
-    await signOut(auth);
-    window.location.href = "login.html";
-  } catch (error) {
-    console.error("Logout failed:", error);
-    Toast.show("Failed to logout. Please try again.", "error");
-  }
-};
-</script>
+      if (!FormValidator.validate('signupForm')) return;
+
+      const name = document.getElementById('signupName').value;
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+      const zone = document.getElementById('signupZone').value;
+      const contact = document.getElementById('signupContact').value;
+      const photoFile = document.getElementById('signupPhoto').files[0];
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const uid = userCredential.user.uid;
+
+        let photoURL = '';
+        if (photoFile) {
+          photoURL = await DatabaseService.uploadImage(photoFile, `profilePictures/${uid}`);
+        }
+
+        await setDoc(doc(db, 'users', uid), {
+          username: name,
+          email,
+          zone,
+          contact,
+          photoURL,
+          isNewUser: true
+        });
+
+        window.location.href = 'index.html';
+
+      } catch (error) {
+        console.error('Signup failed:', error);
+        Toast.show(`Signup failed: ${error.message}`, 'error');
+      }
+    });
+
+    // Global logout function
+    window.logout = async function() {
+      try {
+        await signOut(auth);
+        window.location.href = "login.html";
+      } catch (error) {
+        console.error("Logout failed:", error);
+        Toast.show("Failed to logout. Please try again.", "error");
+      }
+    };
+  </script>
 </body>
 </html>
