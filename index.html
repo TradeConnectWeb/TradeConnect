@@ -2354,8 +2354,8 @@
   // Initialize and expose modal functions
   ModalManager.init();
   window.ModalManager = ModalManager;
-  window.closeModal = ModalManager.close.bind(ModalManager); // For legacy support
-  window.openModal = ModalManager.open.bind(ModalManager); // For legacy support
+  window.closeModal = ModalManager.close.bind(ModalManager);
+  window.openModal = ModalManager.open.bind(ModalManager);
 
   /**
    * Toast Notification System
@@ -2654,12 +2654,13 @@
   });
 
   /**
-   * Marketplace Manager with proper error handling
+   * Marketplace Manager with proper error handling and infinite scroll
    */
   const MarketplaceManager = {
     lastVisibleDoc: null,
     currentCategory: 'All Items',
     isLoading: false,
+    hasMoreItems: true,
     
     init() {
       this.setupEventListeners();
@@ -2687,7 +2688,17 @@
         });
       }
       
-      this.initInfiniteScroll();
+      // Initialize infinite scroll
+      window.addEventListener('scroll', Utils.debounce(() => {
+        if (this.isLoading || !this.hasMoreItems) return;
+        
+        const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+        const isNearBottom = scrollTop + clientHeight >= scrollHeight - 100;
+        
+        if (isNearBottom) {
+          this.loadListings(true);
+        }
+      }, 200));
     },
     
     async loadListings(loadMore = false) {
@@ -2699,12 +2710,19 @@
       try {
         if (!loadMore) {
           this.lastVisibleDoc = null;
+          this.hasMoreItems = true;
           listingsContainer.innerHTML = `
             <div class="loading-spinner" aria-live="polite">
               <i class="fas fa-spinner fa-spin" aria-hidden="true"></i> 
               Loading listings...
             </div>
           `;
+        } else {
+          // Show loading indicator at bottom when loading more
+          const loadingIndicator = document.createElement('div');
+          loadingIndicator.className = 'loading-spinner';
+          loadingIndicator.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Loading more...';
+          listingsContainer.appendChild(loadingIndicator);
         }
         
         const { items, lastDoc } = await DatabaseService.getMarketplaceItems(
@@ -2713,6 +2731,7 @@
         );
         
         this.lastVisibleDoc = lastDoc;
+        this.hasMoreItems = items.length > 0;
         
         if (items.length === 0 && !loadMore) {
           listingsContainer.innerHTML = `
@@ -2725,19 +2744,23 @@
         }
         
         this.renderListings(items, loadMore);
-        this.updateLoadMoreButton(!!lastDoc);
         
       } catch (error) {
         console.error("Error loading listings:", error);
         Toast.show("Failed to load listings", "error");
-        listingsContainer.innerHTML = `
-          <div class="error-state" aria-live="polite">
-            <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
-            <p>Failed to load listings. Please try again.</p>
-            <button onclick="MarketplaceManager.loadListings()">Retry</button>
-          </div>
-        `;
+        
+        if (!loadMore) {
+          listingsContainer.innerHTML = `
+            <div class="error-state" aria-live="polite">
+              <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+              <p>Failed to load listings. Please try again.</p>
+              <button onclick="MarketplaceManager.loadListings()">Retry</button>
+            </div>
+          `;
+        }
       } finally {
+        // Remove any loading indicators
+        document.querySelectorAll('.loading-spinner').forEach(el => el.remove());
         this.isLoading = false;
       }
     },
@@ -2754,6 +2777,7 @@
         listing.className = "product-card";
         listing.dataset.id = item.id;
         listing.setAttribute('role', 'article');
+        listing.tabIndex = 0;
         
         listing.innerHTML = `
           <span class="product-badge ${item.isSelling ? '' : 'trade'}" aria-label="${item.isSelling ? 'For Sale' : 'For Trade'}">
@@ -2787,7 +2811,6 @@
           }
         });
         
-        listing.tabIndex = 0;
         listingsContainer.appendChild(listing);
       });
     },
@@ -2890,6 +2913,9 @@
       Toast.show("Failed to logout. Please try again.", "error");
     }
   };
+
+  // Expose MarketplaceManager to window for debugging
+  window.MarketplaceManager = MarketplaceManager;
 </script>
 </body>
 </html>
