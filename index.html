@@ -2244,38 +2244,32 @@
     getAuth, 
     onAuthStateChanged, 
     signOut,
-    updateEmail,
-    deleteUser,
-    sendEmailVerification, 
-    sendPasswordResetEmail 
+    sendEmailVerification
   } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
   import { 
     getDatabase, 
     ref, 
     get,
-    update,
-    remove,
     set
   } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
   import { 
-    orderBy, limit, startAfter,
-    updateDoc, doc, setDoc,
-    getFirestore, 
-    collection, 
-    addDoc, 
-    serverTimestamp, 
-    getDocs,
+    getFirestore,
+    collection,
     query,
-    where
+    orderBy,
+    limit,
+    startAfter,
+    where,
+    getDocs,
+    serverTimestamp,
+    enableIndexedDbPersistence
   } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
   import { 
-    getStorage, 
-    ref as storageRef, 
-    uploadBytes, 
-    getDownloadURL 
+    getStorage,
+    ref as storageRef,
+    uploadBytes,
+    getDownloadURL
   } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
-  import { enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-  import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
   /**
    * Firebase Configuration
@@ -2434,11 +2428,6 @@
         .replace(/'/g, "&#039;");
     },
     
-    getCurrentTime() {
-      const now = new Date();
-      return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    },
-    
     debounce(func, delay) {
       let timeout;
       return (...args) => {
@@ -2478,7 +2467,10 @@
    * Enhanced Database Service with proper error handling
    */
   const DatabaseService = {
-    async getUserData(uid) {
+    async getUserData(uid, retryCount = 0) {
+      const MAX_RETRIES = 3;
+      const RETRY_DELAY = 1000;
+      
       try {
         const snapshot = await get(ref(realtimeDb, `users/${uid}`));
         if (!snapshot.exists()) {
@@ -2499,6 +2491,11 @@
       } catch (error) {
         console.error("Error getting user data:", error);
         if (error.code === 'PERMISSION_DENIED') {
+          if (retryCount < MAX_RETRIES) {
+            console.log(`Retrying user data fetch (attempt ${retryCount + 1})`);
+            await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * (retryCount + 1)));
+            return this.getUserData(uid, retryCount + 1);
+          }
           Toast.show("Please sign in to access your data", "error");
           await signOut(auth);
           window.location.href = "login.html";
@@ -2507,24 +2504,6 @@
       }
     },
     
-    async updateUserData(uid, data) {
-      try {
-        await update(ref(realtimeDb, `users/${uid}`), {
-          ...data,
-          lastUpdated: serverTimestamp()
-        });
-        return true;
-      } catch (error) {
-        console.error("Error updating user data:", error);
-        if (error.code === 'PERMISSION_DENIED') {
-          Toast.show("You don't have permission to update this data", "error");
-          await signOut(auth);
-          window.location.href = "login.html";
-        }
-        throw error;
-      }
-    },
-
     async getMarketplaceItems(filters = {}, lastDoc = null, limit = 10) {
       try {
         let q = query(
@@ -2572,20 +2551,6 @@
         throw new Error("Failed to load marketplace items. Please try again later.");
       }
     },
-
-    async createMarketplaceItem(itemData) {
-      try {
-        const docRef = await addDoc(collection(db, "marketplaceItems"), {
-          ...itemData,
-          createdAt: serverTimestamp(),
-          views: 0
-        });
-        return docRef.id;
-      } catch (error) {
-        console.error("Error creating marketplace item:", error);
-        throw error;
-      }
-    },
     
     async uploadImage(file, path, compress = true) {
       try {
@@ -2603,55 +2568,69 @@
   /**
    * Robust Auth State Handler with proper permission handling
    */
-  const MAX_RETRIES = 3;
-  const RETRY_DELAY = 1000; // 1 second
-
-  onAuthStateChanged(auth, async (user) => {
-    const authStateHandler = async (retryCount = 0) => {
-      try {
-        if (user) {
-          // Verify email if needed
-          if (!user.emailVerified && user.email) {
-            await sendEmailVerification(user);
-            Toast.show("Verification email sent. Please verify your email.", "info");
-          }
-
+  const AuthManager = {
+    MAX_RETRIES: 3,
+    RETRY_DELAY: 1000,
+    
+    async initialize() {
+      return new Promise((resolve, reject) => {
+        onAuthStateChanged(auth, async (user) => {
           try {
-            const userData = await DatabaseService.getUserData(user.uid);
-            
-            if (!userData) {
-              ModalManager.open('signupModal');
-              return;
-            }
-
-            // Load profile if on a page that needs it
-            if (typeof ProfileManager.loadProfile === 'function') {
-              ProfileManager.loadProfile();
-            }
+            await this.handleAuthState(user);
+            resolve();
           } catch (error) {
-            if (error.code === 'PERMISSION_DENIED') {
-              await signOut(auth);
-              window.location.href = "login.html";
-              return;
-            }
-            throw error;
+            reject(error);
           }
-        } else {
+        }, (error) => {
+          console.error("Auth state observer error:", error);
+          reject(error);
+        });
+      });
+    },
+    
+    async handleAuthState(user, retryCount = 0) {
+      try {
+        if (!user) {
           window.location.href = "login.html";
+          return;
+        }
+
+        // Verify email if needed
+        if (!user.emailVerified) {
+          await sendEmailVerification(user);
+          Toast.show("Verification email sent. Please verify your email.", "info");
+        }
+
+        // Get user data with proper error handling
+        const userData = await DatabaseService.getUserData(user.uid);
+        
+        if (userData?.isNewUser) {
+          setTimeout(() => ModalManager.open('welcomeModal'), 1000);
+        }
+
+        // Load profile if on a page that needs it
+        if (typeof ProfileManager.loadProfile === 'function') {
+          await ProfileManager.loadProfile();
         }
       } catch (error) {
-        if (retryCount < MAX_RETRIES) {
-          console.log(`Retrying auth state (attempt ${retryCount + 1})`);
-          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * (retryCount + 1)));
-          return authStateHandler(retryCount + 1);
-        }
         console.error("Auth state error:", error);
-        Toast.show("Error loading user data. Please refresh.", "error");
+        
+        if (error.code === 'PERMISSION_DENIED') {
+          if (retryCount < this.MAX_RETRIES) {
+            console.log(`Retrying auth state (attempt ${retryCount + 1})`);
+            await new Promise(resolve => setTimeout(resolve, this.RETRY_DELAY * (retryCount + 1)));
+            return this.handleAuthState(user, retryCount + 1);
+          }
+          
+          Toast.show("Session expired. Please login again.", "error");
+          await signOut(auth);
+          window.location.href = "login.html";
+        } else {
+          throw error;
+        }
       }
-    };
-
-    await authStateHandler();
-  });
+    }
+  };
 
   /**
    * Marketplace Manager with proper error handling and infinite scroll
@@ -2871,36 +2850,37 @@
   /**
    * Initialize the application
    */
-  document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all managers
-    ModalManager.init();
-    
-    // Initialize feature-specific managers if their elements exist
-    if (document.getElementById('marketplaceListings')) {
-      MarketplaceManager.init();
-    }
-    
-    if (document.getElementById('userAvatar')) {
-      ProfileManager.loadProfile();
-    }
-    
-    // Enable offline persistence
-    (async function() {
+  document.addEventListener('DOMContentLoaded', async function() {
+    try {
+      // Initialize auth first
+      await AuthManager.initialize();
+      
+      // Then initialize other managers
+      ModalManager.init();
+      
+      if (document.getElementById('marketplaceListings')) {
+        MarketplaceManager.init();
+      }
+      
+      if (document.getElementById('userAvatar')) {
+        ProfileManager.loadProfile();
+      }
+      
+      // Enable offline persistence
       try {
-        await enableIndexedDbPersistence(db, {
-          forceOwnership: true
-        });
+        await enableIndexedDbPersistence(db, { forceOwnership: true });
         console.log("Offline persistence enabled");
       } catch (err) {
         if (err.code === 'failed-precondition') {
           console.warn("Offline persistence already enabled in another tab");
         } else if (err.code === 'unimplemented') {
           console.warn("Offline persistence not supported in this browser");
-        } else {
-          console.error("Offline persistence error:", err);
         }
       }
-    })();
+    } catch (error) {
+      console.error("Initialization error:", error);
+      Toast.show("Failed to initialize app. Please refresh.", "error");
+    }
   });
 
   // Global logout function
@@ -2914,8 +2894,9 @@
     }
   };
 
-  // Expose MarketplaceManager to window for debugging
+  // Expose managers to window for debugging
   window.MarketplaceManager = MarketplaceManager;
+  window.AuthManager = AuthManager;
 </script>
 </body>
 </html>
