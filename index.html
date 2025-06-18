@@ -2234,7 +2234,7 @@
     </div>
   </div>
   
- <script src="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/js/shepherd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/js/shepherd.min.js"></script>
 <script type="module">
   // Firebase imports
   import { 
@@ -2480,6 +2480,13 @@
         return snapshot.val();
       } catch (error) {
         console.error("Error getting user data:", error);
+        if (error.code === 'PERMISSION_DENIED') {
+          Toast.show("Please sign in to access your data", "error");
+          await signOut(auth);
+          window.location.href = "login.html";
+          return null;
+        }
+        
         if (retryCount < MAX_RETRIES) {
           console.log(`Retrying user data fetch (attempt ${retryCount + 1})`);
           await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * (retryCount + 1)));
@@ -2589,6 +2596,11 @@
         // Get user data with proper error handling
         const userData = await DatabaseService.getUserData(user.uid);
         
+        if (!userData) {
+          // User data couldn't be retrieved, likely due to permission issues
+          return;
+        }
+
         if (userData?.isNewUser) {
           setTimeout(() => ModalManager.open('welcomeModal'), 1000);
         }
@@ -2603,15 +2615,20 @@
       } catch (error) {
         console.error("Auth state error:", error);
         
+        if (error.code === 'PERMISSION_DENIED') {
+          Toast.show("Session expired. Please login again.", "error");
+          await signOut(auth);
+          window.location.href = "login.html";
+          return;
+        }
+        
         if (retryCount < this.MAX_RETRIES) {
           console.log(`Retrying auth state (attempt ${retryCount + 1})`);
           await new Promise(resolve => setTimeout(resolve, this.RETRY_DELAY * (retryCount + 1)));
           return this.handleAuthState(user, retryCount + 1);
         }
         
-        Toast.show("Session expired. Please login again.", "error");
-        await signOut(auth);
-        window.location.href = "login.html";
+        Toast.show("Failed to authenticate. Please refresh the page.", "error");
       }
     }
   };
@@ -2793,7 +2810,6 @@
     
     viewListingDetails(item) {
       console.log('Viewing listing:', item);
-      // Implement your listing details view logic here
       Toast.show(`Viewing: ${item.title}`, 'info');
     }
   };
@@ -2888,7 +2904,6 @@
   };
 
   window.startTour = function() {
-    // Implement your tour functionality here
     Toast.show("Tour started!", "info");
     closeModal('welcomeModal');
   };
