@@ -2404,199 +2404,277 @@
   </div>
   
  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-storage-compat.js"></script>
 
-  <script>
-    // =====================
-    // FIREBASE INITIALIZATION
-    // =====================
-    const firebaseConfig = {
-      apiKey: "AIzaSyCxaOGeOvHwS5dnPHRTpw3Lwn2surjXP1E",
-      authDomain: "tradeconnect-3c728.firebaseapp.com",
-      projectId: "tradeconnect-3c728",
-      storageBucket: "tradeconnect-3c728.appspot.com",
-      messagingSenderId: "299665603548",
-      appId: "1:299665603548:web:9ff10af44cd41605382d19"
-    };
+<script>
+  // =====================
+  // FIREBASE INITIALIZATION
+  // =====================
+  const firebaseConfig = {
+    apiKey: "AIzaSyCxaOGeOvHwS5dnPHRTpw3Lwn2surjXP1E",
+    authDomain: "tradeconnect-3c728.firebaseapp.com",
+    projectId: "tradeconnect-3c728",
+    storageBucket: "tradeconnect-3c728.appspot.com",
+    messagingSenderId: "299665603548",
+    appId: "1:299665603548:web:9ff10af44cd41605382d19"
+  };
 
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-    const storage = firebase.storage();
+  const app = firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  const storage = firebase.storage();
 
-    // =====================
-    // PAGINATION VARIABLES
-    // =====================
-    let lastVisible = null;
-    let isFetching = false;
-    let allItemsLoaded = false;
+  // =====================
+  // PAGINATION VARIABLES
+  // =====================
+  let lastVisible = null;
+  let isFetching = false;
+  let allItemsLoaded = false;
+  let loadMoreBtn = null; // Declare globally
 
-    // =====================
-    // CORE FUNCTIONALITY
-    // =====================
-    
-    // 1. AUTH STATE MANAGEMENT
-    auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        // User is signed in
-        document.getElementById('userName').textContent = user.displayName || "User";
-        document.getElementById('userEmail').textContent = user.email;
-        
-        // Check if user profile exists, if not create one
-        const userRef = db.collection('users').doc(user.uid);
-        const userDoc = await userRef.get();
-        
-        if (!userDoc.exists) {
-          await userRef.set({
-            username: user.displayName || "Anonymous",
-            email: user.email,
-            photoUrl: user.photoURL || "",
-            location: "",
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-          });
-        }
-        
-        loadMarketplaceItems();
-      } else {
-        // No user, redirect to login
-        window.location.href = "login.html";
-      }
-    });
-
-    // 2. POST NEW ITEM WITH IMAGE UPLOADS
-    document.getElementById('postForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
+  // =====================
+  // CORE FUNCTIONALITY
+  // =====================
+  
+  // 1. AUTH STATE MANAGEMENT
+  auth.onAuthStateChanged(async (user) => {
+    if (user) {
+      // User is signed in
+      const userNameElement = document.getElementById('userName');
+      const userEmailElement = document.getElementById('userEmail');
       
-      const submitBtn = e.target.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
-      submitBtn.classList.add('loading');
+      if (userNameElement) userNameElement.textContent = user.displayName || "User";
+      if (userEmailElement) userEmailElement.textContent = user.email;
       
-      try {
-        // Get form values
-        const formData = {
-          title: document.getElementById('postTitle').value,
-          description: document.getElementById('postDescription').value,
-          category: document.getElementById('selectedCategory').value,
-          isSelling: document.getElementById('tradeOrSell').checked,
-          price: parseFloat(document.getElementById('itemPrice').value) || 0,
-          userId: auth.currentUser.uid,
-          isAvailable: true,
+      // Check if user profile exists, if not create one
+      const userRef = db.collection('users').doc(user.uid);
+      const userDoc = await userRef.get();
+      
+      if (!userDoc.exists) {
+        await userRef.set({
+          username: user.displayName || "Anonymous",
+          email: user.email,
+          photoUrl: user.photoURL || "",
+          location: "",
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        };
+        });
+      }
+      
+      loadMarketplaceItems();
+    } else {
+      // No user, redirect to login
+      window.location.href = "login.html";
+    }
+  });
 
-        // Upload images
-        const imageInputs = document.querySelectorAll('.image-upload-input');
-        formData.images = [];
+  // 2. POST NEW ITEM WITH IMAGE UPLOADS
+  document.addEventListener('DOMContentLoaded', () => {
+    const postForm = document.getElementById('postForm');
+    if (postForm) {
+      postForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
         
-        for (const input of imageInputs) {
-          if (input.files[0]) {
-            const file = input.files[0];
-            const storageRef = storage.ref(`marketplace/${Date.now()}_${file.name}`);
-            await storageRef.put(file);
-            const url = await storageRef.getDownloadURL();
-            formData.images.push(url);
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.classList.add('loading');
+        }
+        
+        try {
+          // Get form values
+          const formData = {
+            title: document.getElementById('postTitle')?.value || '',
+            description: document.getElementById('postDescription')?.value || '',
+            category: document.getElementById('selectedCategory')?.value || '',
+            isSelling: document.getElementById('tradeOrSell')?.checked || false,
+            price: parseFloat(document.getElementById('itemPrice')?.value) || 0,
+            userId: auth.currentUser?.uid || '',
+            isAvailable: true,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          };
+
+          // Upload images
+          const imageInputs = document.querySelectorAll('.image-upload-input');
+          formData.images = [];
+          
+          for (const input of imageInputs) {
+            if (input.files?.[0]) {
+              const file = input.files[0];
+              const storageRef = storage.ref(`marketplace/${Date.now()}_${file.name}`);
+              await storageRef.put(file);
+              const url = await storageRef.getDownloadURL();
+              formData.images.push(url);
+            }
+          }
+
+          // Validate minimum 3 images
+          if (formData.images.length < 3) {
+            throw new Error("Please upload at least 3 images");
+          }
+
+          // Save to Firestore
+          await db.collection('marketplaceItems').add(formData);
+          
+          // Success feedback
+          showToast("🎉 Item posted successfully!", "success");
+          closeModal('addPostModal');
+          loadMarketplaceItems();
+          
+        } catch (error) {
+          showToast(`Error: ${error.message}`, "error");
+          console.error("Posting error:", error);
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('loading');
           }
         }
+      });
+    }
 
-        // Validate minimum 3 images
-        if (formData.images.length < 3) {
-          throw new Error("Please upload at least 3 images");
-        }
+    // Initialize load more button
+    loadMoreBtn = document.getElementById('loadMoreBtn');
+    if (loadMoreBtn) {
+      loadMoreBtn.addEventListener('click', () => {
+        loadMarketplaceItems(true); // Load next batch
+      });
+    }
 
-        // Save to Firestore
-        await db.collection('marketplaceItems').add(formData);
-        
-        // Success feedback
-        showToast("🎉 Item posted successfully!", "success");
-        closeModal('addPostModal');
-        loadMarketplaceItems();
-        
-      } catch (error) {
-        showToast(`Error: ${error.message}`, "error");
-        console.error("Posting error:", error);
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.classList.remove('loading');
-      }
+    // Navigation
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function() {
+        document.querySelectorAll('.content-section').forEach(section => {
+          section.classList.remove('active');
+        });
+        const targetSection = document.getElementById(this.dataset.target);
+        if (targetSection) targetSection.classList.add('active');
+      });
     });
 
-    // 3. LOAD MARKETPLACE ITEMS WITH PAGINATION
-    async function loadMarketplaceItems(loadMore = false) {
-      if (isFetching || (loadMore && allItemsLoaded)) return;
-      
-      isFetching = true;
-      const listingsContainer = document.getElementById('marketplaceListings');
-      const loadMoreBtn = document.getElementById('loadMoreBtn');
-      
-      // Show loading state
-      if (loadMore) {
-        loadMoreBtn.disabled = true;
-        loadMoreBtn.classList.add('loading');
-      } else {
-        listingsContainer.innerHTML = `
-          <div class="loading-placeholder">
-            <div class="loading-card" style="height: 180px;"></div>
-            <div class="loading-card" style="height: 180px;"></div>
-            <div class="loading-card" style="height: 180px;"></div>
-          </div>
-        `;
-        lastVisible = null;
-        allItemsLoaded = false;
+    // User dropdown
+    const userProfile = document.getElementById('userProfile');
+    if (userProfile) {
+      userProfile.addEventListener('click', function(e) {
+        e.stopPropagation();
+        this.classList.toggle('active');
+      });
+    }
+    document.addEventListener('click', () => {
+      if (userProfile) userProfile.classList.remove('active');
+    });
+
+    // Category selection
+    document.querySelectorAll('.category-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const selectedCategory = document.getElementById('selectedCategory');
+        if (selectedCategory) selectedCategory.value = this.dataset.category;
+      });
+    });
+
+    // Trade/Sell toggle
+    const tradeOrSell = document.getElementById('tradeOrSell');
+    if (tradeOrSell) {
+      tradeOrSell.addEventListener('change', function() {
+        const priceInput = document.getElementById('priceInput');
+        if (priceInput) priceInput.style.display = this.checked ? 'block' : 'none';
+      });
+    }
+
+    // Image previews
+    document.querySelectorAll('.image-upload-input').forEach(input => {
+      input.addEventListener('change', function() {
+        if (this.files?.[0]) {
+          const preview = this.closest('.image-upload-box')?.querySelector('.image-preview');
+          const uploadText = this.closest('.image-upload-box')?.querySelector('.image-upload-text');
+          if (preview) {
+            preview.src = URL.createObjectURL(this.files[0]);
+            preview.style.display = 'block';
+          }
+          if (uploadText) uploadText.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // 3. LOAD MARKETPLACE ITEMS WITH PAGINATION
+  async function loadMarketplaceItems(loadMore = false) {
+    if (isFetching || (loadMore && allItemsLoaded)) return;
+    
+    isFetching = true;
+    const listingsContainer = document.getElementById('marketplaceListings');
+    
+    // Show loading state
+    if (loadMore && loadMoreBtn) {
+      loadMoreBtn.disabled = true;
+      loadMoreBtn.classList.add('loading');
+    } else if (listingsContainer) {
+      listingsContainer.innerHTML = `
+        <div class="loading-placeholder">
+          <div class="loading-card" style="height: 180px;"></div>
+          <div class="loading-card" style="height: 180px;"></div>
+          <div class="loading-card" style="height: 180px;"></div>
+        </div>
+      `;
+      lastVisible = null;
+      allItemsLoaded = false;
+    }
+
+    try {
+      let query = db.collection('marketplaceItems')
+        .where("isAvailable", "==", true)
+        .orderBy('createdAt', 'desc')
+        .limit(10);
+
+      if (loadMore && lastVisible) {
+        query = query.startAfter(lastVisible);
       }
 
-      try {
-        let query = db.collection('marketplaceItems')
-          .where("isAvailable", "==", true)
-          .orderBy('createdAt', 'desc')
-          .limit(10);
+      const snapshot = await query.get();
 
-        if (loadMore && lastVisible) {
-          query = query.startAfter(lastVisible);
+      if (!loadMore && listingsContainer) {
+        listingsContainer.innerHTML = ''; // Clear existing on first load
+      }
+
+      if (snapshot.empty) {
+        if (loadMore) {
+          allItemsLoaded = true;
+          showToast("No more items to load", "info");
+        } else if (listingsContainer) {
+          listingsContainer.innerHTML = '<div class="no-items">No listings found</div>';
         }
+        return;
+      }
 
-        const snapshot = await query.get();
+      lastVisible = snapshot.docs[snapshot.docs.length - 1]; // Save last doc for pagination
 
-        if (!loadMore) {
-          listingsContainer.innerHTML = ''; // Clear existing on first load
-        }
+      // Process each item sequentially to ensure proper user data fetching
+      for (const doc of snapshot.docs) {
+        const item = doc.data();
 
-        if (snapshot.empty) {
-          if (loadMore) {
-            allItemsLoaded = true;
-            showToast("No more items to load", "info");
-          } else {
-            listingsContainer.innerHTML = '<div class="no-items">No listings found</div>';
+        // Fetch user profile based on userId
+        let userData = { 
+          username: "Unknown User", 
+          photoUrl: "https://placehold.co/40x40",
+          location: ""
+        };
+        
+        try {
+          const userDoc = await db.collection('users').doc(item.userId).get();
+          if (userDoc.exists) {
+            userData = {
+              ...userData,
+              ...userDoc.data()
+            };
           }
-          return;
+        } catch (userError) {
+          console.error("Error fetching user data:", userError);
         }
 
-        lastVisible = snapshot.docs[snapshot.docs.length - 1]; // Save last doc for pagination
-
-        // Process each item sequentially to ensure proper user data fetching
-        for (const doc of snapshot.docs) {
-          const item = doc.data();
-
-          // Fetch user profile based on userId
-          let userData = { 
-            username: "Unknown User", 
-            photoUrl: "https://placehold.co/40x40",
-            location: ""
-          };
-          
-          try {
-            const userDoc = await db.collection('users').doc(item.userId).get();
-            if (userDoc.exists) {
-              userData = {
-                ...userData,
-                ...userDoc.data()
-              };
-            }
-          } catch (userError) {
-            console.error("Error fetching user data:", userError);
-          }
-
+        if (listingsContainer) {
           listingsContainer.innerHTML += `
             <div class="product-card" data-id="${doc.id}">
               <span class="product-badge ${item.isSelling ? '' : 'trade'}">
@@ -2628,127 +2706,84 @@
             </div>
           `;
         }
+      }
 
-        // Check if we got fewer items than requested (end of collection)
-        if (snapshot.docs.length < 10) {
-          allItemsLoaded = true;
-          if (loadMore) {
-            showToast("All items loaded", "info");
-          }
-        }
-      } catch (error) {
-        if (!loadMore) {
-          listingsContainer.innerHTML = '<div class="error">Failed to load items. Please try again.</div>';
-        }
-        showToast(`Error loading items: ${error.message}`, "error");
-        console.error("Loading error:", error);
-      } finally {
-        isFetching = false;
+      // Check if we got fewer items than requested (end of collection)
+      if (snapshot.docs.length < 10) {
+        allItemsLoaded = true;
         if (loadMore) {
-          loadMoreBtn.disabled = false;
-          loadMoreBtn.classList.remove('loading');
-        }
-        
-        // Hide load more button if all items are loaded
-        if (allItemsLoaded) {
-          loadMoreBtn.style.display = 'none';
-        } else {
-          loadMoreBtn.style.display = 'block';
+          showToast("All items loaded", "info");
         }
       }
-    }
-
-    // 4. LOAD MORE BUTTON EVENT LISTENER
-    document.getElementById('loadMoreBtn').addEventListener('click', () => {
-      loadMarketplaceItems(true); // Load next batch
-    });
-
-    // =====================
-    // UI UTILITIES
-    // =====================
-    
-    // Toast notifications
-    function showToast(message, type = "success") {
-      const toast = document.createElement('div');
-      toast.className = `toast toast-${type}`;
-      toast.innerHTML = `
-        <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
-        <span>${message}</span>
-      `;
-      document.body.appendChild(toast);
+    } catch (error) {
+      if (!loadMore && listingsContainer) {
+        listingsContainer.innerHTML = '<div class="error">Failed to load items. Please try again.</div>';
+      }
+      showToast(`Error loading items: ${error.message}`, "error");
+      console.error("Loading error:", error);
       
-      setTimeout(() => {
-        toast.classList.add('show');
-        setTimeout(() => {
-          toast.classList.remove('show');
-          setTimeout(() => toast.remove(), 300);
-        }, 3000);
-      }, 10);
+      // Check for Firestore index error
+      if (error.message.includes("index")) {
+        console.error("Firestore query requires an index. Check the error message for a link to create the index.");
+      }
+    } finally {
+      isFetching = false;
+      if (loadMore && loadMoreBtn) {
+        loadMoreBtn.disabled = false;
+        loadMoreBtn.classList.remove('loading');
+      }
+      
+      // Hide load more button if all items are loaded
+      if (loadMoreBtn) {
+        loadMoreBtn.style.display = allItemsLoaded ? 'none' : 'block';
+      }
     }
+  }
 
-    // Modal controls
-    function openModal(id) {
-      document.getElementById(id).style.display = 'flex';
+  // =====================
+  // UI UTILITIES
+  // =====================
+  
+  // Toast notifications
+  function showToast(message, type = "success") {
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.innerHTML = `
+      <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+      <span>${message}</span>
+    `;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }, 10);
+  }
+
+  // Modal controls
+  function openModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.style.display = 'flex';
       document.body.classList.add('modal-open');
     }
+  }
 
-    function closeModal(id) {
-      document.getElementById(id).style.display = 'none';
+  function closeModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.style.display = 'none';
       document.body.classList.remove('modal-open');
     }
+  }
 
-    // Initialize UI interactions
-    document.addEventListener('DOMContentLoaded', () => {
-      // Navigation
-      document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function() {
-          document.querySelectorAll('.content-section').forEach(section => {
-            section.classList.remove('active');
-          });
-          document.getElementById(this.dataset.target).classList.add('active');
-        });
-      });
-
-      // User dropdown
-      document.getElementById('userProfile').addEventListener('click', function(e) {
-        e.stopPropagation();
-        this.classList.toggle('active');
-      });
-      document.addEventListener('click', () => {
-        document.getElementById('userProfile').classList.remove('active');
-      });
-
-      // Category selection
-      document.querySelectorAll('.category-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-          this.classList.add('active');
-          document.getElementById('selectedCategory').value = this.dataset.category;
-        });
-      });
-
-      // Trade/Sell toggle
-      document.getElementById('tradeOrSell').addEventListener('change', function() {
-        document.getElementById('priceInput').style.display = this.checked ? 'block' : 'none';
-      });
-
-      // Image previews
-      document.querySelectorAll('.image-upload-input').forEach(input => {
-        input.addEventListener('change', function() {
-          if (this.files[0]) {
-            const preview = this.closest('.image-upload-box').querySelector('.image-preview');
-            preview.src = URL.createObjectURL(this.files[0]);
-            preview.style.display = 'block';
-            this.closest('.image-upload-box').querySelector('.image-upload-text').style.display = 'none';
-          }
-        });
-      });
-    });
-
-    // Global functions
-    window.openModal = openModal;
-    window.closeModal = closeModal;
-    window.logout = () => auth.signOut().then(() => window.location.href = "login.html");
-  </script>
+  // Global functions
+  window.openModal = openModal;
+  window.closeModal = closeModal;
+  window.logout = () => auth.signOut().then(() => window.location.href = "login.html");
+</script>
 </body>
 </html>
