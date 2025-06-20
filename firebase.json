@@ -9,6 +9,15 @@
     "cleanUrls": true,
     "headers": [
       {
+        "source": "/images/**",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          }
+        ]
+      },
+      {
         "source": "**",
         "headers": [
           {
