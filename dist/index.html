@@ -2454,7 +2454,7 @@
     const app = firebase.initializeApp(firebaseConfig);
     auth = firebase.auth();
     db = firebase.firestore();
-    storage = firebase.storage();
+    storage = firebase.storage(); // Using Firebase SDK for storage
   } catch (firebaseError) {
     handleGlobalError(firebaseError);
     throw firebaseError;
@@ -2528,7 +2528,7 @@
       });
     }
 
-    // Main load more button (if using a single button)
+    // Main load more button
     const loadMoreBtn = document.getElementById('loadMoreBtn');
     if (loadMoreBtn) {
       loadMoreBtn.addEventListener('click', () => {
@@ -2643,22 +2643,50 @@
     };
   }
 
+  // =====================
+  // UPDATED IMAGE UPLOAD FUNCTION USING FIREBASE SDK
+  // =====================
   async function uploadImages() {
     const imageInputs = document.querySelectorAll('.image-upload-input');
     const images = [];
+    const uploadPromises = [];
     
+    // Validate at least 3 images selected
+    let selectedFiles = 0;
+    imageInputs.forEach(input => {
+      if (input.files?.[0]) selectedFiles++;
+    });
+    
+    if (selectedFiles < 3) {
+      throw new Error("Please upload at least 3 images");
+    }
+
+    // Process each image input
     for (const input of imageInputs) {
       if (input.files?.[0]) {
         const file = input.files[0];
         const storageRef = storage.ref(`marketplace/${Date.now()}_${file.name}`);
-        await storageRef.put(file);
-        const url = await storageRef.getDownloadURL();
-        images.push(url);
+        
+        uploadPromises.push(
+          storageRef.put(file)
+            .then(snapshot => snapshot.ref.getDownloadURL())
+            .then(url => {
+              images.push(url);
+              console.log("Image uploaded successfully:", url);
+            })
+            .catch(error => {
+              console.error("Upload failed:", error);
+              throw new Error("Image upload failed. Please try again.");
+            })
+        );
       }
     }
 
+    // Wait for all uploads to complete
+    await Promise.all(uploadPromises);
+    
     if (images.length < 3) {
-      throw new Error("Please upload at least 3 images");
+      throw new Error("Some images failed to upload. Please try again.");
     }
 
     return images;
@@ -2722,7 +2750,6 @@
       const snapshot = await query.get();
       console.log(`Retrieved ${snapshot.docs.length} home items`);
 
-      // Process results
       if (!loadMore) container.innerHTML = '';
       
       if (snapshot.empty) {
@@ -2737,7 +2764,6 @@
         container.innerHTML += createHomeItemCard(doc.id, item);
       }
 
-      // Check if all items loaded
       if (snapshot.docs.length < 10) {
         sectionPagination.home.allItemsLoaded = true;
         if (loadMore) showToast("All home items loaded", "info");
@@ -2766,7 +2792,6 @@
       const snapshot = await query.get();
       console.log(`Retrieved ${snapshot.docs.length} marketplace items`);
 
-      // Process results
       if (!loadMore) container.innerHTML = '';
       
       if (snapshot.empty) {
@@ -2782,7 +2807,6 @@
         container.innerHTML += createMarketplaceItemCard(doc.id, item, userData);
       }
 
-      // Check if all items loaded
       if (snapshot.docs.length < 10) {
         sectionPagination.marketplace.allItemsLoaded = true;
         if (loadMore) showToast("All marketplace items loaded", "info");
@@ -2811,7 +2835,6 @@
       const snapshot = await query.get();
       console.log(`Retrieved ${snapshot.docs.length} forum posts`);
 
-      // Process results
       if (!loadMore) container.innerHTML = '';
       
       if (snapshot.empty) {
@@ -2827,7 +2850,6 @@
         container.innerHTML += createForumPostCard(doc.id, post, userData);
       }
 
-      // Check if all items loaded
       if (snapshot.docs.length < 10) {
         sectionPagination.community.allItemsLoaded = true;
         if (loadMore) showToast("All forum posts loaded", "info");
@@ -3139,6 +3161,7 @@
     }
   `;
   document.head.appendChild(styleElement);
+</script>
 </script>
 </body>
 </html>
