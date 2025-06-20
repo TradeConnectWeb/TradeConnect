@@ -1952,6 +1952,7 @@
             <i class="fas fa-spinner fa-spin"></i> Loading listings...
           </div>
         </div>
+        <button id="loadMoreBtn" style="display: none;">Load More</button>
 
         <!-- "Post Item" Floating Button -->
         <button class="floating-post-btn" onclick="openModal('addPostModal')" title="Create new listing">
@@ -2031,6 +2032,7 @@
             <i class="fas fa-spinner fa-spin"></i> Loading marketplace...
           </div>
         </div>
+        <button id="loadMoreBtn" style="display: none;">Load More</button>
       </div>
 
       <!-- Add Post Modal -->
@@ -2150,6 +2152,7 @@
             <i class="fas fa-spinner fa-spin"></i> Loading forum posts...
           </div>
         </div>
+        <button id="loadMoreBtn" style="display: none;">Load More</button>
       </div>
 
       <!-- Add Post Modal for Community Forum -->
@@ -2470,10 +2473,14 @@
   // DOM CONTENT LOADED
   // =====================
   document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM fully loaded and parsed");
+    
     // Initialize Load More button with null check
     loadMoreBtn = document.getElementById('loadMoreBtn');
     if (loadMoreBtn) {
+      console.log("Load More button found");
       loadMoreBtn.addEventListener('click', () => {
+        console.log("Load More button clicked");
         loadMarketplaceItems(true);
       });
     } else {
@@ -2488,6 +2495,9 @@
 
     // User authentication state
     auth.onAuthStateChanged(handleAuthStateChanged);
+    
+    // Initial load
+    loadMarketplaceItems();
   });
 
   // =====================
@@ -2496,6 +2506,8 @@
   async function handleAuthStateChanged(user) {
     try {
       if (user) {
+        console.log("User authenticated:", user.email);
+        
         // Update UI elements with null checks
         const userNameElement = document.getElementById('userName');
         const userEmailElement = document.getElementById('userEmail');
@@ -2505,8 +2517,8 @@
 
         // Initialize or update user profile
         await initializeUserProfile(user);
-        loadMarketplaceItems();
       } else {
+        console.log("No user signed in, redirecting to login");
         window.location.href = "login.html";
       }
     } catch (error) {
@@ -2519,6 +2531,7 @@
     const userDoc = await userRef.get();
     
     if (!userDoc.exists) {
+      console.log("Creating new user profile");
       await userRef.set({
         username: user.displayName || "Anonymous",
         email: user.email,
@@ -2531,6 +2544,7 @@
 
   async function handlePostSubmit(e) {
     e.preventDefault();
+    console.log("Post form submitted");
     
     const submitBtn = e.target.querySelector('button[type="submit"]');
     if (submitBtn) {
@@ -2599,7 +2613,12 @@
   // MARKETPLACE ITEMS LOADING
   // =====================
   async function loadMarketplaceItems(loadMore = false) {
-    if (isFetching || (loadMore && allItemsLoaded)) return;
+    console.log(`Loading marketplace items (loadMore: ${loadMore})`);
+    
+    if (isFetching || (loadMore && allItemsLoaded)) {
+      console.log("Skipping load - already fetching or all items loaded");
+      return;
+    }
     
     isFetching = true;
     const listingsContainer = document.getElementById('marketplaceListings');
@@ -2615,12 +2634,14 @@
 
       // Execute Firestore query
       const snapshot = await getMarketplaceItems(loadMore);
+      console.log(`Retrieved ${snapshot.docs.length} items`);
 
       // Process results
       if (listingsContainer) {
         if (!loadMore) listingsContainer.innerHTML = '';
         
         if (snapshot.empty) {
+          console.log("No items found in snapshot");
           handleEmptyResults(loadMore, listingsContainer);
           return;
         }
@@ -2631,10 +2652,12 @@
         // Check if all items loaded
         if (snapshot.docs.length < 10) {
           allItemsLoaded = true;
+          console.log("All items loaded");
           if (loadMore) showToast("All items loaded", "info");
         }
       }
     } catch (error) {
+      console.error("Error loading marketplace items:", error);
       handleLoadError(error, listingsContainer, loadMore);
     } finally {
       isFetching = false;
@@ -2653,12 +2676,14 @@
   }
 
   async function getMarketplaceItems(loadMore) {
+    console.log("Querying Firestore for items");
     let query = db.collection('marketplaceItems')
       .where("isAvailable", "==", true)
       .orderBy('createdAt', 'desc')
       .limit(10);
 
     if (loadMore && lastVisible) {
+      console.log("Querying next page of items");
       query = query.startAfter(lastVisible);
     }
 
@@ -2675,6 +2700,7 @@
   }
 
   async function processItems(docs, container) {
+    console.log(`Processing ${docs.length} items`);
     for (const doc of docs) {
       const item = doc.data();
       const userData = await getUserData(item.userId);
@@ -2750,6 +2776,7 @@
 
   function updateLoadMoreButton(loadMore) {
     if (loadMoreBtn) {
+      console.log(`Updating Load More button (allItemsLoaded: ${allItemsLoaded})`);
       if (loadMore) {
         loadMoreBtn.disabled = false;
         loadMoreBtn.classList.remove('loading');
@@ -2831,7 +2858,36 @@
       font-size: 18px;
     }
     .toast {
-      /* Your existing toast styles */
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 4px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 10000;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .toast.show {
+      opacity: 1;
+    }
+    .toast i {
+      font-size: 18px;
+    }
+    .toast-success {
+      background-color: #00C851;
+    }
+    .toast-error {
+      background-color: #ff4444;
+    }
+    .toast-info {
+      background-color: #33b5e5;
     }
   `;
   document.head.appendChild(errorToastStyle);
