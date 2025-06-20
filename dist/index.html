@@ -2454,7 +2454,7 @@
     const app = firebase.initializeApp(firebaseConfig);
     auth = firebase.auth();
     db = firebase.firestore();
-    storage = firebase.storage(); // Using Firebase SDK for storage
+    storage = firebase.storage();
   } catch (firebaseError) {
     handleGlobalError(firebaseError);
     throw firebaseError;
@@ -2466,7 +2466,7 @@
   let lastVisible = null;
   let isFetching = false;
   let allItemsLoaded = false;
-  let currentSection = 'marketplace'; // Default section
+  let currentSection = 'home'; // Default section
   const sectionPagination = {
     home: { lastVisible: null, allItemsLoaded: false },
     marketplace: { lastVisible: null, allItemsLoaded: false },
@@ -2479,28 +2479,84 @@
   document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM fully loaded and parsed");
     
+    // Initialize navigation
+    setupNavigation();
+    
     // Initialize all load more buttons
     initializeLoadMoreButtons();
     
+    // Initialize form submissions
+    setupForms();
+    
+    // Initialize image uploads
+    setupImageUploads();
+    
     // Initialize other event listeners
-    const postForm = document.getElementById('postForm');
-    if (postForm) {
-      postForm.addEventListener('submit', handlePostSubmit);
-    }
-
-    // Section change observer
-    setupSectionObserver();
+    setupEventListeners();
 
     // User authentication state
     auth.onAuthStateChanged(handleAuthStateChanged);
     
     // Initial load
     loadContent();
+    
+    // Show welcome modal for new users
+    setTimeout(() => {
+      if (!localStorage.getItem('welcomeShown')) {
+        openModal('welcomeModal');
+        localStorage.setItem('welcomeShown', 'true');
+      }
+    }, 1000);
   });
 
   // =====================
   // INITIALIZATION FUNCTIONS
   // =====================
+  function setupNavigation() {
+    // Sidebar navigation
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = link.getAttribute('data-target');
+        
+        // Remove active class from all links
+        navLinks.forEach(navLink => {
+          navLink.classList.remove('active');
+        });
+        
+        // Add active class to clicked link
+        link.classList.add('active');
+        
+        // Hide all content sections
+        document.querySelectorAll('.content-section').forEach(section => {
+          section.classList.remove('active');
+        });
+        
+        // Show target section
+        document.getElementById(target).classList.add('active');
+        currentSection = target;
+        
+        // Load content for the section
+        loadContent();
+      });
+    });
+    
+    // User profile dropdown
+    const userProfile = document.getElementById('userProfile');
+    if (userProfile) {
+      userProfile.addEventListener('click', (e) => {
+        e.stopPropagation();
+        userProfile.classList.toggle('active');
+      });
+    }
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', () => {
+      if (userProfile) userProfile.classList.remove('active');
+    });
+  }
+
   function initializeLoadMoreButtons() {
     // Section-specific load more buttons
     const loadMoreHomeBtn = document.getElementById('loadMoreHomeBtn');
@@ -2527,34 +2583,216 @@
         loadContent(true);
       });
     }
+  }
 
-    // Main load more button
-    const loadMoreBtn = document.getElementById('loadMoreBtn');
-    if (loadMoreBtn) {
-      loadMoreBtn.addEventListener('click', () => {
-        loadContent(true);
+  function setupForms() {
+    // Marketplace post form
+    const postForm = document.getElementById('postForm');
+    if (postForm) {
+      postForm.addEventListener('submit', handlePostSubmit);
+      
+      // Trade/sell toggle
+      const tradeOrSell = document.getElementById('tradeOrSell');
+      if (tradeOrSell) {
+        tradeOrSell.addEventListener('change', () => {
+          document.getElementById('priceInput').style.display = 
+            tradeOrSell.checked ? 'block' : 'none';
+        });
+      }
+      
+      // Category selection
+      const categoryBtns = document.querySelectorAll('.category-btn');
+      categoryBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          categoryBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById('selectedCategory').value = btn.getAttribute('data-category');
+        });
+      });
+    }
+    
+    // Forum post form
+    const forumPostForm = document.getElementById('forumPostForm');
+    if (forumPostForm) {
+      forumPostForm.addEventListener('submit', handleForumPostSubmit);
+      
+      // Post type changes
+      const postType = document.getElementById('postType');
+      if (postType) {
+        postType.addEventListener('change', () => {
+          const isScam = postType.value === 'scam';
+          document.getElementById('locationField').style.display = isScam ? 'block' : 'none';
+          document.getElementById('paymentMethodField').style.display = isScam ? 'block' : 'none';
+          document.getElementById('gcashField').style.display = 
+            (isScam && document.getElementById('paymentMethod').value === 'gcash') ? 'block' : 'none';
+        });
+      }
+      
+      // Payment method changes
+      const paymentMethod = document.getElementById('paymentMethod');
+      if (paymentMethod) {
+        paymentMethod.addEventListener('change', () => {
+          document.getElementById('gcashField').style.display = 
+            paymentMethod.value === 'gcash' ? 'block' : 'none';
+        });
+      }
+    }
+    
+    // Report form
+    const reportForm = document.getElementById('reportForm');
+    if (reportForm) {
+      reportForm.addEventListener('submit', handleReportSubmit);
+    }
+    
+    // Signup form
+    const signupForm = document.getElementById('signupForm');
+    if (signupForm) {
+      signupForm.addEventListener('submit', handleSignupSubmit);
+    }
+  }
+
+  function setupImageUploads() {
+    // Marketplace image upload
+    document.querySelectorAll('.image-upload-input').forEach(input => {
+      input.addEventListener('change', function(e) {
+        const container = this.closest('.image-upload-box');
+        const preview = container.querySelector('.image-preview');
+        const text = container.querySelector('.image-upload-text');
+        
+        if (this.files && this.files[0]) {
+          const reader = new FileReader();
+          
+          reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+            text.style.display = 'none';
+            
+            // Add remove button
+            if (!container.querySelector('.remove-image')) {
+              const removeBtn = document.createElement('button');
+              removeBtn.className = 'remove-image';
+              removeBtn.innerHTML = '&times;';
+              removeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                input.value = '';
+                preview.style.display = 'none';
+                text.style.display = 'flex';
+                removeBtn.remove();
+              });
+              container.appendChild(removeBtn);
+            }
+          };
+          
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+    });
+    
+    // Profile image upload
+    const profileUpload = document.getElementById('profile-upload');
+    if (profileUpload) {
+      profileUpload.addEventListener('change', function(e) {
+        const preview = document.getElementById('preview-img');
+        if (this.files && this.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            preview.src = e.target.result;
+          };
+          reader.readAsDataURL(this.files[0]);
+        }
       });
     }
   }
 
-  function setupSectionObserver() {
-    const sections = document.querySelectorAll('.content-section');
-    if (sections.length > 0) {
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.attributeName === 'class') {
-            const activeSection = document.querySelector('.content-section.active');
-            if (activeSection) {
-              currentSection = activeSection.id;
-              console.log(`Active section changed to: ${currentSection}`);
-              loadContent();
-            }
-          }
-        });
+  function setupEventListeners() {
+    // Search functionality
+    const searchBar = document.querySelector('.search-bar input');
+    if (searchBar) {
+      searchBar.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          performSearch(searchBar.value);
+        }
       });
-
-      sections.forEach((section) => {
-        observer.observe(section, { attributes: true });
+      
+      const searchBtn = document.querySelector('.search-bar i');
+      if (searchBtn) {
+        searchBtn.addEventListener('click', () => {
+          performSearch(searchBar.value);
+        });
+      }
+    }
+    
+    // Help center search
+    const helpSearch = document.getElementById('helpSearch');
+    if (helpSearch) {
+      helpSearch.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          searchHelpArticles(helpSearch.value);
+        }
+      });
+      
+      const searchHelpBtn = document.getElementById('searchHelpBtn');
+      if (searchHelpBtn) {
+        searchHelpBtn.addEventListener('click', () => {
+          searchHelpArticles(helpSearch.value);
+        });
+      }
+    }
+    
+    // Back to list in help center
+    const backToList = document.getElementById('backToList');
+    if (backToList) {
+      backToList.addEventListener('click', () => {
+        document.getElementById('articleDetail').style.display = 'none';
+        document.getElementById('helpArticles').style.display = 'block';
+      });
+    }
+    
+    // Notification bell
+    const notificationBell = document.querySelector('.notification');
+    if (notificationBell) {
+      notificationBell.addEventListener('click', () => {
+        openModal('notificationsModal');
+        // Mark notifications as read
+        document.querySelector('.notification-badge').style.display = 'none';
+      });
+    }
+    
+    // Chat functionality
+    const sendMessageBtn = document.getElementById('sendMessage');
+    if (sendMessageBtn) {
+      sendMessageBtn.addEventListener('click', sendMessage);
+    }
+    
+    const messageInput = document.getElementById('messageInput');
+    if (messageInput) {
+      messageInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          sendMessage();
+        }
+      });
+    }
+    
+    // Clear chat button
+    const clearChatBtn = document.getElementById('clearChat');
+    if (clearChatBtn) {
+      clearChatBtn.addEventListener('click', () => {
+        if (confirm('Are you sure you want to clear this chat?')) {
+          document.getElementById('chatMessages').innerHTML = `
+            <div class="no-messages">
+              <i class="fas fa-comment-slash"></i>
+              <p>No messages yet. Start a conversation!</p>
+            </div>
+          `;
+        }
+      });
+    }
+    
+    // Report user button
+    const reportUserBtn = document.getElementById('reportUserBtn');
+    if (reportUserBtn) {
+      reportUserBtn.addEventListener('click', () => {
+        openModal('reportModal');
       });
     }
   }
@@ -2570,12 +2808,19 @@
         // Update UI elements
         const userNameElement = document.getElementById('userName');
         const userEmailElement = document.getElementById('userEmail');
+        const userAvatar = document.getElementById('userAvatar');
         
         if (userNameElement) userNameElement.textContent = user.displayName || "User";
         if (userEmailElement) userEmailElement.textContent = user.email;
+        if (userAvatar) userAvatar.src = user.photoURL || "https://placehold.co/40";
 
         // Initialize user profile
         await initializeUserProfile(user);
+        
+        // Check if profile is complete
+        if (!user.displayName || !user.photoURL) {
+          openModal('signupModal');
+        }
       } else {
         console.log("No user signed in, redirecting to login");
         window.location.href = "login.html";
@@ -2630,28 +2875,17 @@
   }
 
   async function processFormData() {
-    return {
-      title: document.getElementById('postTitle')?.value || '',
-      description: document.getElementById('postDescription')?.value || '',
-      category: document.getElementById('selectedCategory')?.value || '',
-      isSelling: document.getElementById('tradeOrSell')?.checked || false,
-      price: parseFloat(document.getElementById('itemPrice')?.value) || 0,
-      userId: auth.currentUser?.uid || '',
-      isAvailable: true,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      images: await uploadImages()
-    };
-  }
-
-  // =====================
-  // UPDATED IMAGE UPLOAD FUNCTION USING FIREBASE SDK
-  // =====================
-  async function uploadImages() {
-    const imageInputs = document.querySelectorAll('.image-upload-input');
-    const images = [];
-    const uploadPromises = [];
+    // Validate form
+    const title = document.getElementById('postTitle')?.value;
+    const description = document.getElementById('postDescription')?.value;
+    const category = document.getElementById('selectedCategory')?.value;
     
-    // Validate at least 3 images selected
+    if (!title || !description || !category) {
+      throw new Error("Please fill in all required fields");
+    }
+    
+    // Count selected images
+    const imageInputs = document.querySelectorAll('.image-upload-input');
     let selectedFiles = 0;
     imageInputs.forEach(input => {
       if (input.files?.[0]) selectedFiles++;
@@ -2661,6 +2895,24 @@
       throw new Error("Please upload at least 3 images");
     }
 
+    return {
+      title: title,
+      description: description,
+      category: category,
+      isSelling: document.getElementById('tradeOrSell')?.checked || false,
+      price: parseFloat(document.getElementById('itemPrice')?.value) || 0,
+      userId: auth.currentUser?.uid || '',
+      isAvailable: true,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      images: await uploadImages()
+    };
+  }
+
+  async function uploadImages() {
+    const imageInputs = document.querySelectorAll('.image-upload-input');
+    const images = [];
+    const uploadPromises = [];
+    
     // Process each image input
     for (const input of imageInputs) {
       if (input.files?.[0]) {
@@ -2696,6 +2948,164 @@
     await db.collection('marketplaceItems').add(formData);
   }
 
+  async function handleForumPostSubmit(e) {
+    e.preventDefault();
+    console.log("Forum post form submitted");
+    
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
+    }
+    
+    try {
+      const formData = {
+        title: document.getElementById('forumPostTitle')?.value || '',
+        content: document.getElementById('forumPostContent')?.value || '',
+        type: document.getElementById('postType')?.value || '',
+        userId: auth.currentUser?.uid || '',
+        isPublished: true,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+      
+      // Optional fields based on post type
+      if (formData.type === 'scam') {
+        formData.location = document.getElementById('postLocation')?.value || '';
+        formData.paymentMethod = document.getElementById('paymentMethod')?.value || '';
+        if (formData.paymentMethod === 'gcash') {
+          formData.gcashNumber = document.getElementById('gcashNumber')?.value || '';
+        }
+      }
+      
+      await db.collection('forumPosts').add(formData);
+      
+      showToast("Forum post created successfully!", "success");
+      closeModal('addForumPostModal');
+      loadContent();
+    } catch (error) {
+      handleGlobalError(error);
+      showToast(`Error: ${error.message}`, "error");
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+      }
+    }
+  }
+
+  async function handleReportSubmit(e) {
+    e.preventDefault();
+    console.log("Report form submitted");
+    
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
+    }
+    
+    try {
+      const formData = {
+        reason: document.getElementById('reportReason')?.value || '',
+        details: document.getElementById('reportDetails')?.value || '',
+        reportedUserId: document.getElementById('reportUserBtn')?.getAttribute('data-user-id') || '',
+        reporterId: auth.currentUser?.uid || '',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+      
+      // Handle evidence upload if exists
+      const evidenceFile = document.getElementById('reportEvidence')?.files?.[0];
+      if (evidenceFile) {
+        const storageRef = storage.ref(`reports/${Date.now()}_${evidenceFile.name}`);
+        const snapshot = await storageRef.put(evidenceFile);
+        formData.evidenceUrl = await snapshot.ref.getDownloadURL();
+      }
+      
+      await db.collection('reports').add(formData);
+      
+      showToast("Report submitted successfully!", "success");
+      closeModal('reportModal');
+    } catch (error) {
+      handleGlobalError(error);
+      showToast(`Error: ${error.message}`, "error");
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+      }
+    }
+  }
+
+  async function handleSignupSubmit(e) {
+    e.preventDefault();
+    console.log("Signup form submitted");
+    
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
+    }
+    
+    try {
+      // Validate form
+      if (!document.getElementById('acceptTerms')?.checked) {
+        throw new Error("You must accept the terms and conditions");
+      }
+      
+      // Get form values
+      const name = document.getElementById('signupName')?.value;
+      const email = document.getElementById('signupEmail')?.value;
+      const zone = document.getElementById('signupZone')?.value;
+      const contact = document.getElementById('signupContact')?.value;
+      
+      if (!name || !email || !zone || !contact) {
+        throw new Error("Please fill in all required fields");
+      }
+      
+      // Upload profile photo if exists
+      let photoUrl = '';
+      const photoFile = document.getElementById('signupPhoto')?.files?.[0];
+      if (photoFile) {
+        const storageRef = storage.ref(`profile_photos/${Date.now()}_${photoFile.name}`);
+        const snapshot = await storageRef.put(photoFile);
+        photoUrl = await snapshot.ref.getDownloadURL();
+      }
+      
+      // Update user profile
+      const user = auth.currentUser;
+      await user.updateProfile({
+        displayName: name,
+        photoURL: photoUrl
+      });
+      
+      // Save additional user data
+      await db.collection('users').doc(user.uid).set({
+        username: name,
+        email: email,
+        photoUrl: photoUrl,
+        zone: zone,
+        contactNumber: contact,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+      
+      showToast("Profile completed successfully!", "success");
+      closeModal('signupModal');
+      
+      // Update UI
+      document.getElementById('userName').textContent = name;
+      if (photoUrl) {
+        document.getElementById('userAvatar').src = photoUrl;
+      }
+    } catch (error) {
+      handleGlobalError(error);
+      showToast(`Error: ${error.message}`, "error");
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+      }
+    }
+  }
+
   // =====================
   // CONTENT LOADING FUNCTIONS
   // =====================
@@ -2720,6 +3130,9 @@
         case 'community':
           await loadForumPosts(loadMore);
           break;
+        case 'help':
+          loadHelpContent();
+          break;
         default:
           console.warn(`Unknown section: ${currentSection}`);
       }
@@ -2738,8 +3151,8 @@
     try {
       showLoadingState(container, loadMore);
 
-      let query = db.collection('homeContent')
-        .where("isActive", "==", true)
+      let query = db.collection('marketplaceItems')
+        .where("isAvailable", "==", true)
         .orderBy('createdAt', 'desc')
         .limit(10);
 
@@ -2761,7 +3174,8 @@
       
       for (const doc of snapshot.docs) {
         const item = doc.data();
-        container.innerHTML += createHomeItemCard(doc.id, item);
+        const userData = await getUserData(item.userId);
+        container.innerHTML += createMarketplaceItemCard(doc.id, item, userData);
       }
 
       if (snapshot.docs.length < 10) {
@@ -2817,16 +3231,22 @@
   }
 
   async function loadForumPosts(loadMore = false) {
-    const container = document.getElementById('forumPosts');
+    const container = document.getElementById('forumPostsContainer');
     if (!container) return;
     
     try {
       showLoadingState(container, loadMore);
 
+      const postTypeFilter = document.getElementById('postTypeFilter')?.value || 'all';
+      
       let query = db.collection('forumPosts')
         .where("isPublished", "==", true)
         .orderBy('createdAt', 'desc')
         .limit(10);
+
+      if (postTypeFilter !== 'all') {
+        query = query.where('type', '==', postTypeFilter);
+      }
 
       if (loadMore && sectionPagination.community.lastVisible) {
         query = query.startAfter(sectionPagination.community.lastVisible);
@@ -2859,40 +3279,106 @@
     }
   }
 
+  function loadHelpContent() {
+    const categoriesContainer = document.getElementById('helpCategories');
+    const articlesContainer = document.getElementById('helpArticles');
+    
+    if (!categoriesContainer || !articlesContainer) return;
+    
+    // Sample help categories (in a real app, these would come from a database)
+    const helpCategories = [
+      {
+        icon: 'fa-user',
+        title: 'Getting Started',
+        description: 'Learn how to create an account and set up your profile'
+      },
+      {
+        icon: 'fa-store',
+        title: 'Marketplace',
+        description: 'How to buy, sell and trade items in the marketplace'
+      },
+      {
+        icon: 'fa-comments',
+        title: 'Messaging',
+        description: 'How to communicate with other users safely'
+      },
+      {
+        icon: 'fa-users',
+        title: 'Community',
+        description: 'Participating in the community forum'
+      },
+      {
+        icon: 'fa-shield-alt',
+        title: 'Safety',
+        description: 'Tips for safe trading and avoiding scams'
+      },
+      {
+        icon: 'fa-cog',
+        title: 'Account Settings',
+        description: 'Manage your account preferences and settings'
+      }
+    ];
+    
+    // Sample help articles (in a real app, these would come from a database)
+    const helpArticles = [
+      {
+        id: '1',
+        category: 'Getting Started',
+        title: 'How to create an account',
+        content: '<p>Creating an account is easy! Just follow these steps...</p>'
+      },
+      {
+        id: '2',
+        category: 'Marketplace',
+        title: 'Listing an item for sale',
+        content: '<p>To list an item for sale, follow these steps...</p>'
+      },
+      {
+        id: '3',
+        category: 'Safety',
+        title: 'Avoiding scams',
+        content: '<p>Here are some tips to help you avoid scams...</p>'
+      }
+    ];
+    
+    // Render categories
+    categoriesContainer.innerHTML = helpCategories.map(category => `
+      <div class="category-card" onclick="showHelpArticles('${category.title}')">
+        <i class="fas ${category.icon}"></i>
+        <h3>${category.title}</h3>
+        <p>${category.description}</p>
+      </div>
+    `).join('');
+    
+    // Render articles
+    articlesContainer.innerHTML = helpArticles.map(article => `
+      <div class="article-card" onclick="showHelpArticleDetail('${article.id}')">
+        <h3>${article.title}</h3>
+        <div class="article-meta">
+          <span>${article.category}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
   // =====================
   // UI COMPONENT CREATORS
   // =====================
-  function createHomeItemCard(id, item) {
-    return `
-      <div class="home-item" data-id="${id}">
-        <img src="${item.imageUrl || 'https://placehold.co/300x200'}" alt="${item.title}">
-        <div class="home-item-content">
-          <h3>${item.title}</h3>
-          <p>${item.description || ''}</p>
-          <div class="home-item-meta">
-            <span class="date">${new Date(item.createdAt?.toDate()).toLocaleDateString()}</span>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
   function createMarketplaceItemCard(id, item, userData) {
     return `
       <div class="product-card" data-id="${id}">
         <span class="product-badge ${item.isSelling ? '' : 'trade'}">
           ${item.isSelling ? 'For Sale' : 'For Trade'}
         </span>
-        <img src="${item.images[0] || 'https://placehold.co/250'}" alt="${item.title}" class="product-image">
+        <img src="${item.images?.[0] || 'https://placehold.co/250'}" alt="${item.title}" class="product-image">
         <div class="product-info">
           <h3>${item.title}</h3>
           <div class="price">${item.isSelling ? `₱${item.price.toFixed(2)}` : 'Trade Only'}</div>
           <div class="product-meta">
             <div class="user-info">
-              <img src="${userData.photoUrl}" 
+              <img src="${userData.photoUrl || 'https://placehold.co/40x40'}" 
                    alt="${userData.username}" 
-                   class="user-photo"
-                   onerror="this.src='https://placehold.co/40x40'">
+                   class="user-photo">
               <span>${userData.username}</span>
             </div>
             ${userData.location ? `
@@ -2902,7 +3388,7 @@
             </div>
             ` : ''}
             <span class="date-posted">
-              ${new Date(item.createdAt?.toDate()).toLocaleDateString()}
+              ${item.createdAt?.toDate().toLocaleDateString() || 'Recently'}
             </span>
           </div>
         </div>
@@ -2914,13 +3400,12 @@
     return `
       <div class="forum-post" data-id="${id}">
         <div class="post-header">
-          <img src="${userData.photoUrl}" 
+          <img src="${userData.photoUrl || 'https://placehold.co/40x40'}" 
                alt="${userData.username}" 
-               class="user-photo"
-               onerror="this.src='https://placehold.co/40x40'">
+               class="user-photo">
           <div class="post-user-info">
             <span class="username">${userData.username}</span>
-            <span class="post-date">${new Date(post.createdAt?.toDate()).toLocaleDateString()}</span>
+            <span class="post-date">${post.createdAt?.toDate().toLocaleDateString() || 'Recently'}</span>
           </div>
         </div>
         <div class="post-content">
@@ -3003,24 +3488,6 @@
     }
   }
 
-  async function getUserData(userId) {
-    try {
-      const userDoc = await db.collection('users').doc(userId).get();
-      return userDoc.exists ? userDoc.data() : {
-        username: "Unknown User",
-        photoUrl: "https://placehold.co/40x40",
-        location: ""
-      };
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-      return {
-        username: "Unknown User",
-        photoUrl: "https://placehold.co/40x40",
-        location: ""
-      };
-    }
-  }
-
   function showToast(message, type = "success") {
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
@@ -3041,127 +3508,207 @@
     }, 10);
   }
 
-  function openModal(id) {
-    const modal = document.getElementById(id);
-    if (modal) {
-      modal.style.display = 'flex';
-      document.body.classList.add('modal-open');
+  function performSearch(query) {
+    if (!query || query.trim() === '') {
+      showToast("Please enter a search term", "error");
+      return;
+    }
+    
+    showToast(`Searching for: ${query}`, "info");
+    // In a real app, you would perform the search here
+    console.log("Search query:", query);
+  }
+
+  function searchHelpArticles(query) {
+    if (!query || query.trim() === '') {
+      showToast("Please enter a search term", "error");
+      return;
+    }
+    
+    showToast(`Searching help for: ${query}`, "info");
+    // In a real app, you would perform the search here
+    console.log("Help search query:", query);
+  }
+
+  function sendMessage() {
+    const messageInput = document.getElementById('messageInput');
+    const message = messageInput?.value.trim();
+    
+    if (!message) {
+      showToast("Please enter a message", "error");
+      return;
+    }
+    
+    const chatMessages = document.getElementById('chatMessages');
+    if (chatMessages) {
+      // Remove "no messages" placeholder if it exists
+      const noMessages = chatMessages.querySelector('.no-messages');
+      if (noMessages) noMessages.remove();
+      
+      // Add new message
+      chatMessages.innerHTML += `
+        <div class="message sent">
+          <div class="message-content">
+            ${message}
+            <span class="message-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+          </div>
+        </div>
+      `;
+      
+      // Scroll to bottom
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      
+      // Clear input
+      messageInput.value = '';
+      
+      // Simulate reply after 1-3 seconds
+      setTimeout(() => {
+        const replies = [
+          "Thanks for your message!",
+          "I'm interested in your item.",
+          "Can we meet tomorrow?",
+          "What's your best price?",
+          "Is this still available?"
+        ];
+        const reply = replies[Math.floor(Math.random() * replies.length)];
+        
+        chatMessages.innerHTML += `
+          <div class="message received">
+            <div class="message-content">
+              ${reply}
+              <span class="message-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+            </div>
+          </div>
+        `;
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }, 1000 + Math.random() * 2000);
     }
   }
 
-  function closeModal(id) {
-    const modal = document.getElementById(id);
-    if (modal) {
-      modal.style.display = 'none';
-      document.body.classList.remove('modal-open');
+  function showHelpArticles(category) {
+    // In a real app, you would filter articles by category
+    console.log("Showing articles for category:", category);
+    showToast(`Showing articles for: ${category}`, "info");
+  }
+
+  function showHelpArticleDetail(articleId) {
+    const articlesContainer = document.getElementById('helpArticles');
+    const articleDetail = document.getElementById('articleDetail');
+    
+    if (articlesContainer && articleDetail) {
+      // In a real app, you would fetch the article details
+      console.log("Showing article detail for ID:", articleId);
+      
+      // Sample article data
+      const article = {
+        id: articleId,
+        title: "How to create an account",
+        category: "Getting Started",
+        date: new Date().toLocaleDateString(),
+        content: `
+          <p>Creating an account on TradeConnect is easy! Just follow these steps:</p>
+          <ol>
+            <li>Click on the "Sign Up" button</li>
+            <li>Enter your email address and create a password</li>
+            <li>Verify your email address by clicking the link we send you</li>
+            <li>Complete your profile with your name and location</li>
+            <li>Start browsing the marketplace!</li>
+          </ol>
+          <p>If you have any trouble, please contact our support team.</p>
+        `
+      };
+      
+      // Update the article detail view
+      document.getElementById('articleTitle').textContent = article.title;
+      document.getElementById('articleCategory').textContent = article.category;
+      document.getElementById('articleDate').textContent = article.date;
+      document.getElementById('articleContent').innerHTML = article.content;
+      
+      // Show the detail view and hide the list
+      articlesContainer.style.display = 'none';
+      articleDetail.style.display = 'block';
     }
+  }
+
+  function saveProfileSettings() {
+    const nickname = document.getElementById('nickname')?.value;
+    const zone = document.getElementById('zone')?.value;
+    const contact = document.getElementById('contact')?.value;
+    const gcash = document.getElementById('gcash')?.value;
+    
+    if (!nickname) {
+      showToast("Please enter a nickname", "error");
+      return;
+    }
+    
+    // In a real app, you would save these to the database
+    console.log("Saving profile settings:", { nickname, zone, contact, gcash });
+    showToast("Profile settings saved successfully!", "success");
+    
+    // Update UI
+    document.getElementById('userName').textContent = nickname;
+  }
+
+  function confirmDelete() {
+    if (confirm("Are you sure you want to delete your account? This cannot be undone.")) {
+      // In a real app, you would delete the user account
+      console.log("Account deletion requested");
+      showToast("Account deletion initiated", "info");
+    }
+  }
+
+  function startTour() {
+    // In a real app, you would implement a guided tour
+    console.log("Starting user tour");
+    showToast("Starting guided tour", "info");
+    closeModal('welcomeModal');
+  }
+
+  function openTerms() {
+    // In a real app, you would show terms of service
+    console.log("Opening terms of service");
+    showToast("Terms of service would be displayed here", "info");
+  }
+
+  function openPrivacy() {
+    // In a real app, you would show privacy policy
+    console.log("Opening privacy policy");
+    showToast("Privacy policy would be displayed here", "info");
   }
 
   // =====================
   // GLOBAL EXPORTS
   // =====================
-  window.openModal = openModal;
-  window.closeModal = closeModal;
-  window.logout = () => auth.signOut().then(() => window.location.href = "login.html");
+  window.openModal = function(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.style.display = 'flex';
+      document.body.classList.add('modal-open');
+    }
+  };
 
-  // =====================
-  // STYLES
-  // =====================
-  const styleElement = document.createElement('style');
-  styleElement.textContent = `
-    /* Error Toast */
-    .global-error-toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #ff4444;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 4px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      z-index: 10000;
-      opacity: 0;
-      transition: opacity 0.3s;
+  window.closeModal = function(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.style.display = 'none';
+      document.body.classList.remove('modal-open');
     }
-    .global-error-toast.show {
-      opacity: 1;
-    }
-    
-    /* Regular Toasts */
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #333;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 4px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      z-index: 10000;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .toast.show {
-      opacity: 1;
-    }
-    .toast-success {
-      background-color: #00C851;
-    }
-    .toast-error {
-      background-color: #ff4444;
-    }
-    .toast-info {
-      background-color: #33b5e5;
-    }
-    
-    /* Loading State */
-    .loading-placeholder {
-      display: grid;
-      gap: 20px;
-      padding: 20px 0;
-    }
-    .loading-card {
-      background: #f0f0f0;
-      border-radius: 8px;
-      animation: pulse 1.5s infinite ease-in-out;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 0.3; }
-    }
-    
-    /* Load More Button */
-    .loading {
-      position: relative;
-      pointer-events: none;
-    }
-    .loading::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 16px;
-      height: 16px;
-      margin: -8px 0 0 -8px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 1s ease-in-out infinite;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-  `;
-  document.head.appendChild(styleElement);
+  };
+
+  window.logout = function() {
+    auth.signOut().then(() => {
+      window.location.href = "login.html";
+    }).catch(error => {
+      handleGlobalError(error);
+    });
+  };
+
+  window.showHelpArticles = showHelpArticles;
+  window.showHelpArticleDetail = showHelpArticleDetail;
+  window.startTour = startTour;
+  window.openTerms = openTerms;
+  window.openPrivacy = openPrivacy;
 </script>
-</script>
+
 </body>
 </html>
