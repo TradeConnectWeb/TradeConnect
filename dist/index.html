@@ -6,24 +6,23 @@
   <meta name="description" content="TradeConnect - Barter and Marketplace System for Barangay Bulihan">
   <meta name="keywords" content="TradeConnect, Barter, Marketplace, Silang, Cavite, Bulihan">
   <meta name="author" content="Maricar Caratao">
-  <!-- Fixed favicon link -->
-   <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" href="/favicon.ico" />
   <title>TradeConnect</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/css/shepherd.css"/>
   <style>
     :root {
-      --primary: #4a6fa5; /* Deep blue */
-      --secondary: #166088; /* Darker blue */
-      --accent: #d16644; /* Warm accent */
-      --light: #f8f9fa; /* Light background */
-      --dark: #343a40; /* Dark text */
-      --gray: #6c757d; /* Medium gray */
-      --light-gray: #e9ecef; /* Light gray */
-      --white: #ffffff; /* Pure white */
-      --success: #28a745; /* Green */
-      --warning: #ffc107; /* Yellow */
-      --danger: #dc3545; /* Red */
+      --primary: #4a6fa5;
+      --secondary: #166088;
+      --accent: #d16644;
+      --light: #f8f9fa;
+      --dark: #343a40;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --white: #ffffff;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
     }
 
     * {
@@ -245,7 +244,7 @@
       overflow: hidden;
     }
 
-    .user-profile:hover .user-dropdown {
+    .user-profile.active .user-dropdown {
       display: block;
       animation: fadeIn 0.2s ease;
     }
@@ -328,7 +327,188 @@
       color: var(--dark);
       transform: rotate(90deg);
     }
-
+/* Product card styles */
+    .product-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      margin-bottom: 20px;
+      transition: transform 0.2s;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    /* Pagination button styles */
+    #loadMoreBtn {
+      display: block;
+      margin: 20px auto;
+      padding: 12px 24px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+    
+    #loadMoreBtn:hover {
+      background-color: #45a049;
+    }
+    
+    #loadMoreBtn:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    
+    #loadMoreBtn.loading {
+      position: relative;
+      color: transparent;
+    }
+    
+    #loadMoreBtn.loading::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    /* Loading placeholders */
+    .loading-placeholder {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .loading-card {
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 15px;
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+    
+    /* Toast notifications */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 24px;
+      border-radius: 4px;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 1000;
+    }
+    
+    .toast.show {
+      opacity: 1;
+    }
+    
+    .toast-success {
+      background-color: #4CAF50;
+    }
+    
+    .toast-error {
+      background-color: #f44336;
+    }
+    
+    .toast-info {
+      background-color: #2196F3;
+    }
+    
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    
+    /* Form styles */
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    
+    /* Image upload styles */
+    .image-upload-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    
+    .image-upload-box {
+      border: 2px dashed #ddd;
+      border-radius: 4px;
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .image-preview {
+      max-width: 100%;
+      max-height: 100%;
+      display: none;
+    }
     /* Toast Notification */
     .toast {
       position: fixed;
@@ -1588,12 +1768,12 @@
     window.addEventListener('error', handleGlobalError);
     window.addEventListener('unhandledrejection', handleGlobalError);
   </script>
-  <script type="module" crossorigin src="/assets/index-BPI1yr_t.js"></script>
 </head>
 <body>
   <!-- Welcome Modal -->
   <div id="welcomeModal" class="modal">
     <div class="modal-content" style="max-width: 500px; text-align: center;">
+      <span class="close" onclick="closeModal('welcomeModal')">&times;</span>
       <h2>Welcome to TradeConnect! 👋</h2>
       <p>We're excited to have you join our community marketplace. Let's get you started!</p>
       
@@ -1627,11 +1807,7 @@
   <!-- Signup Modal -->
   <div id="signupModal" class="modal">
     <div class="modal-content" style="max-width: 500px;">
-      <!-- In your modal close buttons (replace existing ones) -->
-      <span class="close" onclick="closeModal('welcomeModal')" aria-label="Close modal">&times;</span>
-      <span class="close" onclick="closeModal('signupModal')" aria-label="Close modal">&times;</span>
-      <span class="close" onclick="closeModal('addPostModal')" aria-label="Close modal">&times;</span>
-      <!-- And all other modal close buttons -->
+      <span class="close" onclick="closeModal('signupModal')">&times;</span>
       <h2>Complete Your Profile</h2>
       <p>Help us personalize your experience by providing a few details.</p>
       
@@ -1699,7 +1875,6 @@
   <div class="container">
     <div class="sidebar">
       <div class="logo">
-        <!-- Fixed placeholder.com URL -->
         <img src="logo.png" alt="Logo" onerror="this.src='https://placehold.co/40'">
         <span class="logo-text">TradeConnect</span>
       </div>
@@ -1748,8 +1923,7 @@
             <i class="fas fa-bell"></i>
             <span class="notification-badge"></span>
           </div>
-          <div class="user-profile">
-            <!-- Fixed placeholder.com URL -->
+          <div class="user-profile" id="userProfile">
             <img id="userAvatar" src="https://placehold.co/40" alt="User Avatar">
             <div class="user-info">
               <span id="userName"></span>
@@ -1806,7 +1980,6 @@
           <!-- Chat Header -->
           <div class="chat-header">
             <div class="chat-partner-info">
-              <!-- Fixed placeholder.com URL -->
               <img src="https://placehold.co/40" alt="User" class="partner-avatar">
               <div>
                 <h3>User</h3>
@@ -1875,11 +2048,7 @@
       <!-- Add Post Modal -->
       <div id="addPostModal" class="modal">
         <div class="modal-content">
-          <!-- In your modal close buttons (replace existing ones) -->
-          <span class="close" onclick="closeModal('welcomeModal')" aria-label="Close modal">&times;</span>
-          <span class="close" onclick="closeModal('signupModal')" aria-label="Close modal">&times;</span>
-          <span class="close" onclick="closeModal('addPostModal')" aria-label="Close modal">&times;</span>
-          <!-- And all other modal close buttons -->
+          <span class="close" onclick="closeModal('addPostModal')">&times;</span>
           <h3>Create New Listing</h3>
           <p>Fill in the details of the item you want to list</p>
 
@@ -2148,7 +2317,6 @@
         <h2><i class="fas fa-user-cog"></i> Profile Settings</h2>
 
         <div class="profile-pic">
-          <!-- Fixed placeholder.com URL -->
           <img src="https://placehold.co/120" alt="Profile Picture" id="preview-img" title="Click to change picture" onclick="document.getElementById('profile-upload').click()" />
           <input type="file" accept="image/*" onchange="previewImage(event)" style="display: none;" id="profile-upload" />
           <button onclick="document.getElementById('profile-upload').click()" 
@@ -2235,6 +2403,352 @@
     </div>
   </div>
   
-<script src="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/js/shepherd.min.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-storage-compat.js"></script>
+
+  <script>
+    // =====================
+    // FIREBASE INITIALIZATION
+    // =====================
+    const firebaseConfig = {
+      apiKey: "AIzaSyCxaOGeOvHwS5dnPHRTpw3Lwn2surjXP1E",
+      authDomain: "tradeconnect-3c728.firebaseapp.com",
+      projectId: "tradeconnect-3c728",
+      storageBucket: "tradeconnect-3c728.appspot.com",
+      messagingSenderId: "299665603548",
+      appId: "1:299665603548:web:9ff10af44cd41605382d19"
+    };
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    // =====================
+    // PAGINATION VARIABLES
+    // =====================
+    let lastVisible = null;
+    let isFetching = false;
+    let allItemsLoaded = false;
+
+    // =====================
+    // CORE FUNCTIONALITY
+    // =====================
+    
+    // 1. AUTH STATE MANAGEMENT
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        // User is signed in
+        document.getElementById('userName').textContent = user.displayName || "User";
+        document.getElementById('userEmail').textContent = user.email;
+        
+        // Check if user profile exists, if not create one
+        const userRef = db.collection('users').doc(user.uid);
+        const userDoc = await userRef.get();
+        
+        if (!userDoc.exists) {
+          await userRef.set({
+            username: user.displayName || "Anonymous",
+            email: user.email,
+            photoUrl: user.photoURL || "",
+            location: "",
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+        }
+        
+        loadMarketplaceItems();
+      } else {
+        // No user, redirect to login
+        window.location.href = "login.html";
+      }
+    });
+
+    // 2. POST NEW ITEM WITH IMAGE UPLOADS
+    document.getElementById('postForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
+      
+      try {
+        // Get form values
+        const formData = {
+          title: document.getElementById('postTitle').value,
+          description: document.getElementById('postDescription').value,
+          category: document.getElementById('selectedCategory').value,
+          isSelling: document.getElementById('tradeOrSell').checked,
+          price: parseFloat(document.getElementById('itemPrice').value) || 0,
+          userId: auth.currentUser.uid,
+          isAvailable: true,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        // Upload images
+        const imageInputs = document.querySelectorAll('.image-upload-input');
+        formData.images = [];
+        
+        for (const input of imageInputs) {
+          if (input.files[0]) {
+            const file = input.files[0];
+            const storageRef = storage.ref(`marketplace/${Date.now()}_${file.name}`);
+            await storageRef.put(file);
+            const url = await storageRef.getDownloadURL();
+            formData.images.push(url);
+          }
+        }
+
+        // Validate minimum 3 images
+        if (formData.images.length < 3) {
+          throw new Error("Please upload at least 3 images");
+        }
+
+        // Save to Firestore
+        await db.collection('marketplaceItems').add(formData);
+        
+        // Success feedback
+        showToast("🎉 Item posted successfully!", "success");
+        closeModal('addPostModal');
+        loadMarketplaceItems();
+        
+      } catch (error) {
+        showToast(`Error: ${error.message}`, "error");
+        console.error("Posting error:", error);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+      }
+    });
+
+    // 3. LOAD MARKETPLACE ITEMS WITH PAGINATION
+    async function loadMarketplaceItems(loadMore = false) {
+      if (isFetching || (loadMore && allItemsLoaded)) return;
+      
+      isFetching = true;
+      const listingsContainer = document.getElementById('marketplaceListings');
+      const loadMoreBtn = document.getElementById('loadMoreBtn');
+      
+      // Show loading state
+      if (loadMore) {
+        loadMoreBtn.disabled = true;
+        loadMoreBtn.classList.add('loading');
+      } else {
+        listingsContainer.innerHTML = `
+          <div class="loading-placeholder">
+            <div class="loading-card" style="height: 180px;"></div>
+            <div class="loading-card" style="height: 180px;"></div>
+            <div class="loading-card" style="height: 180px;"></div>
+          </div>
+        `;
+        lastVisible = null;
+        allItemsLoaded = false;
+      }
+
+      try {
+        let query = db.collection('marketplaceItems')
+          .where("isAvailable", "==", true)
+          .orderBy('createdAt', 'desc')
+          .limit(10);
+
+        if (loadMore && lastVisible) {
+          query = query.startAfter(lastVisible);
+        }
+
+        const snapshot = await query.get();
+
+        if (!loadMore) {
+          listingsContainer.innerHTML = ''; // Clear existing on first load
+        }
+
+        if (snapshot.empty) {
+          if (loadMore) {
+            allItemsLoaded = true;
+            showToast("No more items to load", "info");
+          } else {
+            listingsContainer.innerHTML = '<div class="no-items">No listings found</div>';
+          }
+          return;
+        }
+
+        lastVisible = snapshot.docs[snapshot.docs.length - 1]; // Save last doc for pagination
+
+        // Process each item sequentially to ensure proper user data fetching
+        for (const doc of snapshot.docs) {
+          const item = doc.data();
+
+          // Fetch user profile based on userId
+          let userData = { 
+            username: "Unknown User", 
+            photoUrl: "https://placehold.co/40x40",
+            location: ""
+          };
+          
+          try {
+            const userDoc = await db.collection('users').doc(item.userId).get();
+            if (userDoc.exists) {
+              userData = {
+                ...userData,
+                ...userDoc.data()
+              };
+            }
+          } catch (userError) {
+            console.error("Error fetching user data:", userError);
+          }
+
+          listingsContainer.innerHTML += `
+            <div class="product-card" data-id="${doc.id}">
+              <span class="product-badge ${item.isSelling ? '' : 'trade'}">
+                ${item.isSelling ? 'For Sale' : 'For Trade'}
+              </span>
+              <img src="${item.images[0] || 'https://placehold.co/250'}" alt="${item.title}" class="product-image">
+              <div class="product-info">
+                <h3>${item.title}</h3>
+                <div class="price">${item.isSelling ? `₱${item.price.toFixed(2)}` : 'Trade Only'}</div>
+                <div class="product-meta">
+                  <div class="user-info">
+                    <img src="${userData.photoUrl || 'https://placehold.co/40x40'}" 
+                         alt="${userData.username}" 
+                         class="user-photo"
+                         onerror="this.src='https://placehold.co/40x40'">
+                    <span>${userData.username}</span>
+                  </div>
+                  ${userData.location ? `
+                  <div class="location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>${userData.location}</span>
+                  </div>
+                  ` : ''}
+                  <span class="date-posted">
+                    ${new Date(item.createdAt?.toDate()).toLocaleDateString()}
+                  </span>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        // Check if we got fewer items than requested (end of collection)
+        if (snapshot.docs.length < 10) {
+          allItemsLoaded = true;
+          if (loadMore) {
+            showToast("All items loaded", "info");
+          }
+        }
+      } catch (error) {
+        if (!loadMore) {
+          listingsContainer.innerHTML = '<div class="error">Failed to load items. Please try again.</div>';
+        }
+        showToast(`Error loading items: ${error.message}`, "error");
+        console.error("Loading error:", error);
+      } finally {
+        isFetching = false;
+        if (loadMore) {
+          loadMoreBtn.disabled = false;
+          loadMoreBtn.classList.remove('loading');
+        }
+        
+        // Hide load more button if all items are loaded
+        if (allItemsLoaded) {
+          loadMoreBtn.style.display = 'none';
+        } else {
+          loadMoreBtn.style.display = 'block';
+        }
+      }
+    }
+
+    // 4. LOAD MORE BUTTON EVENT LISTENER
+    document.getElementById('loadMoreBtn').addEventListener('click', () => {
+      loadMarketplaceItems(true); // Load next batch
+    });
+
+    // =====================
+    // UI UTILITIES
+    // =====================
+    
+    // Toast notifications
+    function showToast(message, type = "success") {
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.innerHTML = `
+        <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+        <span>${message}</span>
+      `;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+          setTimeout(() => toast.remove(), 300);
+        }, 3000);
+      }, 10);
+    }
+
+    // Modal controls
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
+      document.body.classList.add('modal-open');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+      document.body.classList.remove('modal-open');
+    }
+
+    // Initialize UI interactions
+    document.addEventListener('DOMContentLoaded', () => {
+      // Navigation
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function() {
+          document.querySelectorAll('.content-section').forEach(section => {
+            section.classList.remove('active');
+          });
+          document.getElementById(this.dataset.target).classList.add('active');
+        });
+      });
+
+      // User dropdown
+      document.getElementById('userProfile').addEventListener('click', function(e) {
+        e.stopPropagation();
+        this.classList.toggle('active');
+      });
+      document.addEventListener('click', () => {
+        document.getElementById('userProfile').classList.remove('active');
+      });
+
+      // Category selection
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          document.getElementById('selectedCategory').value = this.dataset.category;
+        });
+      });
+
+      // Trade/Sell toggle
+      document.getElementById('tradeOrSell').addEventListener('change', function() {
+        document.getElementById('priceInput').style.display = this.checked ? 'block' : 'none';
+      });
+
+      // Image previews
+      document.querySelectorAll('.image-upload-input').forEach(input => {
+        input.addEventListener('change', function() {
+          if (this.files[0]) {
+            const preview = this.closest('.image-upload-box').querySelector('.image-preview');
+            preview.src = URL.createObjectURL(this.files[0]);
+            preview.style.display = 'block';
+            this.closest('.image-upload-box').querySelector('.image-upload-text').style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Global functions
+    window.openModal = openModal;
+    window.closeModal = closeModal;
+    window.logout = () => auth.signOut().then(() => window.location.href = "login.html");
+  </script>
 </body>
 </html>

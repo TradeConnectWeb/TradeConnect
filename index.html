@@ -6,24 +6,23 @@
   <meta name="description" content="TradeConnect - Barter and Marketplace System for Barangay Bulihan">
   <meta name="keywords" content="TradeConnect, Barter, Marketplace, Silang, Cavite, Bulihan">
   <meta name="author" content="Maricar Caratao">
-  <!-- Fixed favicon link -->
-   <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" href="/favicon.ico" />
   <title>TradeConnect</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/css/shepherd.css"/>
   <style>
     :root {
-      --primary: #4a6fa5; /* Deep blue */
-      --secondary: #166088; /* Darker blue */
-      --accent: #d16644; /* Warm accent */
-      --light: #f8f9fa; /* Light background */
-      --dark: #343a40; /* Dark text */
-      --gray: #6c757d; /* Medium gray */
-      --light-gray: #e9ecef; /* Light gray */
-      --white: #ffffff; /* Pure white */
-      --success: #28a745; /* Green */
-      --warning: #ffc107; /* Yellow */
-      --danger: #dc3545; /* Red */
+      --primary: #4a6fa5;
+      --secondary: #166088;
+      --accent: #d16644;
+      --light: #f8f9fa;
+      --dark: #343a40;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --white: #ffffff;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
     }
 
     * {
@@ -245,7 +244,7 @@
       overflow: hidden;
     }
 
-    .user-profile:hover .user-dropdown {
+    .user-profile.active .user-dropdown {
       display: block;
       animation: fadeIn 0.2s ease;
     }
@@ -328,7 +327,188 @@
       color: var(--dark);
       transform: rotate(90deg);
     }
-
+/* Product card styles */
+    .product-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      margin-bottom: 20px;
+      transition: transform 0.2s;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    /* Pagination button styles */
+    #loadMoreBtn {
+      display: block;
+      margin: 20px auto;
+      padding: 12px 24px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+    
+    #loadMoreBtn:hover {
+      background-color: #45a049;
+    }
+    
+    #loadMoreBtn:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    
+    #loadMoreBtn.loading {
+      position: relative;
+      color: transparent;
+    }
+    
+    #loadMoreBtn.loading::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    /* Loading placeholders */
+    .loading-placeholder {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .loading-card {
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 15px;
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+    
+    /* Toast notifications */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 24px;
+      border-radius: 4px;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 1000;
+    }
+    
+    .toast.show {
+      opacity: 1;
+    }
+    
+    .toast-success {
+      background-color: #4CAF50;
+    }
+    
+    .toast-error {
+      background-color: #f44336;
+    }
+    
+    .toast-info {
+      background-color: #2196F3;
+    }
+    
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    
+    /* Form styles */
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    
+    /* Image upload styles */
+    .image-upload-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    
+    .image-upload-box {
+      border: 2px dashed #ddd;
+      border-radius: 4px;
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .image-preview {
+      max-width: 100%;
+      max-height: 100%;
+      display: none;
+    }
     /* Toast Notification */
     .toast {
       position: fixed;
@@ -1593,6 +1773,7 @@
   <!-- Welcome Modal -->
   <div id="welcomeModal" class="modal">
     <div class="modal-content" style="max-width: 500px; text-align: center;">
+      <span class="close" onclick="closeModal('welcomeModal')">&times;</span>
       <h2>Welcome to TradeConnect! 👋</h2>
       <p>We're excited to have you join our community marketplace. Let's get you started!</p>
       
@@ -1626,11 +1807,7 @@
   <!-- Signup Modal -->
   <div id="signupModal" class="modal">
     <div class="modal-content" style="max-width: 500px;">
-      <!-- In your modal close buttons (replace existing ones) -->
-      <span class="close" onclick="closeModal('welcomeModal')" aria-label="Close modal">&times;</span>
-      <span class="close" onclick="closeModal('signupModal')" aria-label="Close modal">&times;</span>
-      <span class="close" onclick="closeModal('addPostModal')" aria-label="Close modal">&times;</span>
-      <!-- And all other modal close buttons -->
+      <span class="close" onclick="closeModal('signupModal')">&times;</span>
       <h2>Complete Your Profile</h2>
       <p>Help us personalize your experience by providing a few details.</p>
       
@@ -1698,7 +1875,6 @@
   <div class="container">
     <div class="sidebar">
       <div class="logo">
-        <!-- Fixed placeholder.com URL -->
         <img src="logo.png" alt="Logo" onerror="this.src='https://placehold.co/40'">
         <span class="logo-text">TradeConnect</span>
       </div>
@@ -1747,8 +1923,7 @@
             <i class="fas fa-bell"></i>
             <span class="notification-badge"></span>
           </div>
-          <div class="user-profile">
-            <!-- Fixed placeholder.com URL -->
+          <div class="user-profile" id="userProfile">
             <img id="userAvatar" src="https://placehold.co/40" alt="User Avatar">
             <div class="user-info">
               <span id="userName"></span>
@@ -1805,7 +1980,6 @@
           <!-- Chat Header -->
           <div class="chat-header">
             <div class="chat-partner-info">
-              <!-- Fixed placeholder.com URL -->
               <img src="https://placehold.co/40" alt="User" class="partner-avatar">
               <div>
                 <h3>User</h3>
@@ -1874,11 +2048,7 @@
       <!-- Add Post Modal -->
       <div id="addPostModal" class="modal">
         <div class="modal-content">
-          <!-- In your modal close buttons (replace existing ones) -->
-          <span class="close" onclick="closeModal('welcomeModal')" aria-label="Close modal">&times;</span>
-          <span class="close" onclick="closeModal('signupModal')" aria-label="Close modal">&times;</span>
-          <span class="close" onclick="closeModal('addPostModal')" aria-label="Close modal">&times;</span>
-          <!-- And all other modal close buttons -->
+          <span class="close" onclick="closeModal('addPostModal')">&times;</span>
           <h3>Create New Listing</h3>
           <p>Fill in the details of the item you want to list</p>
 
@@ -2147,7 +2317,6 @@
         <h2><i class="fas fa-user-cog"></i> Profile Settings</h2>
 
         <div class="profile-pic">
-          <!-- Fixed placeholder.com URL -->
           <img src="https://placehold.co/120" alt="Profile Picture" id="preview-img" title="Click to change picture" onclick="document.getElementById('profile-upload').click()" />
           <input type="file" accept="image/*" onchange="previewImage(event)" style="display: none;" id="profile-upload" />
           <button onclick="document.getElementById('profile-upload').click()" 
@@ -2234,684 +2403,352 @@
     </div>
   </div>
   
-<script src="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/js/shepherd.min.js"></script>
-<script type="module">
-  // Firebase imports
-  import { 
-    initializeApp 
-  } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-  import { 
-    getAuth, 
-    onAuthStateChanged, 
-    signOut,
-    sendEmailVerification
-  } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-  import { 
-    getDatabase, 
-    ref, 
-    get,
-    set
-  } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-  import { 
-    getFirestore,
-    collection,
-    query,
-    orderBy,
-    limit,
-    startAfter,
-    where,
-    getDocs,
-    serverTimestamp,
-    enableIndexedDbPersistence
-  } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-  import { 
-    getStorage,
-    ref as storageRef,
-    uploadBytes,
-    getDownloadURL
-  } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
+ <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-storage-compat.js"></script>
 
-  // Firebase Configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyCxaOGeOvHwS5dnPHRTpw3Lwn2surjXP1E",
-    authDomain: "tradeconnect-3c728.firebaseapp.com",
-    projectId: "tradeconnect-3c728",
-    storageBucket: "tradeconnect-3c728.appspot.com",
-    messagingSenderId: "299665603548",
-    appId: "1:299665603548:web:9ff10af44cd41605382d19",
-    databaseURL: "https://tradeconnect-3c728-default-rtdb.asia-southeast1.firebasedatabase.app"
-  };
-  
-  // Initialize Firebase services
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-  const storage = getStorage(app);
-  const realtimeDb = getDatabase(app);
+  <script>
+    // =====================
+    // FIREBASE INITIALIZATION
+    // =====================
+    const firebaseConfig = {
+      apiKey: "AIzaSyCxaOGeOvHwS5dnPHRTpw3Lwn2surjXP1E",
+      authDomain: "tradeconnect-3c728.firebaseapp.com",
+      projectId: "tradeconnect-3c728",
+      storageBucket: "tradeconnect-3c728.appspot.com",
+      messagingSenderId: "299665603548",
+      appId: "1:299665603548:web:9ff10af44cd41605382d19"
+    };
 
-  /**
-   * Enhanced Modal Manager with proper close functionality
-   */
-  const ModalManager = {
-    init() {
-      document.addEventListener('click', (e) => {
-        // Close modal when clicking outside content
-        if (e.target.classList.contains('modal')) {
-          this.close(e.target.id);
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    // =====================
+    // PAGINATION VARIABLES
+    // =====================
+    let lastVisible = null;
+    let isFetching = false;
+    let allItemsLoaded = false;
+
+    // =====================
+    // CORE FUNCTIONALITY
+    // =====================
+    
+    // 1. AUTH STATE MANAGEMENT
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        // User is signed in
+        document.getElementById('userName').textContent = user.displayName || "User";
+        document.getElementById('userEmail').textContent = user.email;
+        
+        // Check if user profile exists, if not create one
+        const userRef = db.collection('users').doc(user.uid);
+        const userDoc = await userRef.get();
+        
+        if (!userDoc.exists) {
+          await userRef.set({
+            username: user.displayName || "Anonymous",
+            email: user.email,
+            photoUrl: user.photoURL || "",
+            location: "",
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
         }
         
-        // Close modal when clicking close button
-        if (e.target.classList.contains('close')) {
-          const modal = e.target.closest('.modal');
-          if (modal) this.close(modal.id);
-        }
-      });
-      
-      // Close modal with Escape key
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          const openModal = document.querySelector('.modal[style*="display: flex"]');
-          if (openModal) this.close(openModal.id);
-        }
-      });
-    },
-    
-    open(id) {
-      const modal = document.getElementById(id);
-      if (modal) {
-        modal.style.display = 'flex';
-        document.body.classList.add('modal-open');
-        const firstInput = modal.querySelector('input, textarea, button');
-        if (firstInput) firstInput.focus();
+        loadMarketplaceItems();
+      } else {
+        // No user, redirect to login
+        window.location.href = "login.html";
       }
-    },
-    
-    close(id) {
-      const modal = document.getElementById(id);
-      if (modal) {
-        modal.style.display = 'none';
-        document.body.classList.remove('modal-open');
-      }
-    }
-  };
+    });
 
-  /**
-   * Toast Notification System
-   */
-  const Toast = {
-    show(message, type = 'success', duration = 3000) {
-      // Remove existing toasts
-      document.querySelectorAll('.toast').forEach(toast => toast.remove());
+    // 2. POST NEW ITEM WITH IMAGE UPLOADS
+    document.getElementById('postForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
       
-      const toast = document.createElement('div');
-      toast.className = `toast toast-${type}`;
-      toast.setAttribute('role', 'alert');
-      toast.setAttribute('aria-live', 'assertive');
-      toast.innerHTML = `
-        <i class="fas ${type === 'success' ? 'fa-check-circle' : 
-                        type === 'error' ? 'fa-exclamation-circle' : 
-                        'fa-info-circle'}"></i>
-        <span>${message}</span>
-      `;
-      
-      document.body.appendChild(toast);
-      
-      // Show toast with animation
-      setTimeout(() => toast.classList.add('show'), 10);
-      
-      // Hide toast after duration
-      setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 300);
-      }, duration);
-      
-      // Allow clicking to dismiss
-      toast.addEventListener('click', () => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 300);
-      });
-    }
-  };
-
-  /**
-   * Utility Functions
-   */
-  const Utils = {
-    formatDate(timestamp) {
-      if (!timestamp) return "Recently";
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
       
       try {
-        const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-        if (isNaN(date.getTime())) return "Recently";
-        
-        const now = new Date();
-        const diff = now - date;
-        const seconds = Math.floor(diff / 1000);
-        const minutes = Math.floor(seconds / 60);
-        const hours = Math.floor(minutes / 60);
-        const days = Math.floor(hours / 24);
-        
-        if (seconds < 60) return "Just now";
-        if (minutes < 60) return `${minutes} min ago`;
-        if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`;
-        if (days < 7) return `${days} day${days === 1 ? '' : 's'} ago`;
-        
-        return new Intl.DateTimeFormat(navigator.language, {
-          month: 'short',
-          day: 'numeric',
-          year: days > 365 ? 'numeric' : undefined
-        }).format(date);
-      } catch (e) {
-        console.error('Date formatting error:', e);
-        return "Recently";
-      }
-    },
-    
-    escapeHtml(unsafe) {
-      if (!unsafe) return '';
-      return unsafe
-        .toString()
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    },
-    
-    debounce(func, delay) {
-      let timeout;
-      return (...args) => {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(this, args), delay);
-      };
-    },
-    
-    async compressImage(file, maxWidth = 800, quality = 0.7) {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const img = new Image();
-          img.src = e.target.result;
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            const scale = Math.min(maxWidth / img.width, 1);
-            canvas.width = img.width * scale;
-            canvas.height = img.height * scale;
-            
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            
-            canvas.toBlob(
-              (blob) => resolve(new File([blob], file.name, { type: 'image/jpeg' })),
-              'image/jpeg',
-              quality
-            );
-          };
+        // Get form values
+        const formData = {
+          title: document.getElementById('postTitle').value,
+          description: document.getElementById('postDescription').value,
+          category: document.getElementById('selectedCategory').value,
+          isSelling: document.getElementById('tradeOrSell').checked,
+          price: parseFloat(document.getElementById('itemPrice').value) || 0,
+          userId: auth.currentUser.uid,
+          isAvailable: true,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
         };
-        reader.readAsDataURL(file);
-      });
-    }
-  };
 
-  /**
-   * Enhanced Database Service with proper error handling
-   */
-  const DatabaseService = {
-    async getUserData(uid, retryCount = 0) {
-      const MAX_RETRIES = 3;
-      const RETRY_DELAY = 1000;
-      
-      try {
-        const snapshot = await get(ref(realtimeDb, `users/${uid}`));
-        if (!snapshot.exists()) {
-          // Create default user data if it doesn't exist
-          const defaultData = {
-            username: "New User",
-            zone: "",
-            contact: "",
-            gcash: "",
-            photoURL: "https://placehold.co/120",
-            isNewUser: true,
-            lastUpdated: serverTimestamp()
-          };
-          await set(ref(realtimeDb, `users/${uid}`), defaultData);
-          return defaultData;
-        }
-        return snapshot.val();
-      } catch (error) {
-        console.error("Error getting user data:", error);
-        if (error.code === 'PERMISSION_DENIED') {
-          Toast.show("Please sign in to access your data", "error");
-          await signOut(auth);
-          window.location.href = "login.html";
-          return null;
-        }
+        // Upload images
+        const imageInputs = document.querySelectorAll('.image-upload-input');
+        formData.images = [];
         
-        if (retryCount < MAX_RETRIES) {
-          console.log(`Retrying user data fetch (attempt ${retryCount + 1})`);
-          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * (retryCount + 1)));
-          return this.getUserData(uid, retryCount + 1);
-        }
-        throw error;
-      }
-    },
-    
-    async getMarketplaceItems(filters = {}, lastDoc = null, limit = 10) {
-      try {
-        let q = query(
-          collection(db, "marketplaceItems"),
-          orderBy('createdAt', 'desc'),
-          limit(limit)
-        );
-        
-        if (filters.category && filters.category !== 'All Items') {
-          q = query(q, where('category', '==', filters.category));
-        }
-        
-        if (filters.userId) {
-          q = query(q, where('uid', '==', filters.userId));
-        }
-        
-        if (lastDoc) {
-          q = query(q, startAfter(lastDoc));
-        }
-        
-        const snapshot = await getDocs(q);
-        
-        if (!snapshot || !snapshot.docs) {
-          throw new Error("Invalid snapshot returned");
-        }
-        
-        return {
-          items: snapshot.docs.map(doc => {
-            const data = doc.data();
-            return {
-              id: doc.id,
-              title: data.title || 'Untitled',
-              price: data.price || 0,
-              images: data.images || [],
-              isSelling: data.isSelling || false,
-              createdAt: data.createdAt || serverTimestamp(),
-              views: data.views || 0,
-              category: data.category || 'Other'
-            };
-          }),
-          lastDoc: snapshot.docs[snapshot.docs.length - 1] || null
-        };
-      } catch (error) {
-        console.error("Database Error:", error);
-        throw new Error("Failed to load marketplace items. Please try again later.");
-      }
-    },
-    
-    async uploadImage(file, path, compress = true) {
-      try {
-        const fileToUpload = compress ? await Utils.compressImage(file) : file;
-        const fileRef = storageRef(storage, `${path}/${Date.now()}_${fileToUpload.name}`);
-        await uploadBytes(fileRef, fileToUpload);
-        return getDownloadURL(fileRef);
-      } catch (error) {
-        console.error("Error uploading image:", error);
-        throw error;
-      }
-    }
-  };
-
-  /**
-   * Robust Auth State Handler with proper permission handling
-   */
-  const AuthManager = {
-    MAX_RETRIES: 3,
-    RETRY_DELAY: 1000,
-    
-    async initialize() {
-      return new Promise((resolve, reject) => {
-        onAuthStateChanged(auth, async (user) => {
-          try {
-            await this.handleAuthState(user);
-            resolve();
-          } catch (error) {
-            reject(error);
+        for (const input of imageInputs) {
+          if (input.files[0]) {
+            const file = input.files[0];
+            const storageRef = storage.ref(`marketplace/${Date.now()}_${file.name}`);
+            await storageRef.put(file);
+            const url = await storageRef.getDownloadURL();
+            formData.images.push(url);
           }
-        }, (error) => {
-          console.error("Auth state observer error:", error);
-          reject(error);
-        });
-      });
-    },
-    
-    async handleAuthState(user, retryCount = 0) {
-      try {
-        if (!user) {
-          window.location.href = "login.html";
-          return;
         }
 
-        // Verify email if needed
-        if (!user.emailVerified) {
-          await sendEmailVerification(user);
-          Toast.show("Verification email sent. Please verify your email.", "info");
+        // Validate minimum 3 images
+        if (formData.images.length < 3) {
+          throw new Error("Please upload at least 3 images");
         }
 
-        // Get user data with proper error handling
-        const userData = await DatabaseService.getUserData(user.uid);
+        // Save to Firestore
+        await db.collection('marketplaceItems').add(formData);
         
-        if (!userData) {
-          // User data couldn't be retrieved, likely due to permission issues
-          return;
-        }
-
-        if (userData?.isNewUser) {
-          setTimeout(() => ModalManager.open('welcomeModal'), 1000);
-        }
-
-        // Update UI with user data
-        if (document.getElementById('userName')) {
-          document.getElementById('userName').textContent = userData.username || "User";
-          document.getElementById('userEmail').textContent = user.email || "";
-          document.getElementById('userAvatar').src = userData.photoURL || "https://placehold.co/40";
-        }
-
-      } catch (error) {
-        console.error("Auth state error:", error);
-        
-        if (error.code === 'PERMISSION_DENIED') {
-          Toast.show("Session expired. Please login again.", "error");
-          await signOut(auth);
-          window.location.href = "login.html";
-          return;
-        }
-        
-        if (retryCount < this.MAX_RETRIES) {
-          console.log(`Retrying auth state (attempt ${retryCount + 1})`);
-          await new Promise(resolve => setTimeout(resolve, this.RETRY_DELAY * (retryCount + 1)));
-          return this.handleAuthState(user, retryCount + 1);
-        }
-        
-        Toast.show("Failed to authenticate. Please refresh the page.", "error");
-      }
-    }
-  };
-
-  /**
-   * Marketplace Manager with proper error handling and infinite scroll
-   */
-  const MarketplaceManager = {
-    lastVisibleDoc: null,
-    currentCategory: 'All Items',
-    isLoading: false,
-    hasMoreItems: true,
-    
-    init() {
-      this.setupEventListeners();
-      this.loadListings();
-    },
-    
-    setupEventListeners() {
-      // Category buttons
-      document.querySelectorAll(".category").forEach(btn => {
-        btn.addEventListener("click", () => {
-          document.querySelectorAll(".category").forEach(b => b.classList.remove("active"));
-          btn.classList.add("active");
-          this.currentCategory = btn.textContent;
-          this.loadListings();
-        });
-      });
-      
-      // Trade/Sell toggle
-      const tradeOrSell = document.getElementById("tradeOrSell");
-      if (tradeOrSell) {
-        tradeOrSell.addEventListener("change", () => {
-          const priceInput = document.getElementById("priceInput");
-          if (priceInput) {
-            priceInput.style.display = tradeOrSell.checked ? "block" : "none";
-            document.getElementById("itemPrice").required = tradeOrSell.checked;
-          }
-        });
-      }
-      
-      // Initialize infinite scroll
-      window.addEventListener('scroll', Utils.debounce(() => {
-        if (this.isLoading || !this.hasMoreItems) return;
-        
-        const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-        const isNearBottom = scrollTop + clientHeight >= scrollHeight - 100;
-        
-        if (isNearBottom) {
-          this.loadListings(true);
-        }
-      }, 200));
-    },
-    
-    async loadListings(loadMore = false) {
-      if (this.isLoading) return;
-      
-      this.isLoading = true;
-      const listingsContainer = document.getElementById("marketplaceListings") || 
-                               document.getElementById("homeListings");
-      
-      if (!listingsContainer) {
-        this.isLoading = false;
-        return;
-      }
-
-      try {
-        if (!loadMore) {
-          this.lastVisibleDoc = null;
-          this.hasMoreItems = true;
-          listingsContainer.innerHTML = `
-            <div class="loading-spinner" aria-live="polite">
-              <i class="fas fa-spinner fa-spin" aria-hidden="true"></i> 
-              Loading listings...
-            </div>
-          `;
-        } else {
-          // Show loading indicator at bottom when loading more
-          const loadingIndicator = document.createElement('div');
-          loadingIndicator.className = 'loading-spinner';
-          loadingIndicator.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Loading more...';
-          listingsContainer.appendChild(loadingIndicator);
-        }
-        
-        const { items, lastDoc } = await DatabaseService.getMarketplaceItems(
-          { category: this.currentCategory },
-          this.lastVisibleDoc
-        );
-        
-        this.lastVisibleDoc = lastDoc;
-        this.hasMoreItems = items.length > 0;
-        
-        if (items.length === 0 && !loadMore) {
-          listingsContainer.innerHTML = `
-            <div class="no-listings" aria-live="polite">
-              <i class="fas fa-box-open" aria-hidden="true"></i>
-              <p>No listings found in this category</p>
-            </div>
-          `;
-          return;
-        }
-        
-        this.renderListings(items, loadMore, listingsContainer);
+        // Success feedback
+        showToast("🎉 Item posted successfully!", "success");
+        closeModal('addPostModal');
+        loadMarketplaceItems();
         
       } catch (error) {
-        console.error("Error loading listings:", error);
-        Toast.show("Failed to load listings", "error");
-        
-        if (!loadMore) {
-          listingsContainer.innerHTML = `
-            <div class="error-state" aria-live="polite">
-              <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
-              <p>Failed to load listings. Please try again.</p>
-              <button onclick="window.MarketplaceManager.loadListings()">Retry</button>
-            </div>
-          `;
-        }
+        showToast(`Error: ${error.message}`, "error");
+        console.error("Posting error:", error);
       } finally {
-        // Remove any loading indicators
-        document.querySelectorAll('.loading-spinner').forEach(el => el.remove());
-        this.isLoading = false;
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
       }
-    },
-    
-    renderListings(items, append = false, container) {
-      if (!container) {
-        container = document.getElementById("marketplaceListings") || 
-                    document.getElementById("homeListings");
-      }
+    });
+
+    // 3. LOAD MARKETPLACE ITEMS WITH PAGINATION
+    async function loadMarketplaceItems(loadMore = false) {
+      if (isFetching || (loadMore && allItemsLoaded)) return;
       
-      if (!container) return;
+      isFetching = true;
+      const listingsContainer = document.getElementById('marketplaceListings');
+      const loadMoreBtn = document.getElementById('loadMoreBtn');
       
-      if (!append) {
-        container.innerHTML = '';
-      }
-      
-      items.forEach(item => {
-        const listing = document.createElement("div");
-        listing.className = "product-card";
-        listing.dataset.id = item.id;
-        listing.setAttribute('role', 'article');
-        listing.tabIndex = 0;
-        
-        listing.innerHTML = `
-          <span class="product-badge ${item.isSelling ? '' : 'trade'}" aria-label="${item.isSelling ? 'For Sale' : 'For Trade'}">
-            ${item.isSelling ? 'For Sale' : 'For Trade'}
-          </span>
-          <img src="${item.images[0] || 'https://placehold.co/250'}" 
-               alt="${Utils.escapeHtml(item.title)}" 
-               loading="lazy"
-               onerror="this.src='https://placehold.co/250'">
-          <div class="product-info">
-            <h3>${Utils.escapeHtml(item.title)}</h3>
-            <div class="price">${item.isSelling ? `₱${item.price.toFixed(2)}` : 'Trade Only'}</div>
-            <div class="location">
-              <i class="fas fa-map-marker-alt" aria-hidden="true"></i> Bulihan, Silang, Cavite
-            </div>
-            <div class="product-meta">
-              <span>${Utils.formatDate(item.createdAt)}</span>
-              <span><i class="fas fa-eye" aria-hidden="true"></i> ${item.views || 0}</span>
-            </div>
+      // Show loading state
+      if (loadMore) {
+        loadMoreBtn.disabled = true;
+        loadMoreBtn.classList.add('loading');
+      } else {
+        listingsContainer.innerHTML = `
+          <div class="loading-placeholder">
+            <div class="loading-card" style="height: 180px;"></div>
+            <div class="loading-card" style="height: 180px;"></div>
+            <div class="loading-card" style="height: 180px;"></div>
           </div>
         `;
-        
-        listing.addEventListener('click', () => {
-          this.viewListingDetails(item);
-        });
-        
-        listing.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            this.viewListingDetails(item);
-          }
-        });
-        
-        container.appendChild(listing);
-      });
-    },
-    
-    viewListingDetails(item) {
-      console.log('Viewing listing:', item);
-      Toast.show(`Viewing: ${item.title}`, 'info');
-    }
-  };
-
-  /**
-   * Initialize the application
-   */
-  document.addEventListener('DOMContentLoaded', async function() {
-    try {
-      // Initialize auth first
-      await AuthManager.initialize();
-      
-      // Initialize modal manager
-      ModalManager.init();
-      
-      // Initialize marketplace if on relevant page
-      if (document.getElementById('marketplaceListings') || document.getElementById('homeListings')) {
-        MarketplaceManager.init();
+        lastVisible = null;
+        allItemsLoaded = false;
       }
+
+      try {
+        let query = db.collection('marketplaceItems')
+          .where("isAvailable", "==", true)
+          .orderBy('createdAt', 'desc')
+          .limit(10);
+
+        if (loadMore && lastVisible) {
+          query = query.startAfter(lastVisible);
+        }
+
+        const snapshot = await query.get();
+
+        if (!loadMore) {
+          listingsContainer.innerHTML = ''; // Clear existing on first load
+        }
+
+        if (snapshot.empty) {
+          if (loadMore) {
+            allItemsLoaded = true;
+            showToast("No more items to load", "info");
+          } else {
+            listingsContainer.innerHTML = '<div class="no-items">No listings found</div>';
+          }
+          return;
+        }
+
+        lastVisible = snapshot.docs[snapshot.docs.length - 1]; // Save last doc for pagination
+
+        // Process each item sequentially to ensure proper user data fetching
+        for (const doc of snapshot.docs) {
+          const item = doc.data();
+
+          // Fetch user profile based on userId
+          let userData = { 
+            username: "Unknown User", 
+            photoUrl: "https://placehold.co/40x40",
+            location: ""
+          };
+          
+          try {
+            const userDoc = await db.collection('users').doc(item.userId).get();
+            if (userDoc.exists) {
+              userData = {
+                ...userData,
+                ...userDoc.data()
+              };
+            }
+          } catch (userError) {
+            console.error("Error fetching user data:", userError);
+          }
+
+          listingsContainer.innerHTML += `
+            <div class="product-card" data-id="${doc.id}">
+              <span class="product-badge ${item.isSelling ? '' : 'trade'}">
+                ${item.isSelling ? 'For Sale' : 'For Trade'}
+              </span>
+              <img src="${item.images[0] || 'https://placehold.co/250'}" alt="${item.title}" class="product-image">
+              <div class="product-info">
+                <h3>${item.title}</h3>
+                <div class="price">${item.isSelling ? `₱${item.price.toFixed(2)}` : 'Trade Only'}</div>
+                <div class="product-meta">
+                  <div class="user-info">
+                    <img src="${userData.photoUrl || 'https://placehold.co/40x40'}" 
+                         alt="${userData.username}" 
+                         class="user-photo"
+                         onerror="this.src='https://placehold.co/40x40'">
+                    <span>${userData.username}</span>
+                  </div>
+                  ${userData.location ? `
+                  <div class="location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>${userData.location}</span>
+                  </div>
+                  ` : ''}
+                  <span class="date-posted">
+                    ${new Date(item.createdAt?.toDate()).toLocaleDateString()}
+                  </span>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        // Check if we got fewer items than requested (end of collection)
+        if (snapshot.docs.length < 10) {
+          allItemsLoaded = true;
+          if (loadMore) {
+            showToast("All items loaded", "info");
+          }
+        }
+      } catch (error) {
+        if (!loadMore) {
+          listingsContainer.innerHTML = '<div class="error">Failed to load items. Please try again.</div>';
+        }
+        showToast(`Error loading items: ${error.message}`, "error");
+        console.error("Loading error:", error);
+      } finally {
+        isFetching = false;
+        if (loadMore) {
+          loadMoreBtn.disabled = false;
+          loadMoreBtn.classList.remove('loading');
+        }
+        
+        // Hide load more button if all items are loaded
+        if (allItemsLoaded) {
+          loadMoreBtn.style.display = 'none';
+        } else {
+          loadMoreBtn.style.display = 'block';
+        }
+      }
+    }
+
+    // 4. LOAD MORE BUTTON EVENT LISTENER
+    document.getElementById('loadMoreBtn').addEventListener('click', () => {
+      loadMarketplaceItems(true); // Load next batch
+    });
+
+    // =====================
+    // UI UTILITIES
+    // =====================
+    
+    // Toast notifications
+    function showToast(message, type = "success") {
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.innerHTML = `
+        <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+        <span>${message}</span>
+      `;
+      document.body.appendChild(toast);
       
-      // Set up navigation
+      setTimeout(() => {
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+          setTimeout(() => toast.remove(), 300);
+        }, 3000);
+      }, 10);
+    }
+
+    // Modal controls
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
+      document.body.classList.add('modal-open');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+      document.body.classList.remove('modal-open');
+    }
+
+    // Initialize UI interactions
+    document.addEventListener('DOMContentLoaded', () => {
+      // Navigation
       document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', function() {
-          const target = this.dataset.target;
           document.querySelectorAll('.content-section').forEach(section => {
             section.classList.remove('active');
           });
-          document.querySelectorAll('.nav-link').forEach(navLink => {
-            navLink.classList.remove('active');
-          });
+          document.getElementById(this.dataset.target).classList.add('active');
+        });
+      });
+
+      // User dropdown
+      document.getElementById('userProfile').addEventListener('click', function(e) {
+        e.stopPropagation();
+        this.classList.toggle('active');
+      });
+      document.addEventListener('click', () => {
+        document.getElementById('userProfile').classList.remove('active');
+      });
+
+      // Category selection
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
           this.classList.add('active');
-          document.getElementById(target).classList.add('active');
+          document.getElementById('selectedCategory').value = this.dataset.category;
         });
       });
-      
-      // Set up floating post button
-      const floatingBtn = document.querySelector('.floating-post-btn');
-      if (floatingBtn) {
-        floatingBtn.addEventListener('click', () => {
-          ModalManager.open('addPostModal');
-        });
-      }
-      
-      // Set up image upload previews
+
+      // Trade/Sell toggle
+      document.getElementById('tradeOrSell').addEventListener('change', function() {
+        document.getElementById('priceInput').style.display = this.checked ? 'block' : 'none';
+      });
+
+      // Image previews
       document.querySelectorAll('.image-upload-input').forEach(input => {
-        input.addEventListener('change', function(e) {
-          const file = e.target.files[0];
-          if (!file) return;
-          
-          const preview = this.closest('.image-upload-box').querySelector('.image-preview');
-          const reader = new FileReader();
-          
-          reader.onload = function(event) {
-            preview.src = event.target.result;
+        input.addEventListener('change', function() {
+          if (this.files[0]) {
+            const preview = this.closest('.image-upload-box').querySelector('.image-preview');
+            preview.src = URL.createObjectURL(this.files[0]);
             preview.style.display = 'block';
-            preview.closest('.image-upload-box').querySelector('.image-upload-text').style.display = 'none';
-          };
-          
-          reader.readAsDataURL(file);
+            this.closest('.image-upload-box').querySelector('.image-upload-text').style.display = 'none';
+          }
         });
       });
-      
-      // Enable offline persistence
-      try {
-        await enableIndexedDbPersistence(db);
-        console.log("Offline persistence enabled");
-      } catch (err) {
-        if (err.code === 'failed-precondition') {
-          console.warn("Offline persistence already enabled in another tab");
-        } else if (err.code === 'unimplemented') {
-          console.warn("Offline persistence not supported in this browser");
-        }
-      }
-    } catch (error) {
-      console.error("Initialization error:", error);
-      Toast.show("Failed to initialize app. Please refresh.", "error");
-    }
-  });
+    });
 
-  // Global functions
-  window.closeModal = ModalManager.close.bind(ModalManager);
-  window.openModal = ModalManager.open.bind(ModalManager);
-  
-  window.logout = async function() {
-    try {
-      await signOut(auth);
-      window.location.href = "login.html";
-    } catch (error) {
-      console.error("Logout failed:", error);
-      Toast.show("Failed to logout. Please try again.", "error");
-    }
-  };
-
-  window.startTour = function() {
-    Toast.show("Tour started!", "info");
-    closeModal('welcomeModal');
-  };
-
-  // Expose managers to window for debugging
-  window.MarketplaceManager = MarketplaceManager;
-  window.AuthManager = AuthManager;
-  window.DatabaseService = DatabaseService;
-</script>
+    // Global functions
+    window.openModal = openModal;
+    window.closeModal = closeModal;
+    window.logout = () => auth.signOut().then(() => window.location.href = "login.html");
+  </script>
 </body>
 </html>
