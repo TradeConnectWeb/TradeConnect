@@ -1758,8 +1758,7 @@
   </style>
 </head>
 <body>
-  <!-- Welcome Modal -->
-  <div id="welcomeModal" class="modal">
+ <div id="welcomeModal" class="modal">
     <div class="modal-content" style="max-width: 500px; text-align: center;">
       <span class="close" onclick="closeModal('welcomeModal')">&times;</span>
       <h2>Welcome to TradeConnect! 👋</h2>
@@ -1952,7 +1951,7 @@
             <i class="fas fa-spinner fa-spin"></i> Loading listings...
           </div>
         </div>
-        <button id="loadMoreBtn" style="display: none;">Load More</button>
+        <button id="loadMoreHomeBtn" style="display: none;">Load More</button>
 
         <!-- "Post Item" Floating Button -->
         <button class="floating-post-btn" onclick="openModal('addPostModal')" title="Create new listing">
@@ -2032,7 +2031,7 @@
             <i class="fas fa-spinner fa-spin"></i> Loading marketplace...
           </div>
         </div>
-        <button id="loadMoreBtn" style="display: none;">Load More</button>
+        <button id="loadMoreMarketplaceBtn" style="display: none;">Load More</button>
       </div>
 
       <!-- Add Post Modal -->
@@ -2152,7 +2151,7 @@
             <i class="fas fa-spinner fa-spin"></i> Loading forum posts...
           </div>
         </div>
-        <button id="loadMoreBtn" style="display: none;">Load More</button>
+        <button id="loadMoreForumBtn" style="display: none;">Load More</button>
       </div>
 
       <!-- Add Post Modal for Community Forum -->
@@ -2393,7 +2392,7 @@
       </form>
     </div>
   </div>
-  
+
  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
@@ -2467,7 +2466,12 @@
   let lastVisible = null;
   let isFetching = false;
   let allItemsLoaded = false;
-  let loadMoreBtn = null;
+  let currentSection = 'marketplace'; // Default section
+  const sectionPagination = {
+    home: { lastVisible: null, allItemsLoaded: false },
+    marketplace: { lastVisible: null, allItemsLoaded: false },
+    community: { lastVisible: null, allItemsLoaded: false }
+  };
 
   // =====================
   // DOM CONTENT LOADED
@@ -2475,30 +2479,85 @@
   document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM fully loaded and parsed");
     
-    // Initialize Load More button with null check
-    loadMoreBtn = document.getElementById('loadMoreBtn');
-    if (loadMoreBtn) {
-      console.log("Load More button found");
-      loadMoreBtn.addEventListener('click', () => {
-        console.log("Load More button clicked");
-        loadMarketplaceItems(true);
-      });
-    } else {
-      console.warn("⚠️ loadMoreBtn not found!");
-    }
-
-    // Initialize other event listeners with null checks
+    // Initialize all load more buttons
+    initializeLoadMoreButtons();
+    
+    // Initialize other event listeners
     const postForm = document.getElementById('postForm');
     if (postForm) {
       postForm.addEventListener('submit', handlePostSubmit);
     }
 
+    // Section change observer
+    setupSectionObserver();
+
     // User authentication state
     auth.onAuthStateChanged(handleAuthStateChanged);
     
     // Initial load
-    loadMarketplaceItems();
+    loadContent();
   });
+
+  // =====================
+  // INITIALIZATION FUNCTIONS
+  // =====================
+  function initializeLoadMoreButtons() {
+    // Section-specific load more buttons
+    const loadMoreHomeBtn = document.getElementById('loadMoreHomeBtn');
+    const loadMoreMarketplaceBtn = document.getElementById('loadMoreMarketplaceBtn');
+    const loadMoreForumBtn = document.getElementById('loadMoreForumBtn');
+    
+    if (loadMoreHomeBtn) {
+      loadMoreHomeBtn.addEventListener('click', () => {
+        currentSection = 'home';
+        loadContent(true);
+      });
+    }
+    
+    if (loadMoreMarketplaceBtn) {
+      loadMoreMarketplaceBtn.addEventListener('click', () => {
+        currentSection = 'marketplace';
+        loadContent(true);
+      });
+    }
+    
+    if (loadMoreForumBtn) {
+      loadMoreForumBtn.addEventListener('click', () => {
+        currentSection = 'community';
+        loadContent(true);
+      });
+    }
+
+    // Main load more button (if using a single button)
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if (loadMoreBtn) {
+      loadMoreBtn.addEventListener('click', () => {
+        loadContent(true);
+      });
+    }
+  }
+
+  function setupSectionObserver() {
+    const sections = document.querySelectorAll('.content-section');
+    if (sections.length > 0) {
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.attributeName === 'class') {
+            const activeSection = document.querySelector('.content-section.active');
+            if (activeSection) {
+              currentSection = activeSection.id;
+              console.log(`Active section changed to: ${currentSection}`);
+              loadContent();
+            }
+          }
+        });
+      });
+
+      sections.forEach((section) => {
+        observer.observe(section, { attributes: true });
+      });
+    }
+  }
 
   // =====================
   // CORE FUNCTIONS
@@ -2508,14 +2567,14 @@
       if (user) {
         console.log("User authenticated:", user.email);
         
-        // Update UI elements with null checks
+        // Update UI elements
         const userNameElement = document.getElementById('userName');
         const userEmailElement = document.getElementById('userEmail');
         
         if (userNameElement) userNameElement.textContent = user.displayName || "User";
         if (userEmailElement) userEmailElement.textContent = user.email;
 
-        // Initialize or update user profile
+        // Initialize user profile
         await initializeUserProfile(user);
       } else {
         console.log("No user signed in, redirecting to login");
@@ -2558,7 +2617,7 @@
       
       showToast("🎉 Item posted successfully!", "success");
       closeModal('addPostModal');
-      loadMarketplaceItems();
+      loadContent();
     } catch (error) {
       handleGlobalError(error);
       showToast(`Error: ${error.message}`, "error");
@@ -2610,126 +2669,193 @@
   }
 
   // =====================
-  // MARKETPLACE ITEMS LOADING
+  // CONTENT LOADING FUNCTIONS
   // =====================
-  async function loadMarketplaceItems(loadMore = false) {
-    console.log(`Loading marketplace items (loadMore: ${loadMore})`);
+  async function loadContent(loadMore = false) {
+    console.log(`Loading content for ${currentSection} (loadMore: ${loadMore})`);
     
-    if (isFetching || (loadMore && allItemsLoaded)) {
+    if (isFetching || (loadMore && sectionPagination[currentSection].allItemsLoaded)) {
       console.log("Skipping load - already fetching or all items loaded");
       return;
     }
     
     isFetching = true;
-    const listingsContainer = document.getElementById('marketplaceListings');
     
     try {
-      // Show loading state
-      if (loadMore && loadMoreBtn) {
-        loadMoreBtn.disabled = true;
-        loadMoreBtn.classList.add('loading');
-      } else if (listingsContainer) {
-        listingsContainer.innerHTML = createLoadingPlaceholder();
-      }
-
-      // Execute Firestore query
-      const snapshot = await getMarketplaceItems(loadMore);
-      console.log(`Retrieved ${snapshot.docs.length} items`);
-
-      // Process results
-      if (listingsContainer) {
-        if (!loadMore) listingsContainer.innerHTML = '';
-        
-        if (snapshot.empty) {
-          console.log("No items found in snapshot");
-          handleEmptyResults(loadMore, listingsContainer);
-          return;
-        }
-
-        lastVisible = snapshot.docs[snapshot.docs.length - 1];
-        await processItems(snapshot.docs, listingsContainer);
-
-        // Check if all items loaded
-        if (snapshot.docs.length < 10) {
-          allItemsLoaded = true;
-          console.log("All items loaded");
-          if (loadMore) showToast("All items loaded", "info");
-        }
+      switch(currentSection) {
+        case 'home':
+          await loadHomeContent(loadMore);
+          break;
+        case 'marketplace':
+          await loadMarketplaceItems(loadMore);
+          break;
+        case 'community':
+          await loadForumPosts(loadMore);
+          break;
+        default:
+          console.warn(`Unknown section: ${currentSection}`);
       }
     } catch (error) {
-      console.error("Error loading marketplace items:", error);
-      handleLoadError(error, listingsContainer, loadMore);
+      handleGlobalError(error);
     } finally {
       isFetching = false;
-      updateLoadMoreButton(loadMore);
+      updateLoadMoreButtons();
     }
   }
 
-  function createLoadingPlaceholder() {
+  async function loadHomeContent(loadMore = false) {
+    const container = document.getElementById('homeListings');
+    if (!container) return;
+    
+    try {
+      showLoadingState(container, loadMore);
+
+      let query = db.collection('homeContent')
+        .where("isActive", "==", true)
+        .orderBy('createdAt', 'desc')
+        .limit(10);
+
+      if (loadMore && sectionPagination.home.lastVisible) {
+        query = query.startAfter(sectionPagination.home.lastVisible);
+      }
+
+      const snapshot = await query.get();
+      console.log(`Retrieved ${snapshot.docs.length} home items`);
+
+      // Process results
+      if (!loadMore) container.innerHTML = '';
+      
+      if (snapshot.empty) {
+        handleEmptyResults(container, 'home');
+        return;
+      }
+
+      sectionPagination.home.lastVisible = snapshot.docs[snapshot.docs.length - 1];
+      
+      for (const doc of snapshot.docs) {
+        const item = doc.data();
+        container.innerHTML += createHomeItemCard(doc.id, item);
+      }
+
+      // Check if all items loaded
+      if (snapshot.docs.length < 10) {
+        sectionPagination.home.allItemsLoaded = true;
+        if (loadMore) showToast("All home items loaded", "info");
+      }
+    } catch (error) {
+      handleLoadError(error, container);
+    }
+  }
+
+  async function loadMarketplaceItems(loadMore = false) {
+    const container = document.getElementById('marketplaceListings');
+    if (!container) return;
+    
+    try {
+      showLoadingState(container, loadMore);
+
+      let query = db.collection('marketplaceItems')
+        .where("isAvailable", "==", true)
+        .orderBy('createdAt', 'desc')
+        .limit(10);
+
+      if (loadMore && sectionPagination.marketplace.lastVisible) {
+        query = query.startAfter(sectionPagination.marketplace.lastVisible);
+      }
+
+      const snapshot = await query.get();
+      console.log(`Retrieved ${snapshot.docs.length} marketplace items`);
+
+      // Process results
+      if (!loadMore) container.innerHTML = '';
+      
+      if (snapshot.empty) {
+        handleEmptyResults(container, 'marketplace');
+        return;
+      }
+
+      sectionPagination.marketplace.lastVisible = snapshot.docs[snapshot.docs.length - 1];
+      
+      for (const doc of snapshot.docs) {
+        const item = doc.data();
+        const userData = await getUserData(item.userId);
+        container.innerHTML += createMarketplaceItemCard(doc.id, item, userData);
+      }
+
+      // Check if all items loaded
+      if (snapshot.docs.length < 10) {
+        sectionPagination.marketplace.allItemsLoaded = true;
+        if (loadMore) showToast("All marketplace items loaded", "info");
+      }
+    } catch (error) {
+      handleLoadError(error, container);
+    }
+  }
+
+  async function loadForumPosts(loadMore = false) {
+    const container = document.getElementById('forumPosts');
+    if (!container) return;
+    
+    try {
+      showLoadingState(container, loadMore);
+
+      let query = db.collection('forumPosts')
+        .where("isPublished", "==", true)
+        .orderBy('createdAt', 'desc')
+        .limit(10);
+
+      if (loadMore && sectionPagination.community.lastVisible) {
+        query = query.startAfter(sectionPagination.community.lastVisible);
+      }
+
+      const snapshot = await query.get();
+      console.log(`Retrieved ${snapshot.docs.length} forum posts`);
+
+      // Process results
+      if (!loadMore) container.innerHTML = '';
+      
+      if (snapshot.empty) {
+        handleEmptyResults(container, 'community');
+        return;
+      }
+
+      sectionPagination.community.lastVisible = snapshot.docs[snapshot.docs.length - 1];
+      
+      for (const doc of snapshot.docs) {
+        const post = doc.data();
+        const userData = await getUserData(post.userId);
+        container.innerHTML += createForumPostCard(doc.id, post, userData);
+      }
+
+      // Check if all items loaded
+      if (snapshot.docs.length < 10) {
+        sectionPagination.community.allItemsLoaded = true;
+        if (loadMore) showToast("All forum posts loaded", "info");
+      }
+    } catch (error) {
+      handleLoadError(error, container);
+    }
+  }
+
+  // =====================
+  // UI COMPONENT CREATORS
+  // =====================
+  function createHomeItemCard(id, item) {
     return `
-      <div class="loading-placeholder">
-        <div class="loading-card" style="height: 180px;"></div>
-        <div class="loading-card" style="height: 180px;"></div>
-        <div class="loading-card" style="height: 180px;"></div>
+      <div class="home-item" data-id="${id}">
+        <img src="${item.imageUrl || 'https://placehold.co/300x200'}" alt="${item.title}">
+        <div class="home-item-content">
+          <h3>${item.title}</h3>
+          <p>${item.description || ''}</p>
+          <div class="home-item-meta">
+            <span class="date">${new Date(item.createdAt?.toDate()).toLocaleDateString()}</span>
+          </div>
+        </div>
       </div>
     `;
   }
 
-  async function getMarketplaceItems(loadMore) {
-    console.log("Querying Firestore for items");
-    let query = db.collection('marketplaceItems')
-      .where("isAvailable", "==", true)
-      .orderBy('createdAt', 'desc')
-      .limit(10);
-
-    if (loadMore && lastVisible) {
-      console.log("Querying next page of items");
-      query = query.startAfter(lastVisible);
-    }
-
-    return await query.get();
-  }
-
-  function handleEmptyResults(loadMore, container) {
-    if (loadMore) {
-      allItemsLoaded = true;
-      showToast("No more items to load", "info");
-    } else if (container) {
-      container.innerHTML = '<div class="no-items">No listings found</div>';
-    }
-  }
-
-  async function processItems(docs, container) {
-    console.log(`Processing ${docs.length} items`);
-    for (const doc of docs) {
-      const item = doc.data();
-      const userData = await getUserData(item.userId);
-      
-      if (container) {
-        container.innerHTML += createItemCard(doc.id, item, userData);
-      }
-    }
-  }
-
-  async function getUserData(userId) {
-    try {
-      const userDoc = await db.collection('users').doc(userId).get();
-      return userDoc.exists ? userDoc.data() : {
-        username: "Unknown User",
-        photoUrl: "https://placehold.co/40x40",
-        location: ""
-      };
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-      return {
-        username: "Unknown User",
-        photoUrl: "https://placehold.co/40x40",
-        location: ""
-      };
-    }
-  }
-
-  function createItemCard(id, item, userData) {
+  function createMarketplaceItemCard(id, item, userData) {
     return `
       <div class="product-card" data-id="${id}">
         <span class="product-badge ${item.isSelling ? '' : 'trade'}">
@@ -2762,10 +2888,73 @@
     `;
   }
 
-  function handleLoadError(error, container, loadMore) {
+  function createForumPostCard(id, post, userData) {
+    return `
+      <div class="forum-post" data-id="${id}">
+        <div class="post-header">
+          <img src="${userData.photoUrl}" 
+               alt="${userData.username}" 
+               class="user-photo"
+               onerror="this.src='https://placehold.co/40x40'">
+          <div class="post-user-info">
+            <span class="username">${userData.username}</span>
+            <span class="post-date">${new Date(post.createdAt?.toDate()).toLocaleDateString()}</span>
+          </div>
+        </div>
+        <div class="post-content">
+          <h3>${post.title}</h3>
+          <p>${post.content}</p>
+        </div>
+        <div class="post-footer">
+          <button class="like-btn"><i class="far fa-thumbs-up"></i> ${post.likes || 0}</button>
+          <button class="comment-btn"><i class="far fa-comment"></i> ${post.comments?.length || 0}</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function createLoadingPlaceholder() {
+    return `
+      <div class="loading-placeholder">
+        <div class="loading-card" style="height: 180px;"></div>
+        <div class="loading-card" style="height: 180px;"></div>
+        <div class="loading-card" style="height: 180px;"></div>
+      </div>
+    `;
+  }
+
+  // =====================
+  // UTILITY FUNCTIONS
+  // =====================
+  function showLoadingState(container, loadMore) {
+    if (loadMore) {
+      const loadMoreBtn = document.getElementById(`loadMore${currentSection.charAt(0).toUpperCase() + currentSection.slice(1)}Btn`) || 
+                         document.getElementById('loadMoreBtn');
+      if (loadMoreBtn) {
+        loadMoreBtn.disabled = true;
+        loadMoreBtn.classList.add('loading');
+      }
+    } else if (container) {
+      container.innerHTML = createLoadingPlaceholder();
+    }
+  }
+
+  function handleEmptyResults(container, section) {
+    sectionPagination[section].allItemsLoaded = true;
+    
+    if (container) {
+      const noItemsMsg = section === 'marketplace' ? 'No listings found' : 
+                         section === 'community' ? 'No forum posts found' : 
+                         'No items found';
+      
+      container.innerHTML = `<div class="no-items">${noItemsMsg}</div>`;
+    }
+  }
+
+  function handleLoadError(error, container) {
     handleGlobalError(error);
     
-    if (!loadMore && container) {
+    if (container) {
       container.innerHTML = '<div class="error">Failed to load items. Please try again.</div>';
     }
     
@@ -2774,25 +2963,49 @@
     }
   }
 
-  function updateLoadMoreButton(loadMore) {
-    if (loadMoreBtn) {
-      console.log(`Updating Load More button (allItemsLoaded: ${allItemsLoaded})`);
-      if (loadMore) {
-        loadMoreBtn.disabled = false;
-        loadMoreBtn.classList.remove('loading');
-      }
-      loadMoreBtn.style.display = allItemsLoaded ? 'none' : 'block';
+  function updateLoadMoreButtons() {
+    const sectionBtn = document.getElementById(`loadMore${currentSection.charAt(0).toUpperCase() + currentSection.slice(1)}Btn`);
+    const mainBtn = document.getElementById('loadMoreBtn');
+    const allLoaded = sectionPagination[currentSection].allItemsLoaded;
+    
+    if (sectionBtn) {
+      sectionBtn.disabled = false;
+      sectionBtn.classList.remove('loading');
+      sectionBtn.style.display = allLoaded ? 'none' : 'block';
+    }
+    
+    if (mainBtn) {
+      mainBtn.disabled = false;
+      mainBtn.classList.remove('loading');
+      mainBtn.style.display = allLoaded ? 'none' : 'block';
     }
   }
 
-  // =====================
-  // UI UTILITIES
-  // =====================
+  async function getUserData(userId) {
+    try {
+      const userDoc = await db.collection('users').doc(userId).get();
+      return userDoc.exists ? userDoc.data() : {
+        username: "Unknown User",
+        photoUrl: "https://placehold.co/40x40",
+        location: ""
+      };
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      return {
+        username: "Unknown User",
+        photoUrl: "https://placehold.co/40x40",
+        location: ""
+      };
+    }
+  }
+
   function showToast(message, type = "success") {
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
     toast.innerHTML = `
-      <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+      <i class="fas ${type === 'success' ? 'fa-check-circle' : 
+                     type === 'error' ? 'fa-exclamation-circle' : 
+                     'fa-info-circle'}"></i>
       <span>${message}</span>
     `;
     document.body.appendChild(toast);
@@ -2830,10 +3043,11 @@
   window.logout = () => auth.signOut().then(() => window.location.href = "login.html");
 
   // =====================
-  // ERROR TOAST STYLES
+  // STYLES
   // =====================
-  const errorToastStyle = document.createElement('style');
-  errorToastStyle.textContent = `
+  const styleElement = document.createElement('style');
+  styleElement.textContent = `
+    /* Error Toast */
     .global-error-toast {
       position: fixed;
       bottom: 20px;
@@ -2854,9 +3068,8 @@
     .global-error-toast.show {
       opacity: 1;
     }
-    .global-error-toast i {
-      font-size: 18px;
-    }
+    
+    /* Regular Toasts */
     .toast {
       position: fixed;
       bottom: 20px;
@@ -2877,9 +3090,6 @@
     .toast.show {
       opacity: 1;
     }
-    .toast i {
-      font-size: 18px;
-    }
     .toast-success {
       background-color: #00C851;
     }
@@ -2889,8 +3099,46 @@
     .toast-info {
       background-color: #33b5e5;
     }
+    
+    /* Loading State */
+    .loading-placeholder {
+      display: grid;
+      gap: 20px;
+      padding: 20px 0;
+    }
+    .loading-card {
+      background: #f0f0f0;
+      border-radius: 8px;
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 0.3; }
+    }
+    
+    /* Load More Button */
+    .loading {
+      position: relative;
+      pointer-events: none;
+    }
+    .loading::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 16px;
+      height: 16px;
+      margin: -8px 0 0 -8px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
   `;
-  document.head.appendChild(errorToastStyle);
+  document.head.appendChild(styleElement);
 </script>
 </body>
 </html>
