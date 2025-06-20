@@ -1,0 +1,9 @@
+[
+  {
+    "origin": ["https://tradeconnect-dmf1.onrender.com"],
+    "method": ["GET", "POST", "PUT", "DELETE"],
+    "maxAgeSeconds": 3600,
+    "responseHeader": ["Content-Type"]
+  }
+]
+
