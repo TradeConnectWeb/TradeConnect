@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" href="/favicon.ico" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,6 +14,7 @@
       --success: #2ecc71;
       --light-gray: #f5f5f5;
       --dark-gray: #333;
+      --link-color: #1a73e8;
     }
     
     * {
@@ -120,7 +121,7 @@
     .input-group input,
     .input-group select {
       width: 100%;
-      padding: 12px 40px 12px 15px; /* Reduced left padding, increased right padding */
+      padding: 12px 40px 12px 15px;
       border: 1px solid #ccc;
       border-radius: 5px;
       font-size: 16px;
@@ -237,6 +238,75 @@
       vertical-align: middle;
     }
 
+    .terms-checkbox {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .terms-checkbox input {
+      margin-right: 10px;
+    }
+
+    .terms-link {
+      color: var(--link-color);
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .terms-link:hover {
+      text-decoration: underline;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .close-modal {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close-modal:hover {
+      color: black;
+    }
+
+    .modal-title {
+      margin-bottom: 15px;
+      color: var(--secondary);
+    }
+
+    .modal-list {
+      padding-left: 20px;
+      margin-bottom: 15px;
+    }
+
+    .modal-list li {
+      margin-bottom: 8px;
+    }
+
     @keyframes spinAndScale {
       0% { transform: rotate(0deg) scale(1); }
       50% { transform: rotate(180deg) scale(1.1); }
@@ -255,6 +325,11 @@
       .left-section,
       .right-section {
         padding: 30px;
+      }
+
+      .modal-content {
+        margin: 20% auto;
+        width: 90%;
       }
     }
   </style>
@@ -305,18 +380,29 @@
           <div class="error-message" id="zone-error"></div>
         </div>
 
-        <!-- In the password input groups, remove the left icon and keep only the right toggle icon -->
-<div class="input-group">
-  <input type="password" id="password" placeholder="Password" required />
-  <i class="fas fa-eye password-toggle" id="togglePassword"></i>
-  <div class="error-message" id="password-error"></div>
-</div>
+        <div class="input-group">
+          <i class="fas fa-id-card"></i>
+          <input type="text" id="barangayId" placeholder="Barangay ID Number" required />
+          <div class="error-message" id="barangayId-error"></div>
+        </div>
 
-<div class="input-group">
-  <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
-  <i class="fas fa-eye password-toggle" id="toggleConfirmPassword"></i>
-  <div class="error-message" id="confirmPassword-error"></div>
-</div>
+        <div class="input-group">
+          <input type="password" id="password" placeholder="Password" required />
+          <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+          <div class="error-message" id="password-error"></div>
+        </div>
+
+        <div class="input-group">
+          <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+          <i class="fas fa-eye password-toggle" id="toggleConfirmPassword"></i>
+          <div class="error-message" id="confirmPassword-error"></div>
+        </div>
+
+        <div class="terms-checkbox">
+          <input type="checkbox" id="acceptTerms" required />
+          <label for="acceptTerms">I agree to the <span class="terms-link" id="termsLink">Terms and Conditions</span></label>
+          <div class="error-message" id="terms-error"></div>
+        </div>
 
         <div class="admin-checkbox">
           <input type="checkbox" id="isAdmin" />
@@ -340,6 +426,23 @@
     </div>
   </div>
 
+  <!-- Terms and Conditions Modal -->
+  <div id="termsModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h3 class="modal-title">Terms and Conditions</h3>
+      <p>By signing up, you agree to the following:</p>
+      <ol class="modal-list">
+        <li>You are a resident of Barangay Bulihan, Silang, Cavite.</li>
+        <li>You will only use this platform for legitimate trading purposes.</li>
+        <li>You will not engage in any fraudulent activities.</li>
+        <li>Your location data will be used for verification purposes only.</li>
+        <li>The admin reserves the right to verify your identity and location.</li>
+        <li>Any violation of these terms may result in account suspension.</li>
+      </ol>
+    </div>
+  </div>
+
   <script type="module"> 
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
     import { 
@@ -354,7 +457,7 @@
       set 
     } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
-    // Firebase configuration - should be moved to environment variables in production
+    // Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyCxaOGeOvHwS5dnPHRTpw3Lwn2surjXP1E",
       authDomain: "tradeconnect-3c728.firebaseapp.com",
@@ -376,46 +479,50 @@
     const buttonText = document.getElementById('buttonText');
     const isAdminCheckbox = document.getElementById('isAdmin');
     const adminCodeGroup = document.getElementById('adminCodeGroup');
+    const acceptTerms = document.getElementById('acceptTerms');
+    const termsLink = document.getElementById('termsLink');
+    const termsModal = document.getElementById('termsModal');
+    const closeModal = document.querySelector('.close-modal');
     
-    // Password toggle functionality remains the same
-document.getElementById('togglePassword').addEventListener('click', function() {
-  togglePassword('password', this);
-});
+    // Password toggle functionality
+    document.getElementById('togglePassword').addEventListener('click', function() {
+      togglePassword('password', this);
+    });
 
-document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
-  togglePassword('confirmPassword', this);
-});
+    document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
+      togglePassword('confirmPassword', this);
+    });
 
-function togglePassword(fieldId, icon) {
-  const field = document.getElementById(fieldId);
-  if (field.type === "password") {
-    field.type = "text";
-    icon.classList.remove("fa-eye");
-    icon.classList.add("fa-eye-slash");
-  } else {
-    field.type = "password";
-    icon.classList.remove("fa-eye-slash");
-    icon.classList.add("fa-eye");
-  }
-}
-
-// Show eye icon only when there's input in password fields
-['password', 'confirmPassword'].forEach(id => {
-  const field = document.getElementById(id);
-  const icon = document.getElementById(`toggle${id.charAt(0).toUpperCase() + id.slice(1)}`);
-  
-  field.addEventListener('input', function() {
-    if (this.value.length > 0) {
-      icon.style.display = 'block';
-    } else {
-      icon.style.display = 'none';
-      // Reset to password type if field is empty
-      this.type = 'password';
-      icon.classList.remove('fa-eye-slash');
-      icon.classList.add('fa-eye');
+    function togglePassword(fieldId, icon) {
+      const field = document.getElementById(fieldId);
+      if (field.type === "password") {
+        field.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+      } else {
+        field.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+      }
     }
-  });
-});
+
+    // Show eye icon only when there's input in password fields
+    ['password', 'confirmPassword'].forEach(id => {
+      const field = document.getElementById(id);
+      const icon = document.getElementById(`toggle${id.charAt(0).toUpperCase() + id.slice(1)}`);
+      
+      field.addEventListener('input', function() {
+        if (this.value.length > 0) {
+          icon.style.display = 'block';
+        } else {
+          icon.style.display = 'none';
+          this.type = 'password';
+          icon.classList.remove('fa-eye-slash');
+          icon.classList.add('fa-eye');
+        }
+      });
+    });
+
     // Show/hide admin code field based on checkbox
     isAdminCheckbox.addEventListener("change", function() {
       adminCodeGroup.style.display = this.checked ? "block" : "none";
@@ -425,16 +532,33 @@ function togglePassword(fieldId, icon) {
       }
     });
 
+    // Terms and Conditions modal
+    termsLink.addEventListener('click', function() {
+      termsModal.style.display = 'block';
+    });
+
+    closeModal.addEventListener('click', function() {
+      termsModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', function(event) {
+      if (event.target === termsModal) {
+        termsModal.style.display = 'none';
+      }
+    });
+
     // Form validation
     function validateForm() {
       let isValid = true;
       const username = document.getElementById("username").value.trim();
       const email = document.getElementById("email").value.trim();
       const zone = document.getElementById("zone").value;
+      const barangayId = document.getElementById("barangayId").value.trim();
       const password = document.getElementById("password").value;
       const confirmPassword = document.getElementById("confirmPassword").value;
       const isAdmin = isAdminCheckbox.checked;
       const adminCode = document.getElementById("adminCode").value;
+      const termsAccepted = acceptTerms.checked;
 
       // Username validation
       if (!username) {
@@ -466,6 +590,17 @@ function togglePassword(fieldId, icon) {
         clearError('zone-error', 'zone');
       }
 
+      // Barangay ID validation
+      if (!barangayId) {
+        showError('barangayId-error', 'barangayId', 'Barangay ID is required');
+        isValid = false;
+      } else if (!/^[A-Za-z0-9-]+$/.test(barangayId)) {
+        showError('barangayId-error', 'barangayId', 'Only letters, numbers and hyphens allowed');
+        isValid = false;
+      } else {
+        clearError('barangayId-error', 'barangayId');
+      }
+
       // Password validation
       if (!password) {
         showError('password-error', 'password', 'Password is required');
@@ -486,6 +621,14 @@ function togglePassword(fieldId, icon) {
         isValid = false;
       } else {
         clearError('confirmPassword-error', 'confirmPassword');
+      }
+
+      // Terms validation
+      if (!termsAccepted) {
+        showError('terms-error', 'acceptTerms', 'You must accept the terms and conditions');
+        isValid = false;
+      } else {
+        clearError('terms-error', 'acceptTerms');
       }
 
       // Admin code validation
@@ -530,6 +673,7 @@ function togglePassword(fieldId, icon) {
       const username = document.getElementById("username").value.trim();
       const email = document.getElementById("email").value.trim();
       const zone = document.getElementById("zone").value;
+      const barangayId = document.getElementById("barangayId").value.trim();
       const password = document.getElementById("password").value;
       const isAdmin = isAdminCheckbox.checked;
 
@@ -538,6 +682,7 @@ function togglePassword(fieldId, icon) {
         signupButton.disabled = true;
         buttonText.innerHTML = `<span class="loading-spinner"></span> Creating account...`;
 
+        // Create user account
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
@@ -555,7 +700,11 @@ function togglePassword(fieldId, icon) {
           username: username,
           email: email,
           zone: zone,
+          barangayId: barangayId,
+          barangayIdVerified: false, // Admin will verify this
           role: userRole,
+          termsAccepted: true,
+          termsAcceptedDate: new Date().toISOString(),
           createdAt: new Date().toISOString()
         });
 
