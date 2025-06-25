@@ -8,8 +8,8 @@
   <title>TradeConnect - Sign Up</title>
   <style>
     :root {
-      --primary: #4a6fa5; /* Deep blue */
-      --secondary: #166088; /* Darker blue */
+      --primary: #4a6fa5;
+      --secondary: #166088;
       --error: #e74c3c;
       --success: #2ecc71;
       --light-gray: #f5f5f5;
@@ -114,14 +114,10 @@
       margin-bottom: 25px;
     }
 
-    .input-group i {
-      display: none;
-    }
-
     .input-group input,
     .input-group select {
       width: 100%;
-      padding: 12px 40px 12px 15px;
+      padding: 12px 15px;
       border: 1px solid #ccc;
       border-radius: 5px;
       font-size: 16px;
@@ -144,11 +140,6 @@
     .input-group select.success {
       border-color: var(--success);
     }
-
-    .password-container input {
-      width: 100%;
-      padding-right: 30px;
-    }
     
     .password-toggle {
       position: absolute;
@@ -159,10 +150,6 @@
       color: #777;
       z-index: 2;
       display: none;
-    }
-
-    .input-group input {
-      padding-right: 40px !important;
     }
 
     button {
@@ -200,23 +187,10 @@
       text-decoration: none;
     }
 
-    .login-link a:hover {
-      text-decoration: underline;
-    }
-
     .admin-checkbox {
       display: flex;
       align-items: center;
       margin-bottom: 20px;
-    }
-
-    .admin-checkbox input {
-      margin-right: 10px;
-      width: auto;
-    }
-
-    .admin-checkbox label {
-      font-size: 14px;
     }
 
     .error-message {
@@ -244,19 +218,11 @@
       margin-bottom: 15px;
     }
 
-    .terms-checkbox input {
-      margin-right: 10px;
-    }
-
     .terms-link {
       color: var(--link-color);
       text-decoration: none;
       cursor: pointer;
       font-weight: bold;
-    }
-
-    .terms-link:hover {
-      text-decoration: underline;
     }
 
     .modal {
@@ -277,8 +243,6 @@
       border-radius: 8px;
       width: 80%;
       max-width: 600px;
-      max-height: 80vh;
-      overflow-y: auto;
     }
 
     .close-modal {
@@ -289,22 +253,14 @@
       cursor: pointer;
     }
 
-    .close-modal:hover {
-      color: black;
-    }
-
-    .modal-title {
-      margin-bottom: 15px;
-      color: var(--secondary);
-    }
-
-    .modal-list {
-      padding-left: 20px;
-      margin-bottom: 15px;
-    }
-
-    .modal-list li {
-      margin-bottom: 8px;
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .left-section,
+      .right-section {
+        padding: 30px;
+      }
     }
 
     @keyframes spinAndScale {
@@ -315,22 +271,6 @@
 
     @keyframes spin {
       to { transform: rotate(360deg); }
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-
-      .left-section,
-      .right-section {
-        padding: 30px;
-      }
-
-      .modal-content {
-        margin: 20% auto;
-        width: 90%;
-      }
     }
   </style>
 </head>
@@ -350,19 +290,16 @@
       <h2>Sign Up</h2>
       <form id="signupForm">
         <div class="input-group">
-          <i class="fas fa-user"></i>
           <input type="text" id="username" placeholder="Username" required />
           <div class="error-message" id="username-error"></div>
         </div>
 
         <div class="input-group">
-          <i class="fas fa-envelope"></i>
           <input type="email" id="email" placeholder="Email" required />
           <div class="error-message" id="email-error"></div>
         </div>
 
         <div class="input-group">
-          <i class="fas fa-map-marker-alt"></i>
           <select id="zone" required>
             <option value="">Select your Zone</option>
             <option value="Zone 1">Zone 1</option>
@@ -381,7 +318,6 @@
         </div>
 
         <div class="input-group">
-          <i class="fas fa-id-card"></i>
           <input type="text" id="barangayId" placeholder="Barangay ID Number" required />
           <div class="error-message" id="barangayId-error"></div>
         </div>
@@ -410,7 +346,6 @@
         </div>
 
         <div class="input-group" id="adminCodeGroup" style="display: none;">
-          <i class="fas fa-key"></i>
           <input type="password" id="adminCode" placeholder="Enter Admin Code" />
           <div class="error-message" id="adminCode-error"></div>
         </div>
@@ -426,13 +361,12 @@
     </div>
   </div>
 
-  <!-- Terms and Conditions Modal -->
+  <!-- Terms Modal -->
   <div id="termsModal" class="modal">
     <div class="modal-content">
       <span class="close-modal">&times;</span>
-      <h3 class="modal-title">Terms and Conditions</h3>
-      <p>By signing up, you agree to the following:</p>
-      <ol class="modal-list">
+      <h3>Terms and Conditions</h3>
+      <ol>
         <li>You are a resident of Barangay Bulihan, Silang, Cavite.</li>
         <li>You will only use this platform for legitimate trading purposes.</li>
         <li>You will not engage in any fraudulent activities.</li>
@@ -443,13 +377,14 @@
     </div>
   </div>
 
-  <script type="module"> 
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
     import { 
       getAuth, 
       createUserWithEmailAndPassword,
       sendEmailVerification,
-      signOut
+      signOut,
+      onAuthStateChanged
     } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { 
       getDatabase, 
@@ -457,7 +392,6 @@
       set 
     } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
-    // Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyCxaOGeOvHwS5dnPHRTpw3Lwn2surjXP1E",
       authDomain: "tradeconnect-3c728.firebaseapp.com",
@@ -468,311 +402,121 @@
       databaseURL: "https://tradeconnect-3c728-default-rtdb.firebaseio.com"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getDatabase(app);
 
-    // DOM Elements
+    // Check auth state to redirect verified users
+    onAuthStateChanged(auth, (user) => {
+      if (user && user.emailVerified) {
+        window.location.href = "index.html"; // Redirect to dashboard
+      }
+    });
+
+    // Form elements
     const signupForm = document.getElementById('signupForm');
     const signupButton = document.getElementById('signupButton');
-    const buttonText = document.getElementById('buttonText');
     const isAdminCheckbox = document.getElementById('isAdmin');
     const adminCodeGroup = document.getElementById('adminCodeGroup');
-    const acceptTerms = document.getElementById('acceptTerms');
     const termsLink = document.getElementById('termsLink');
     const termsModal = document.getElementById('termsModal');
     const closeModal = document.querySelector('.close-modal');
-    
-    // Password toggle functionality
-    document.getElementById('togglePassword').addEventListener('click', function() {
-      togglePassword('password', this);
-    });
 
-    document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
-      togglePassword('confirmPassword', this);
-    });
-
-    function togglePassword(fieldId, icon) {
-      const field = document.getElementById(fieldId);
-      if (field.type === "password") {
-        field.type = "text";
-        icon.classList.remove("fa-eye");
-        icon.classList.add("fa-eye-slash");
-      } else {
-        field.type = "password";
-        icon.classList.remove("fa-eye-slash");
-        icon.classList.add("fa-eye");
-      }
-    }
-
-    // Show eye icon only when there's input in password fields
-    ['password', 'confirmPassword'].forEach(id => {
-      const field = document.getElementById(id);
-      const icon = document.getElementById(`toggle${id.charAt(0).toUpperCase() + id.slice(1)}`);
-      
-      field.addEventListener('input', function() {
-        if (this.value.length > 0) {
-          icon.style.display = 'block';
-        } else {
-          icon.style.display = 'none';
-          this.type = 'password';
-          icon.classList.remove('fa-eye-slash');
-          icon.classList.add('fa-eye');
-        }
+    // Password toggle
+    document.querySelectorAll('.password-toggle').forEach(toggle => {
+      toggle.addEventListener('click', function() {
+        const input = this.previousElementSibling;
+        input.type = input.type === 'password' ? 'text' : 'password';
+        this.classList.toggle('fa-eye-slash');
       });
     });
 
-    // Show/hide admin code field based on checkbox
-    isAdminCheckbox.addEventListener("change", function() {
-      adminCodeGroup.style.display = this.checked ? "block" : "none";
-      if (!this.checked) {
-        document.getElementById("adminCode").value = "";
-        clearError(document.getElementById('adminCode-error'), document.getElementById('adminCode'));
-      }
+    // Admin code toggle
+    isAdminCheckbox.addEventListener('change', () => {
+      adminCodeGroup.style.display = isAdminCheckbox.checked ? 'block' : 'none';
     });
 
-    // Terms and Conditions modal
-    termsLink.addEventListener('click', function() {
-      termsModal.style.display = 'block';
-    });
-
-    closeModal.addEventListener('click', function() {
-      termsModal.style.display = 'none';
-    });
-
-    window.addEventListener('click', function(event) {
-      if (event.target === termsModal) {
-        termsModal.style.display = 'none';
-      }
+    // Terms modal
+    termsLink.addEventListener('click', () => termsModal.style.display = 'block');
+    closeModal.addEventListener('click', () => termsModal.style.display = 'none');
+    window.addEventListener('click', (e) => {
+      if (e.target === termsModal) termsModal.style.display = 'none';
     });
 
     // Form validation
     function validateForm() {
       let isValid = true;
-      const username = document.getElementById("username").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const zone = document.getElementById("zone").value;
-      const barangayId = document.getElementById("barangayId").value.trim();
-      const password = document.getElementById("password").value;
-      const confirmPassword = document.getElementById("confirmPassword").value;
-      const isAdmin = isAdminCheckbox.checked;
-      const adminCode = document.getElementById("adminCode").value;
-      const termsAccepted = acceptTerms.checked;
+      const fields = [
+        { id: 'username', validate: val => val.length >= 3, error: 'Username must be at least 3 characters' },
+        { id: 'email', validate: val => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(val), error: 'Invalid email' },
+        { id: 'zone', validate: val => val.startsWith('Zone'), error: 'Please select your zone' },
+        { id: 'barangayId', validate: val => /^[A-Za-z0-9-]+$/.test(val), error: 'Invalid ID format' },
+        { id: 'password', validate: val => val.length >= 6, error: 'Password too short' },
+        { id: 'confirmPassword', validate: (val, form) => val === form.password.value, error: 'Passwords don\'t match' },
+        { id: 'acceptTerms', validate: val => val.checked, error: 'You must accept terms' },
+        { id: 'adminCode', validate: (val, form) => !form.isAdmin.checked || val === 'TRADEADMIN123', error: 'Invalid admin code' }
+      ];
 
-      // Username validation
-      if (!username) {
-        showError('username-error', 'username', 'Username is required');
-        isValid = false;
-      } else if (username.length < 3) {
-        showError('username-error', 'username', 'Username must be at least 3 characters');
-        isValid = false;
-      } else {
-        clearError('username-error', 'username');
-      }
-
-      // Email validation
-      if (!email) {
-        showError('email-error', 'email', 'Email is required');
-        isValid = false;
-      } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-        showError('email-error', 'email', 'Please enter a valid email');
-        isValid = false;
-      } else {
-        clearError('email-error', 'email');
-      }
-
-      // Zone validation
-      if (!zone || !zone.startsWith("Zone")) {
-        showError('zone-error', 'zone', 'Please select your zone');
-        isValid = false;
-      } else {
-        clearError('zone-error', 'zone');
-      }
-
-      // Barangay ID validation
-      if (!barangayId) {
-        showError('barangayId-error', 'barangayId', 'Barangay ID is required');
-        isValid = false;
-      } else if (!/^[A-Za-z0-9-]+$/.test(barangayId)) {
-        showError('barangayId-error', 'barangayId', 'Only letters, numbers and hyphens allowed');
-        isValid = false;
-      } else {
-        clearError('barangayId-error', 'barangayId');
-      }
-
-      // Password validation
-      if (!password) {
-        showError('password-error', 'password', 'Password is required');
-        isValid = false;
-      } else if (password.length < 6) {
-        showError('password-error', 'password', 'Password must be at least 6 characters');
-        isValid = false;
-      } else {
-        clearError('password-error', 'password');
-      }
-
-      // Confirm Password validation
-      if (!confirmPassword) {
-        showError('confirmPassword-error', 'confirmPassword', 'Please confirm your password');
-        isValid = false;
-      } else if (password !== confirmPassword) {
-        showError('confirmPassword-error', 'confirmPassword', 'Passwords do not match');
-        isValid = false;
-      } else {
-        clearError('confirmPassword-error', 'confirmPassword');
-      }
-
-      // Terms validation
-      if (!termsAccepted) {
-        showError('terms-error', 'acceptTerms', 'You must accept the terms and conditions');
-        isValid = false;
-      } else {
-        clearError('terms-error', 'acceptTerms');
-      }
-
-      // Admin code validation
-      if (isAdmin && !adminCode) {
-        showError('adminCode-error', 'adminCode', 'Admin code is required');
-        isValid = false;
-      } else if (isAdmin && adminCode !== "TRADEADMIN123") {
-        showError('adminCode-error', 'adminCode', 'Invalid admin code');
-        isValid = false;
-      } else {
-        clearError('adminCode-error', 'adminCode');
-      }
+      fields.forEach(field => {
+        const element = document.getElementById(field.id);
+        const errorElement = document.getElementById(`${field.id}-error`);
+        const isValidField = field.validate(element, signupForm);
+        
+        if (!isValidField) {
+          errorElement.textContent = field.error;
+          errorElement.style.display = 'block';
+          element.classList.add('error');
+          isValid = false;
+        } else {
+          errorElement.style.display = 'none';
+          element.classList.remove('error');
+        }
+      });
 
       return isValid;
     }
 
-    function showError(errorId, inputId, message) {
-      const errorElement = document.getElementById(errorId);
-      const inputElement = document.getElementById(inputId);
-      
-      errorElement.textContent = message;
-      errorElement.style.display = 'block';
-      inputElement.classList.add('error');
-      inputElement.classList.remove('success');
-    }
-
-    function clearError(errorId, inputId) {
-      const errorElement = document.getElementById(errorId);
-      const inputElement = document.getElementById(inputId);
-      
-      errorElement.style.display = 'none';
-      inputElement.classList.remove('error');
-      inputElement.classList.add('success');
-    }
-
     // Form submission
-    signupForm.addEventListener("submit", async function(e) {
+    signupForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-
       if (!validateForm()) return;
 
-      const username = document.getElementById("username").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const zone = document.getElementById("zone").value;
-      const barangayId = document.getElementById("barangayId").value.trim();
-      const password = document.getElementById("password").value;
-      const isAdmin = isAdminCheckbox.checked;
-
       try {
-        // Show loading state
         signupButton.disabled = true;
         buttonText.innerHTML = `<span class="loading-spinner"></span> Creating account...`;
 
-        // Create user account
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+        const formData = new FormData(signupForm);
+        const userCredential = await createUserWithEmailAndPassword(
+          auth, 
+          formData.get('email'), 
+          formData.get('password')
+        );
 
-        // Send email verification
-        await sendEmailVerification(user);
+        await sendEmailVerification(userCredential.user);
         
-        // Determine user role
-        let userRole = "user";
-        if (isAdmin || email === "admintradeconnect@gmail.com") {
-          userRole = "admin";
-        }
-
-        // Save user data to database
-        await set(ref(db, 'users/' + user.uid), {
-          username: username,
-          email: email,
-          zone: zone,
-          barangayId: barangayId,
-          barangayIdVerified: false, // Admin will verify this
-          role: userRole,
+        await set(ref(db, `users/${userCredential.user.uid}`), {
+          username: formData.get('username'),
+          email: formData.get('email'),
+          zone: formData.get('zone'),
+          barangayId: formData.get('barangayId'),
+          barangayIdVerified: false,
+          role: formData.get('isAdmin') ? 'admin' : 'user',
           termsAccepted: true,
-          termsAcceptedDate: new Date().toISOString(),
           createdAt: new Date().toISOString()
         });
 
-        // Show success message and redirect
-        alert("Account created successfully! A verification email has been sent to your email address. Please verify your email before logging in.");
-        
-        // Sign out and redirect to login
         await signOut(auth);
+        alert('Account created! Please check your email for verification.');
         window.location.href = "login.html";
-
+        
       } catch (error) {
         console.error("Signup error:", error);
-        handleSignupError(error);
+        alert(error.message);
       } finally {
-        // Reset button state
         signupButton.disabled = false;
         buttonText.textContent = 'Sign Up';
       }
     });
-
-    function handleSignupError(error) {
-      let errorMessage = "Signup failed. Please try again.";
-      let errorField = 'email'; // Default field for errors
-      
-      switch (error.code) {
-        case "auth/email-already-in-use":
-          errorMessage = "This email is already registered";
-          errorField = 'email';
-          break;
-        case "auth/invalid-email":
-          errorMessage = "Invalid email address";
-          errorField = 'email';
-          break;
-        case "auth/weak-password":
-          errorMessage = "Password should be at least 6 characters";
-          errorField = 'password';
-          break;
-        case "auth/operation-not-allowed":
-          errorMessage = "Account creation is currently disabled";
-          break;
-        case "auth/network-request-failed":
-          errorMessage = "Network error. Please check your connection";
-          break;
-      }
-      
-      showError(`${errorField}-error`, errorField, errorMessage);
-    }
-
-    // Clear errors when typing
-    document.querySelectorAll('input, select').forEach(element => {
-      element.addEventListener('input', () => {
-        const errorId = `${element.id}-error`;
-        if (document.getElementById(errorId)) {
-          clearError(errorId, element.id);
-        }
-      });
-    });
-
-    // Service worker registration for PWA capabilities
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').then(registration => {
-          console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        }).catch(err => {
-          console.log('ServiceWorker registration failed: ', err);
-        });
-      });
-    }
   </script>
 </body>
 </html>
