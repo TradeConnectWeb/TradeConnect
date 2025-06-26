@@ -1,11 +1,19 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   server: {
     host: true,
-    port: 5175
+    port: 5175,
+    proxy: {
+      // 🔁 Ito ang importante para gumana ang fetch('/firebase-config')
+      '/firebase-config': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
   build: {
-    outDir: 'dist'  // 🔑 ito ang kailangan mo para alam ng Vite saan ilalagay ang build files
+    outDir: 'dist'
   }
-})
+});
