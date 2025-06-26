@@ -7,7 +7,7 @@ import ForgotPassword from './pages/Forgot';
 import UserDashboard from './pages/UserDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 
-import { initFirebase } from './firebase'; // ✅ import firebase setup
+import { getFirebaseApp } from './firebase'; // tugma sa export mo sa firebase.js
 
 const isAuthenticated = () => {
   return !!localStorage.getItem('authToken');
@@ -18,9 +18,9 @@ const getUserRole = () => {
 };
 
 const App = () => {
-  useEffect(() => {
-    initFirebase(); // ✅ initialize firebase once on app load
-  }, []);
+ useEffect(() => {
+  getFirebaseApp(); // ito ang tatawagin mo
+}, []);
 
   return (
     <Router>

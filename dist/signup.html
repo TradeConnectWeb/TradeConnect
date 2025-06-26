@@ -8,8 +8,8 @@
   <title>TradeConnect - Sign Up</title>
   <style>
     :root {
-      --primary: #4a6fa5; /* Deep blue */
-      --secondary: #166088; /* Darker blue */
+      --primary: #4a6fa5;
+      --secondary: #166088;
       --error: #e74c3c;
       --success: #2ecc71;
       --light-gray: #f5f5f5;
@@ -114,14 +114,23 @@
       margin-bottom: 25px;
     }
 
-    .input-group i {
-      display: none;
+    .input-group i.fa-user,
+    .input-group i.fa-envelope,
+    .input-group i.fa-map-marker-alt,
+    .input-group i.fa-id-card,
+    .input-group i.fa-lock,
+    .input-group i.fa-key {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #777;
     }
 
     .input-group input,
     .input-group select {
       width: 100%;
-      padding: 12px 40px 12px 15px;
+      padding: 12px 40px 12px 40px;
       border: 1px solid #ccc;
       border-radius: 5px;
       font-size: 16px;
@@ -143,26 +152,6 @@
     .input-group input.success,
     .input-group select.success {
       border-color: var(--success);
-    }
-
-    .password-container input {
-      width: 100%;
-      padding-right: 30px;
-    }
-    
-    .password-toggle {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      color: #777;
-      z-index: 2;
-      display: none;
-    }
-
-    .input-group input {
-      padding-right: 40px !important;
     }
 
     button {
@@ -307,6 +296,13 @@
       margin-bottom: 8px;
     }
 
+    .password-requirements {
+      font-size: 13px;
+      color: #666;
+      margin-top: 5px;
+      padding-left: 15px;
+    }
+
     @keyframes spinAndScale {
       0% { transform: rotate(0deg) scale(1); }
       50% { transform: rotate(180deg) scale(1.1); }
@@ -382,19 +378,22 @@
 
         <div class="input-group">
           <i class="fas fa-id-card"></i>
-          <input type="text" id="barangayId" placeholder="Barangay ID Number" required />
+          <input type="text" id="barangayId" placeholder="Barangay ID Number (e.g., BRG-2023-12345)" required />
           <div class="error-message" id="barangayId-error"></div>
         </div>
 
         <div class="input-group">
-          <input type="password" id="password" placeholder="Password" required />
-          <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+          <i class="fas fa-lock"></i>
+          <input type="password" id="password" placeholder="Password (min 6 characters)" required />
           <div class="error-message" id="password-error"></div>
+          <div class="password-requirements">
+            Password must be at least 6 characters long
+          </div>
         </div>
 
         <div class="input-group">
+          <i class="fas fa-lock"></i>
           <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
-          <i class="fas fa-eye password-toggle" id="toggleConfirmPassword"></i>
           <div class="error-message" id="confirmPassword-error"></div>
         </div>
 
@@ -449,7 +448,9 @@
       getAuth, 
       createUserWithEmailAndPassword,
       sendEmailVerification,
-      signOut
+      signOut,
+      setPersistence,
+      browserLocalPersistence
     } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { 
       getDatabase, 
@@ -483,45 +484,6 @@
     const termsLink = document.getElementById('termsLink');
     const termsModal = document.getElementById('termsModal');
     const closeModal = document.querySelector('.close-modal');
-    
-    // Password toggle functionality
-    document.getElementById('togglePassword').addEventListener('click', function() {
-      togglePassword('password', this);
-    });
-
-    document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
-      togglePassword('confirmPassword', this);
-    });
-
-    function togglePassword(fieldId, icon) {
-      const field = document.getElementById(fieldId);
-      if (field.type === "password") {
-        field.type = "text";
-        icon.classList.remove("fa-eye");
-        icon.classList.add("fa-eye-slash");
-      } else {
-        field.type = "password";
-        icon.classList.remove("fa-eye-slash");
-        icon.classList.add("fa-eye");
-      }
-    }
-
-    // Show eye icon only when there's input in password fields
-    ['password', 'confirmPassword'].forEach(id => {
-      const field = document.getElementById(id);
-      const icon = document.getElementById(`toggle${id.charAt(0).toUpperCase() + id.slice(1)}`);
-      
-      field.addEventListener('input', function() {
-        if (this.value.length > 0) {
-          icon.style.display = 'block';
-        } else {
-          icon.style.display = 'none';
-          this.type = 'password';
-          icon.classList.remove('fa-eye-slash');
-          icon.classList.add('fa-eye');
-        }
-      });
-    });
 
     // Show/hide admin code field based on checkbox
     isAdminCheckbox.addEventListener("change", function() {
@@ -594,8 +556,8 @@
       if (!barangayId) {
         showError('barangayId-error', 'barangayId', 'Barangay ID is required');
         isValid = false;
-      } else if (!/^[A-Za-z0-9-]+$/.test(barangayId)) {
-        showError('barangayId-error', 'barangayId', 'Only letters, numbers and hyphens allowed');
+      } else if (!/^BRG-\d{4}-\d{5}$/.test(barangayId)) {
+        showError('barangayId-error', 'barangayId', 'Format: BRG-YYYY-XXXXX (e.g., BRG-2023-12345)');
         isValid = false;
       } else {
         clearError('barangayId-error', 'barangayId');
@@ -682,6 +644,9 @@
         signupButton.disabled = true;
         buttonText.innerHTML = `<span class="loading-spinner"></span> Creating account...`;
 
+        // Set persistence
+        await setPersistence(auth, browserLocalPersistence);
+
         // Create user account
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
@@ -691,7 +656,7 @@
         
         // Determine user role
         let userRole = "user";
-        if (isAdmin || email === "admintradeconnect@gmail.com") {
+        if (isAdmin || email === "tradeconnecta@gmail.com") {
           userRole = "admin";
         }
 
@@ -701,18 +666,17 @@
           email: email,
           zone: zone,
           barangayId: barangayId,
-          barangayIdVerified: false, // Admin will verify this
+          barangayIdVerified: false,
           role: userRole,
           termsAccepted: true,
           termsAcceptedDate: new Date().toISOString(),
-          createdAt: new Date().toISOString()
+          createdAt: new Date().toISOString(),
+          emailVerified: false
         });
 
-        // Show success message and redirect
-        alert("Account created successfully! A verification email has been sent to your email address. Please verify your email before logging in.");
-        
-        // Sign out and redirect to login
+        // Sign out the user and redirect to login page
         await signOut(auth);
+        alert("A verification email has been sent. Please verify your email before logging in.");
         window.location.href = "login.html";
 
       } catch (error) {
@@ -727,7 +691,7 @@
 
     function handleSignupError(error) {
       let errorMessage = "Signup failed. Please try again.";
-      let errorField = 'email'; // Default field for errors
+      let errorField = 'email';
       
       switch (error.code) {
         case "auth/email-already-in-use":
