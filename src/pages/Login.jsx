@@ -1,45 +1,62 @@
+// src/pages/Login.jsx
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { login } from '../firebaseAuth';
 
-const Login = () => {
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const storedEmail = localStorage.getItem('email');
-    const storedPassword = localStorage.getItem('password');
-    const role = localStorage.getItem('role');
-
-    if (email === storedEmail && password === storedPassword) {
-      localStorage.setItem('authToken', 'LOGGED_IN');
-      navigate(role === 'admin' ? '/admin-dashboard' : '/user-dashboard');
-    } else {
-      alert('Invalid email or password');
+    setError('');
+    setLoading(true);
+    try {
+      await login(email, password);
+      // Redirect or show success, halimbawa:
+      window.location.href = '/dashboard'; 
+    } catch (err) {
+      // Firebase error codes pwede mo i-handle dito
+      if (err.code === 'auth/user-not-found') {
+        setError('User not found.');
+      } else if (err.code === 'auth/wrong-password') {
+        setError('Incorrect password.');
+      } else {
+        setError('Login failed. Try again.');
+      }
+    } finally {
+      setLoading(false);
     }
-  };
+  }
 
   return (
-    <form onSubmit={handleLogin}>
+    <div style={{ maxWidth: 400, margin: 'auto', padding: 20 }}>
       <h2>Login</h2>
-      <input
-        type="email"
-        placeholder="Enter email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <br />
-      <input
-        type="password"
-        placeholder="Enter password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <br />
-      <button type="submit">Login</button>
-    </form>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Email</label><br/>
+          <input 
+            type="email" 
+            value={email} 
+            onChange={e => setEmail(e.target.value)} 
+            required 
+          />
+        </div>
+        <div>
+          <label>Password</label><br/>
+          <input 
+            type="password" 
+            value={password} 
+            onChange={e => setPassword(e.target.value)} 
+            required 
+          />
+        </div>
+        {error && <div style={{ color: 'red', marginTop: 10 }}>{error}</div>}
+        <button type="submit" disabled={loading} style={{ marginTop: 10 }}>
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
+      </form>
+    </div>
   );
-};
-
-export default Login;
+}
