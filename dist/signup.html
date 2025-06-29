@@ -5,23 +5,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <title>TradeConnect - Sign Up</title>
   <style>
     :root {
-      --primary: #4a6fa5;
-      --secondary: #166088;
+      --primary: #4a6fa5; /* Deep blue */
+      --secondary: #166088; /* Darker blue */
       --error: #e74c3c;
       --success: #2ecc71;
       --light-gray: #f5f5f5;
       --dark-gray: #333;
-      --link-color: #1a73e8;
+      --link-blue: #1a73e8;
     }
     
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Times New Roman", Times, serif;
+      font-family: "Open Sans", sans-serif;
     }
 
     body {
@@ -114,23 +115,14 @@
       margin-bottom: 25px;
     }
 
-    .input-group i.fa-user,
-    .input-group i.fa-envelope,
-    .input-group i.fa-map-marker-alt,
-    .input-group i.fa-id-card,
-    .input-group i.fa-lock,
-    .input-group i.fa-key {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #777;
+    .input-group i {
+      display: none;
     }
 
     .input-group input,
     .input-group select {
       width: 100%;
-      padding: 12px 40px 12px 40px;
+      padding: 12px 40px 12px 15px;
       border: 1px solid #ccc;
       border-radius: 5px;
       font-size: 16px;
@@ -152,6 +144,26 @@
     .input-group input.success,
     .input-group select.success {
       border-color: var(--success);
+    }
+
+    .password-container input {
+      width: 100%;
+      padding-right: 30px;
+    }
+    
+    .password-toggle {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #777;
+      z-index: 2;
+      display: none;
+    }
+
+    .input-group input {
+      padding-right: 40px !important;
     }
 
     button {
@@ -227,80 +239,91 @@
       vertical-align: middle;
     }
 
-    .terms-checkbox {
-      display: flex;
-      align-items: center;
-      margin-bottom: 15px;
+    .terms-privacy {
+      text-align: center;
+      margin: 15px 0;
+      font-size: 14px;
+      color: #777;
     }
 
-    .terms-checkbox input {
-      margin-right: 10px;
-    }
-
-    .terms-link {
-      color: var(--link-color);
+    .terms-privacy a {
+      color: var(--link-blue);
       text-decoration: none;
       cursor: pointer;
-      font-weight: bold;
     }
 
-    .terms-link:hover {
+    .terms-privacy a:hover {
       text-decoration: underline;
     }
 
     .modal {
       display: none;
       position: fixed;
-      z-index: 100;
-      left: 0;
       top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0,0,0,0.5);
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
     }
 
     .modal-content {
-      background-color: #fefefe;
-      margin: 10% auto;
-      padding: 20px;
+      background-color: white;
+      padding: 30px;
       border-radius: 8px;
-      width: 80%;
-      max-width: 600px;
+      max-width: 500px;
+      width: 90%;
       max-height: 80vh;
       overflow-y: auto;
     }
 
-    .close-modal {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .close-modal:hover {
-      color: black;
-    }
-
-    .modal-title {
+    .modal-content h3 {
       margin-bottom: 15px;
       color: var(--secondary);
     }
 
-    .modal-list {
-      padding-left: 20px;
-      margin-bottom: 15px;
+    .modal-content p {
+      margin-bottom: 10px;
+      line-height: 1.5;
     }
 
-    .modal-list li {
-      margin-bottom: 8px;
+    .close-modal {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 15px;
+      float: right;
     }
 
-    .password-requirements {
-      font-size: 13px;
-      color: #666;
-      margin-top: 5px;
-      padding-left: 15px;
+    .close-modal:hover {
+      opacity: 0.9;
+    }
+
+    .verification-notice {
+      background-color: #e8f4fd;
+      border-left: 4px solid var(--primary);
+      padding: 15px;
+      margin: 20px 0;
+      display: none;
+    }
+
+    .verification-notice p {
+      margin-bottom: 10px;
+    }
+
+    .verification-notice a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .verification-notice a:hover {
+      text-decoration: underline;
     }
 
     @keyframes spinAndScale {
@@ -322,11 +345,6 @@
       .right-section {
         padding: 30px;
       }
-
-      .modal-content {
-        margin: 20% auto;
-        width: 90%;
-      }
     }
   </style>
 </head>
@@ -344,6 +362,13 @@
 
     <div class="right-section">
       <h2>Sign Up</h2>
+      <div class="verification-notice" id="verificationNotice">
+        <h3>Email Verification Required</h3>
+        <p>We've sent a verification email to <span id="sentEmail"></span>. Please check your inbox and click the verification link to activate your account.</p>
+        <p>Didn't receive the email? <a href="#" id="resendLink">Resend verification email</a></p>
+        <p>Already verified? <a href="login.html">Proceed to login</a></p>
+      </div>
+      
       <form id="signupForm">
         <div class="input-group">
           <i class="fas fa-user"></i>
@@ -377,30 +402,15 @@
         </div>
 
         <div class="input-group">
-          <i class="fas fa-id-card"></i>
-          <input type="text" id="barangayId" placeholder="Barangay ID Number (e.g., BRG-2023-12345)" required />
-          <div class="error-message" id="barangayId-error"></div>
-        </div>
-
-        <div class="input-group">
-          <i class="fas fa-lock"></i>
-          <input type="password" id="password" placeholder="Password (min 6 characters)" required />
+          <input type="password" id="password" placeholder="Password" required />
+          <i class="fas fa-eye password-toggle" id="togglePassword"></i>
           <div class="error-message" id="password-error"></div>
-          <div class="password-requirements">
-            Password must be at least 6 characters long
-          </div>
         </div>
 
         <div class="input-group">
-          <i class="fas fa-lock"></i>
           <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+          <i class="fas fa-eye password-toggle" id="toggleConfirmPassword"></i>
           <div class="error-message" id="confirmPassword-error"></div>
-        </div>
-
-        <div class="terms-checkbox">
-          <input type="checkbox" id="acceptTerms" required />
-          <label for="acceptTerms">I agree to the <span class="terms-link" id="termsLink">Terms and Conditions</span></label>
-          <div class="error-message" id="terms-error"></div>
         </div>
 
         <div class="admin-checkbox">
@@ -412,6 +422,10 @@
           <i class="fas fa-key"></i>
           <input type="password" id="adminCode" placeholder="Enter Admin Code" />
           <div class="error-message" id="adminCode-error"></div>
+        </div>
+
+        <div class="terms-privacy">
+          By signing up, you agree to our <a id="termsLink">Terms and Privacy</a>
         </div>
 
         <button type="submit" id="signupButton">
@@ -426,19 +440,27 @@
   </div>
 
   <!-- Terms and Conditions Modal -->
-  <div id="termsModal" class="modal">
+  <div class="modal" id="termsModal">
     <div class="modal-content">
-      <span class="close-modal">&times;</span>
-      <h3 class="modal-title">Terms and Conditions</h3>
+      <h3>Terms and Conditions</h3>
       <p>By signing up, you agree to the following:</p>
-      <ol class="modal-list">
-        <li>You are a resident of Barangay Bulihan, Silang, Cavite.</li>
-        <li>You will only use this platform for legitimate trading purposes.</li>
-        <li>You will not engage in any fraudulent activities.</li>
-        <li>Your location data will be used for verification purposes only.</li>
-        <li>The admin reserves the right to verify your identity and location.</li>
-        <li>Any violation of these terms may result in account suspension.</li>
-      </ol>
+      <p>1. You are a resident of Barangay Bulihan, Silang, Cavite.</p>
+      <p>2. You will only use this platform for legitimate trading purposes.</p>
+      <p>3. You will not engage in any fraudulent activities.</p>
+      <p>4. Your location data will be used for verification purposes only.</p>
+      <p>5. The admin reserves the right to verify your identity and location.</p>
+      <p>6. Any violation of these terms may result in account suspension.</p>
+      <button class="close-modal" id="closeModal">Close</button>
+    </div>
+  </div>
+
+  <!-- Success Notification Modal -->
+  <div class="modal" id="successModal">
+    <div class="modal-content">
+      <h3>Success!</h3>
+      <p>Your account has been created successfully!</p>
+      <p>We've sent a verification email to <span id="successEmail"></span>. Please verify your email to complete your registration.</p>
+      <button class="close-modal" id="closeSuccessModal">OK</button>
     </div>
   </div>
 
@@ -449,8 +471,9 @@
       createUserWithEmailAndPassword,
       sendEmailVerification,
       signOut,
-      setPersistence,
-      browserLocalPersistence
+      sendSignInLinkToEmail,
+      isSignInWithEmailLink,
+      signInWithEmailLink
     } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { 
       getDatabase, 
@@ -480,10 +503,89 @@
     const buttonText = document.getElementById('buttonText');
     const isAdminCheckbox = document.getElementById('isAdmin');
     const adminCodeGroup = document.getElementById('adminCodeGroup');
-    const acceptTerms = document.getElementById('acceptTerms');
     const termsLink = document.getElementById('termsLink');
     const termsModal = document.getElementById('termsModal');
-    const closeModal = document.querySelector('.close-modal');
+    const closeModal = document.getElementById('closeModal');
+    const successModal = document.getElementById('successModal');
+    const closeSuccessModal = document.getElementById('closeSuccessModal');
+    const verificationNotice = document.getElementById('verificationNotice');
+    const sentEmail = document.getElementById('sentEmail');
+    const successEmail = document.getElementById('successEmail');
+    const resendLink = document.getElementById('resendLink');
+    
+    // Check if we're coming back from email verification
+    if (isSignInWithEmailLink(auth, window.location.href)) {
+      handleEmailVerification();
+    }
+
+    async function handleEmailVerification() {
+      try {
+        // Show loading state
+        signupButton.disabled = true;
+        buttonText.innerHTML = `<span class="loading-spinner"></span> Verifying email...`;
+
+        let email = window.localStorage.getItem('emailForSignIn');
+        if (!email) {
+          email = window.prompt('Please provide your email for confirmation');
+        }
+        
+        const result = await signInWithEmailLink(auth, email, window.location.href);
+        window.localStorage.removeItem('emailForSignIn');
+        
+        // Update user's emailVerified status in database
+        await set(ref(db, 'users/' + result.user.uid + '/emailVerified'), true);
+        
+        // Show success message and redirect
+        alert("Email verified successfully! You can now login.");
+        window.location.href = "login.html";
+      } catch (error) {
+        console.error("Email verification error:", error);
+        alert("Email verification failed: " + error.message);
+      } finally {
+        signupButton.disabled = false;
+        buttonText.textContent = 'Sign Up';
+      }
+    }
+
+    // Password toggle functionality
+    document.getElementById('togglePassword').addEventListener('click', function() {
+      togglePassword('password', this);
+    });
+
+    document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
+      togglePassword('confirmPassword', this);
+    });
+
+    function togglePassword(fieldId, icon) {
+      const field = document.getElementById(fieldId);
+      if (field.type === "password") {
+        field.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+      } else {
+        field.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+      }
+    }
+
+    // Show eye icon only when there's input in password fields
+    ['password', 'confirmPassword'].forEach(id => {
+      const field = document.getElementById(id);
+      const icon = document.getElementById(`toggle${id.charAt(0).toUpperCase() + id.slice(1)}`);
+      
+      field.addEventListener('input', function() {
+        if (this.value.length > 0) {
+          icon.style.display = 'block';
+        } else {
+          icon.style.display = 'none';
+          // Reset to password type if field is empty
+          this.type = 'password';
+          icon.classList.remove('fa-eye-slash');
+          icon.classList.add('fa-eye');
+        }
+      });
+    });
 
     // Show/hide admin code field based on checkbox
     isAdminCheckbox.addEventListener("change", function() {
@@ -494,18 +596,45 @@
       }
     });
 
-    // Terms and Conditions modal
+    // Terms and Privacy modal
     termsLink.addEventListener('click', function() {
-      termsModal.style.display = 'block';
+      termsModal.style.display = 'flex';
     });
 
     closeModal.addEventListener('click', function() {
       termsModal.style.display = 'none';
     });
 
+    closeSuccessModal.addEventListener('click', function() {
+      successModal.style.display = 'none';
+    });
+
+    // Resend verification email
+    resendLink.addEventListener('click', async function(e) {
+      e.preventDefault();
+      const email = sentEmail.textContent;
+      
+      try {
+        // Show loading state
+        resendLink.innerHTML = `<span class="loading-spinner"></span> Sending...`;
+        
+        await sendEmailVerification(auth.currentUser || { email });
+        alert("Verification email resent successfully!");
+      } catch (error) {
+        console.error("Resend error:", error);
+        alert("Failed to resend verification email: " + error.message);
+      } finally {
+        resendLink.textContent = 'Resend verification email';
+      }
+    });
+
+    // Close modal when clicking outside
     window.addEventListener('click', function(event) {
       if (event.target === termsModal) {
         termsModal.style.display = 'none';
+      }
+      if (event.target === successModal) {
+        successModal.style.display = 'none';
       }
     });
 
@@ -515,12 +644,10 @@
       const username = document.getElementById("username").value.trim();
       const email = document.getElementById("email").value.trim();
       const zone = document.getElementById("zone").value;
-      const barangayId = document.getElementById("barangayId").value.trim();
       const password = document.getElementById("password").value;
       const confirmPassword = document.getElementById("confirmPassword").value;
       const isAdmin = isAdminCheckbox.checked;
       const adminCode = document.getElementById("adminCode").value;
-      const termsAccepted = acceptTerms.checked;
 
       // Username validation
       if (!username) {
@@ -544,23 +671,12 @@
         clearError('email-error', 'email');
       }
 
-      // Zone validation
+      // Zone validation - Functional Suitability
       if (!zone || !zone.startsWith("Zone")) {
         showError('zone-error', 'zone', 'Please select your zone');
         isValid = false;
       } else {
         clearError('zone-error', 'zone');
-      }
-
-      // Barangay ID validation
-      if (!barangayId) {
-        showError('barangayId-error', 'barangayId', 'Barangay ID is required');
-        isValid = false;
-      } else if (!/^BRG-\d{4}-\d{5}$/.test(barangayId)) {
-        showError('barangayId-error', 'barangayId', 'Format: BRG-YYYY-XXXXX (e.g., BRG-2023-12345)');
-        isValid = false;
-      } else {
-        clearError('barangayId-error', 'barangayId');
       }
 
       // Password validation
@@ -583,14 +699,6 @@
         isValid = false;
       } else {
         clearError('confirmPassword-error', 'confirmPassword');
-      }
-
-      // Terms validation
-      if (!termsAccepted) {
-        showError('terms-error', 'acceptTerms', 'You must accept the terms and conditions');
-        isValid = false;
-      } else {
-        clearError('terms-error', 'acceptTerms');
       }
 
       // Admin code validation
@@ -635,7 +743,6 @@
       const username = document.getElementById("username").value.trim();
       const email = document.getElementById("email").value.trim();
       const zone = document.getElementById("zone").value;
-      const barangayId = document.getElementById("barangayId").value.trim();
       const password = document.getElementById("password").value;
       const isAdmin = isAdminCheckbox.checked;
 
@@ -644,10 +751,6 @@
         signupButton.disabled = true;
         buttonText.innerHTML = `<span class="loading-spinner"></span> Creating account...`;
 
-        // Set persistence
-        await setPersistence(auth, browserLocalPersistence);
-
-        // Create user account
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
@@ -656,7 +759,7 @@
         
         // Determine user role
         let userRole = "user";
-        if (isAdmin || email === "tradeconnecta@gmail.com") {
+        if (isAdmin || email === "admintradeconnect@gmail.com") {
           userRole = "admin";
         }
 
@@ -665,19 +768,22 @@
           username: username,
           email: email,
           zone: zone,
-          barangayId: barangayId,
-          barangayIdVerified: false,
           role: userRole,
-          termsAccepted: true,
-          termsAcceptedDate: new Date().toISOString(),
-          createdAt: new Date().toISOString(),
-          emailVerified: false
+          emailVerified: false,
+          createdAt: new Date().toISOString()
         });
 
-        // Sign out the user and redirect to login page
+        // Show success modal with verification notice
+        successEmail.textContent = email;
+        successModal.style.display = 'flex';
+        
+        // Hide form and show verification notice
+        signupForm.style.display = 'none';
+        verificationNotice.style.display = 'block';
+        sentEmail.textContent = email;
+        
+        // Sign out (optional, depending on your flow)
         await signOut(auth);
-        alert("A verification email has been sent. Please verify your email before logging in.");
-        window.location.href = "login.html";
 
       } catch (error) {
         console.error("Signup error:", error);
@@ -691,7 +797,7 @@
 
     function handleSignupError(error) {
       let errorMessage = "Signup failed. Please try again.";
-      let errorField = 'email';
+      let errorField = 'email'; // Default field for errors
       
       switch (error.code) {
         case "auth/email-already-in-use":

@@ -28,7 +28,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Times New Roman", Times, serif;
+      font-family: "Open Sans", sans-serif;
     }
 
     body {
@@ -327,228 +327,6 @@
       transform: rotate(90deg);
     }
 
-    /* Product card styles */
-    .product-card {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      overflow: hidden;
-      margin-bottom: 20px;
-      transition: transform 0.2s;
-    }
-    
-    .product-card:hover {
-      transform: translateY(-5px);
-    }
-    
-    /* Pagination button styles */
-    #loadMoreBtn {
-      display: block;
-      margin: 20px auto;
-      padding: 12px 24px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s;
-    }
-    
-    #loadMoreBtn:hover {
-      background-color: #45a049;
-    }
-    
-    #loadMoreBtn:disabled {
-      background-color: #cccccc;
-      cursor: not-allowed;
-    }
-    
-    #loadMoreBtn.loading {
-      position: relative;
-      color: transparent;
-    }
-    
-    #loadMoreBtn.loading::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 20px;
-      height: 20px;
-      border: 2px solid #f3f3f3;
-      border-top: 2px solid #3498db;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    
-    @keyframes spin {
-      0% { transform: translate(-50%, -50%) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-    
-    /* Loading placeholders */
-    .loading-placeholder {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    
-    .loading-card {
-      background: #f5f5f5;
-      border-radius: 8px;
-      padding: 15px;
-      animation: pulse 1.5s infinite ease-in-out;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 1; }
-    }
-    
-    /* Toast notifications */
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 12px 24px;
-      border-radius: 4px;
-      color: white;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      opacity: 0;
-      transition: opacity 0.3s;
-      z-index: 1000;
-    }
-    
-    .toast.show {
-      opacity: 1;
-    }
-    
-    .toast-success {
-      background-color: #4CAF50;
-    }
-    
-    .toast-error {
-      background-color: #f44336;
-    }
-    
-    .toast-info {
-      background-color: #2196F3;
-    }
-    
-    /* Modal styles */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.5);
-      z-index: 100;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .modal-content {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      width: 90%;
-      max-width: 500px;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-    
-    /* Form styles */
-    .form-group {
-      margin-bottom: 15px;
-    }
-    
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-    
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-    
-    /* Image upload styles */
-    .image-upload-container {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-    
-    .image-upload-box {
-      border: 2px dashed #ddd;
-      border-radius: 4px;
-      height: 100px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      position: relative;
-    }
-    
-    .image-preview {
-      max-width: 100%;
-      max-height: 100%;
-      display: none;
-    }
-    /* Toast Notification */
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      padding: 15px 20px;
-      border-radius: 8px;
-      color: white;
-      background-color: #4CAF50;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      transform: translateY(100px);
-      opacity: 0;
-      transition: all 0.3s ease;
-      z-index: 1000;
-    }
-
-    .toast.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    .toast i {
-      font-size: 20px;
-    }
-
-    .toast-error {
-      background-color: #f44336;
-    }
-
-    .toast-warning {
-      background-color: #ff9800;
-    }
-
-    .toast-info {
-      background-color: #2196F3;
-    }
-
     /* Home Dashboard Styles */
     .home-header h2 {
       margin: 0 0 10px 0;
@@ -662,7 +440,7 @@
     .location i {
       font-size: 12px;
     }
-
+    
     .product-meta {
       display: flex;
       justify-content: space-between;
@@ -1876,75 +1654,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Signup Modal -->
-  <div id="signupModal" class="modal">
-    <div class="modal-content" style="max-width: 500px;">
-      <span class="close" onclick="closeModal('signupModal')">&times;</span>
-      <h2>Complete Your Profile</h2>
-      <p>Help us personalize your experience by providing a few details.</p>
-      
-      <form id="signupForm">
-        <div class="form-group">
-          <label for="signupName">Full Name*</label>
-          <input type="text" id="signupName" required>
-          <div class="error-message">Please enter your name</div>
-        </div>
-        
-        <div class="form-group">
-          <label for="signupEmail">Email*</label>
-          <input type="email" id="signupEmail" required>
-          <div class="error-message">Please enter a valid email</div>
-        </div>
-        
-        <div class="form-group">
-          <label for="signupZone">Zone (Barangay Bulihan)*</label>
-          <select id="signupZone" required>
-            <option value="">Select your zone</option>
-            <option>Zone 1</option>
-            <option>Zone 2</option>
-            <option>Zone 3</option>
-            <option>Zone 4</option>
-            <option>Zone 5</option>
-            <option>Zone 6</option>
-            <option>Zone 7</option>
-            <option>Zone 8</option>
-            <option>Zone 9</option>
-            <option>Zone 10</option>
-            <option>Zone 11</option>
-          </select>
-          <div class="error-message">Please select your zone</div>
-        </div>
-        
-        <div class="form-group">
-          <label for="signupContact">Contact Number*</label>
-          <input type="tel" id="signupContact" pattern="[0-9]{11}" required>
-          <div class="error-message">Please enter a valid 11-digit number</div>
-          <small>Format: 09XXXXXXXXX</small>
-        </div>
-        
-        <div class="form-group">
-          <label>Profile Picture</label>
-          <div class="image-upload-box" style="width: 120px; height: 120px; margin: 0 auto;">
-            <input type="file" id="signupPhoto" accept="image/*">
-            <span class="image-upload-text">+ Add Photo</span>
-            <img class="image-preview" style="width: 100%; height: 100%;">
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label>
-            <input type="checkbox" id="acceptTerms" required>
-            I agree to the <a href="#" onclick="openTerms()">Terms of Service</a> and <a href="#" onclick="openPrivacy()">Privacy Policy</a>
-          </label>
-          <div class="error-message">You must accept the terms</div>
-        </div>
-        
-        <button type="submit" class="btn-submit">Complete Sign Up</button>
-      </form>
-    </div>
-  </div>
-
   <div class="container">
     <div class="sidebar">
       <div class="logo">
@@ -2000,13 +1709,13 @@
         <div class="user-actions">
           <div class="notification" onclick="openModal('notificationsModal')">
             <i class="fas fa-bell"></i>
-            <span class="notification-badge">3</span>
+            <span class="notification-badge"></span>
           </div>
           <div class="user-profile" id="userProfile">
             <img id="userAvatar" src="https://placehold.co/40" alt="User Avatar">
             <div class="user-info">
-              <span id="userName">KITKAI</span>
-              <span id="userEmail">maricarcaratao11@gmail.com</span>
+              <span id="userName"></span>
+              <span id="userEmail"></span>
             </div>
             <div class="user-dropdown">
               <a href="javascript:void(0)" class="dropdown-item" onclick="openModal('settingsModal')">
@@ -2024,7 +1733,6 @@
       <div id="home" class="content-section active">
         <div class="home-header">
           <h2>Home Feed</h2>
-          <p>Recent posts from all users in your community</p>
         </div>
         
         <!-- Categories Quick Access -->
@@ -2039,46 +1747,7 @@
 
         <!-- Live Listings Feed -->
         <div class="listings-feed" id="homeListings">
-          <!-- Sample listings -->
-          <div class="product-card">
-            <span class="product-badge">For Sale</span>
-            <img src="https://placehold.co/250" alt="Product Image">
-            <div class="product-info">
-              <h3>Brand New Smartphone</h3>
-              <div class="price">₱12,500</div>
-              <div class="product-meta">
-                <div class="user-info">
-                  <img src="https://placehold.co/40x40" alt="User" class="user-photo">
-                  <span></span>
-                </div>
-                <div class="location">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <span></span>
-                </div>
-                <span class="date-posted"></span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="product-card">
-            <span class="product-badge trade">For Trade</span>
-            <img src="https://placehold.co/250" alt="Product Image">
-            <div class="product-info">
-              <h3>Wooden Dining Table</h3>
-              <div class="price">Trade Only</div>
-              <div class="product-meta">
-                <div class="user-info">
-                  <img src="https://placehold.co/40x40" alt="User" class="user-photo">
-                  <span></span>
-                </div>
-                <div class="location">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <span></span>
-                </div>
-                <span class="date-posted"></span>
-              </div>
-            </div>
-          </div>
+          <!-- Product cards will be loaded here -->
         </div>
         <button id="loadMoreHomeBtn" class="load-more-btn">Load More</button>
 
@@ -2093,29 +1762,28 @@
         <div class="profile-container">
           <div class="profile-header">
             <img src="https://placehold.co/120" alt="Profile Picture" class="profile-avatar" id="profileAvatar">
-            <h1 class="profile-name" id="profileName">KITKAI</h1>
+            <h1 class="profile-name" id="profileName"></h1>
             <div class="profile-location">
               <i class="fas fa-map-marker-alt"></i>
-              <span id="profileLocation">Zone 5, Barangay Bulihan, Silang, Cavite</span>
+              <span id="profileLocation"></span>
             </div>
             
             <div class="profile-stats">
               <div class="stat-item">
-                <div class="stat-number" id="postsCount">5</div>
+                <div class="stat-number" id="postsCount">0</div>
                 <div class="stat-label">Posts</div>
               </div>
               <div class="stat-item">
-                <div class="stat-number" id="tradesCount">3</div>
+                <div class="stat-number" id="tradesCount">0</div>
                 <div class="stat-label">Trades</div>
               </div>
               <div class="stat-item">
-                <div class="stat-number" id="ratingCount">5.0</div>
+                <div class="stat-number" id="ratingCount">0</div>
                 <div class="stat-label">Rating</div>
               </div>
             </div>
             
             <div class="profile-bio" id="profileBio">
-              Member since 2025. Active trader in the community.
             </div>
           </div>
           
@@ -2129,25 +1797,6 @@
             <h3>My Posts</h3>
             <div class="profile-posts" id="userPosts">
               <!-- User's posts will be loaded here -->
-              <div class="product-card">
-                <span class="product-badge">For Sale</span>
-                <img src="https://placehold.co/250" alt="Product Image">
-                <div class="product-info">
-                  <h3>Brand New Smartphone</h3>
-                  <div class="price">₱12,500</div>
-                  <div class="product-meta">
-                    <span class="date-posted">Today</span>
-                    <div class="post-actions">
-                      <button class="edit-post-btn" onclick="editPost('1')">
-                        <i class="fas fa-edit"></i> Edit
-                      </button>
-                      <button class="delete-post-btn" onclick="deletePost('1')">
-                        <i class="fas fa-trash"></i> Delete
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
           
@@ -2185,7 +1834,7 @@
             <div class="chat-partner-info">
               <img src="https://placehold.co/40" alt="User" class="partner-avatar">
               <div>
-                <h3>Username</h3>
+                <h3>Chat Partner</h3>
                 <span class="status">Online</span>
               </div>
             </div>
@@ -2205,25 +1854,9 @@
           <!-- Chat Messages -->
           <div class="chat-messages" id="chatMessages">
             <!-- Messages will appear here -->
-            <div class="message received">
-              <div class="message-content">
-                Hi there! Is this item still available?
-                <span class="message-time">10:30 AM</span>
-              </div>
-            </div>
-            
-            <div class="message sent">
-              <div class="message-content">
-                Yes, it's still available. Are you interested?
-                <span class="message-time">10:32 AM</span>
-              </div>
-            </div>
-            
-            <div class="message received">
-              <div class="message-content">
-                Yes, can we meet tomorrow at the barangay hall?
-                <span class="message-time">10:33 AM</span>
-              </div>
+            <div class="no-messages">
+              <i class="fas fa-comment-slash"></i>
+              <p>No messages yet. Start a conversation!</p>
             </div>
           </div>
           
@@ -2256,45 +1889,6 @@
         
         <div class="listings-feed" id="marketplaceListings">
           <!-- Listings will be loaded here dynamically -->
-          <div class="product-card">
-            <span class="product-badge">For Sale</span>
-            <img src="https://placehold.co/250" alt="Product Image">
-            <div class="product-info">
-              <h3>Brand New Smartphone</h3>
-              <div class="price">₱12,500</div>
-              <div class="product-meta">
-                <div class="user-info">
-                  <img src="https://placehold.co/40x40" alt="User" class="user-photo">
-                  <span></span>
-                </div>
-                <div class="location">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <span></span>
-                </div>
-                <span class="date-posted"></span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="product-card">
-            <span class="product-badge trade">For Trade</span>
-            <img src="https://placehold.co/250" alt="Product Image">
-            <div class="product-info">
-              <h3>Wooden Dining Table</h3>
-              <div class="price">Trade Only</div>
-              <div class="product-meta">
-                <div class="user-info">
-                  <img src="https://placehold.co/40x40" alt="User" class="user-photo">
-                  <span></span>
-                </div>
-                <div class="location">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <span></span>
-                </div>
-                <span class="date-posted"></span>
-              </div>
-            </div>
-          </div>
         </div>
         <button id="loadMoreMarketplaceBtn" class="load-more-btn">Load More</button>
       </div>
@@ -2312,7 +1906,7 @@
           <form id="postForm" onsubmit="handlePostSubmit(event)">
             <div class="form-group">
               <label for="postTitle">Title*</label>
-              <input type="text" id="postTitle" required placeholder="What are you offering?">
+              <input type="text" id="postTitle" required placeholder="Enter item title...">
               <div class="error-message">Please enter a title</div>
             </div>
 
@@ -2412,41 +2006,6 @@
         
         <div class="forum-posts" id="forumPostsContainer">
           <!-- Posts will be loaded here dynamically -->
-          <div class="forum-post">
-            <div class="post-header">
-              <img src="https://placehold.co/40x40" alt="User" class="user-photo">
-              <div class="post-user-info">
-                <span class="username"> </span>
-                <span class="post-date"></span>
-              </div>
-            </div>
-            <div class="post-content">
-              <h3>Looking to buy rice cooker</h3>
-              <p>Does anyone have a rice cooker for sale? Preferably 5L capacity. Please message me if you have one available.</p>
-            </div>
-            <div class="post-footer">
-              <button class="like-btn" onclick="likePost(this)"><i class="far fa-thumbs-up"></i> 2</button>
-              <button class="comment-btn" onclick="showComments(this)"><i class="far fa-comment"></i> 3</button>
-            </div>
-          </div>
-          
-          <div class="forum-post">
-            <div class="post-header">
-              <img src="https://placehold.co/40x40" alt="User" class="user-photo">
-              <div class="post-user-info">
-                <span class="username"> </span>
-                <span class="post-date"></span>
-              </div>
-            </div>
-            <div class="post-content">
-              <h3>⚠️ Beware of this scammer!</h3>
-              <p>Someone tried to sell me a fake gold necklace. Be careful when trading jewelry items!</p>
-            </div>
-            <div class="post-footer">
-              <button class="like-btn" onclick="likePost(this)"><i class="far fa-thumbs-up"></i> 5</button>
-              <button class="comment-btn" onclick="showComments(this)"><i class="far fa-comment"></i> 2</button>
-            </div>
-          </div>
         </div>
         <button id="loadMoreForumBtn" class="load-more-btn">Load More</button>
       </div>
@@ -2469,10 +2028,10 @@
               </select>
               <div class="error-message">Please select a post type</div>
             </div>
-            
+      
             <div class="form-group">
               <label for="forumPostTitle">Title*</label>
-              <input type="text" id="forumPostTitle" required placeholder="Enter post title">
+              <input type="text" id="forumPostTitle" required placeholder="Enter post title...">
               <div class="error-message">Please enter a title</div>
             </div>
             
@@ -2493,7 +2052,6 @@
                 <option value="">Select method</option>
                 <option value="gcash">GCash</option>
                 <option value="cash">Cash</option>
-                <option value="barter">Barter</option>
               </select>
             </div>
             
@@ -2583,7 +2141,7 @@
             <h2 id="articleTitle">How to create an account</h2>
             <div class="article-meta">
               <span id="articleCategory">Getting Started</span>
-              <span id="articleDate">June 1, 2023</span>
+              <span id="articleDate"></span>
             </div>
             <div class="article-content" id="articleContent">
               <p>Creating an account on TradeConnect is easy! Just follow these steps:</p>
@@ -2636,8 +2194,8 @@
             <i class="fas fa-thumbs-up"></i>
           </div>
           <div class="notification-content">
-            <p>Your item has been viewed 15 times</p>
-            <span class="notification-time">Yesterday</span>
+            <p></p>
+            <span class="notification-time"></span>
           </div>
         </div>
       </div>
@@ -2739,145 +2297,1002 @@
     </div>
   </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-storage-compat.js"></script>
 <script>
-  // Current active section
-  let currentSection = 'home';
-  
-  // Sample data for demonstration
-  const sampleUser = {
-    name: "KITKAI",
-    email: "maricarcaratao11@gmail.com",
-    avatar: "https://placehold.co/40",
-    location: "Zone 5, Barangay Bulihan, Silang, Cavite"
-  };
-  
-  // Initialize the page
-  document.addEventListener('DOMContentLoaded', function() {
-    // Set user info
-    document.getElementById('userName').textContent = sampleUser.name;
-    document.getElementById('userEmail').textContent = sampleUser.email;
-    document.getElementById('userAvatar').src = sampleUser.avatar;
-    document.getElementById('profileName').textContent = sampleUser.name;
-    document.getElementById('profileAvatar').src = sampleUser.avatar;
-    document.getElementById('profileLocation').textContent = sampleUser.location;
+  // =====================
+  // GLOBAL ERROR HANDLER
+  // =====================
+  window.handleGlobalError = function(error) {
+    console.error("Global error:", error);
     
-    // Show welcome modal for first-time visitors
-    if (!localStorage.getItem('welcomeShown')) {
+    // Prevent duplicate error toasts
+    if (document.querySelector('.global-error-toast')) return;
+    
+    const toast = document.createElement('div');
+    toast.className = 'global-error-toast';
+    toast.innerHTML = `
+      <i class="fas fa-exclamation-triangle"></i>
+      <span>An unexpected error occurred. Please try refreshing the page.</span>
+    `;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+      toast.classList.add('show');
       setTimeout(() => {
-        openModal('welcomeModal');
-        localStorage.setItem('welcomeShown', 'true');
-      }, 1000);
-    }
-    
-    // Initialize event listeners
-    setupEventListeners();
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 5000);
+    }, 10);
+  };
+
+  // Initialize error listeners
+  window.addEventListener('error', (event) => {
+    event.preventDefault();
+    handleGlobalError(event.error || event);
   });
   
-  // Set up all event listeners
-  function setupEventListeners() {
+  window.addEventListener('unhandledrejection', (event) => {
+    event.preventDefault();
+    handleGlobalError(event.reason || event);
+  });
+
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyCxaOGeOvHwS5dnPHRTpw3Lwn2surjXP1E",
+    authDomain: "tradeconnect-3c728.firebaseapp.com",
+    projectId: "tradeconnect-3c728",
+    storageBucket: "tradeconnect-3c728.appspot.com",
+    messagingSenderId: "299665603548",
+    appId: "1:299665603548:web:9ff10af44cd41605382d19",
+    databaseURL: "https://tradeconnect-3c728-default-rtdb.firebaseio.com"
+  };
+
+  // Initialize Firebase with error handling
+  let auth, db, storage;
+  try {
+    const app = firebase.initializeApp(firebaseConfig);
+    auth = firebase.auth();
+    db = firebase.firestore();
+    storage = firebase.storage();
+  } catch (firebaseError) {
+    handleGlobalError(firebaseError);
+    throw firebaseError;
+  }
+
+  let currentSection = 'home'; // Default section
+
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM fully loaded and parsed");
+    
+    // Initialize navigation
+    setupNavigation();
+    
+    // Initialize form submissions
+    setupForms();
+    
+    // Initialize image uploads
+    setupImageUploads();
+    
+    // Initialize other event listeners
+    setupEventListeners();
+
+    // User authentication state
+    auth.onAuthStateChanged(handleAuthStateChanged);
+    
+    // Initial load
+    loadContent();
+    
+    // Show welcome modal for new users
+    setTimeout(() => {
+      if (!localStorage.getItem('welcomeShown')) {
+        openModal('welcomeModal');
+        localStorage.setItem('welcomeShown', 'true');
+      }
+    }, 1000);
+  });
+
+  function setupNavigation() {
+    // Sidebar navigation
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = link.getAttribute('data-target');
+        
+        // Remove active class from all links
+        navLinks.forEach(navLink => {
+          navLink.classList.remove('active');
+        });
+        
+        // Add active class to clicked link
+        link.classList.add('active');
+        
+        // Hide all content sections
+        document.querySelectorAll('.content-section').forEach(section => {
+          section.classList.remove('active');
+        });
+        
+        // Show target section
+        document.getElementById(target).classList.add('active');
+        currentSection = target;
+        
+        // Load content for the section
+        loadContent();
+      });
+    });
+    
+    // Profile tabs
+    const profileTabs = document.querySelectorAll('.profile-tab');
+    profileTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active class from all tabs
+        profileTabs.forEach(t => t.classList.remove('active'));
+        // Add active class to clicked tab
+        tab.classList.add('active');
+        
+        // Hide all profile content
+        document.querySelectorAll('.profile-content').forEach(content => {
+          content.classList.remove('active');
+        });
+        
+        // Show selected content
+        const tabId = tab.getAttribute('data-tab') + 'Tab';
+        document.getElementById(tabId).classList.add('active');
+      });
+    });
+    
     // User profile dropdown
     const userProfile = document.getElementById('userProfile');
     if (userProfile) {
-      userProfile.addEventListener('click', function(e) {
+      userProfile.addEventListener('click', (e) => {
         e.stopPropagation();
-        this.classList.toggle('active');
+        userProfile.classList.toggle('active');
       });
     }
     
     // Close dropdown when clicking outside
-    document.addEventListener('click', function() {
-      const userProfile = document.getElementById('userProfile');
+    document.addEventListener('click', () => {
       if (userProfile) userProfile.classList.remove('active');
     });
+  }
+
+  function setupForms() {
+    // Marketplace post form
+    const postForm = document.getElementById('postForm');
+    if (postForm) {
+      postForm.addEventListener('submit', handlePostSubmit);
+      
+      // Trade/sell toggle
+      const tradeOrSell = document.getElementById('tradeOrSell');
+      if (tradeOrSell) {
+        tradeOrSell.addEventListener('change', () => {
+          document.getElementById('priceInput').style.display = 
+            tradeOrSell.checked ? 'block' : 'none';
+        });
+      }
+      
+      // Category selection
+      const categoryBtns = document.querySelectorAll('.category-btn');
+      categoryBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          categoryBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById('selectedCategory').value = btn.getAttribute('data-category');
+        });
+      });
+    }
     
+    // Forum post form
+    const forumPostForm = document.getElementById('forumPostForm');
+    if (forumPostForm) {
+      forumPostForm.addEventListener('submit', handleForumPostSubmit);
+      
+      // Post type changes
+      const postType = document.getElementById('postType');
+      if (postType) {
+        postType.addEventListener('change', () => {
+          const isScam = postType.value === 'scam';
+          document.getElementById('locationField').style.display = isScam ? 'block' : 'none';
+          document.getElementById('paymentMethodField').style.display = isScam ? 'block' : 'none';
+          document.getElementById('gcashField').style.display = 
+            (isScam && document.getElementById('paymentMethod').value === 'gcash') ? 'block' : 'none';
+        });
+      }
+      
+      // Payment method changes
+      const paymentMethod = document.getElementById('paymentMethod');
+      if (paymentMethod) {
+        paymentMethod.addEventListener('change', () => {
+          document.getElementById('gcashField').style.display = 
+            paymentMethod.value === 'gcash' ? 'block' : 'none';
+        });
+      }
+    }
+    
+    // Report form
+    const reportForm = document.getElementById('reportForm');
+    if (reportForm) {
+      reportForm.addEventListener('submit', handleReportSubmit);
+    }
+  }
+
+  function setupImageUploads() {
+    // Marketplace image upload
+    document.querySelectorAll('.image-upload-input').forEach(input => {
+      input.addEventListener('change', function(e) {
+        const container = this.closest('.image-upload-box');
+        const preview = container.querySelector('.image-preview');
+        const text = container.querySelector('.image-upload-text');
+        
+        if (this.files && this.files[0]) {
+          const reader = new FileReader();
+          
+          reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+            text.style.display = 'none';
+            
+            // Add remove button
+            if (!container.querySelector('.remove-image')) {
+              const removeBtn = document.createElement('button');
+              removeBtn.className = 'remove-image';
+              removeBtn.innerHTML = '&times;';
+              removeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                input.value = '';
+                preview.style.display = 'none';
+                text.style.display = 'flex';
+                removeBtn.remove();
+              });
+              container.appendChild(removeBtn);
+            }
+          };
+          
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+    });
+    
+    // Profile image upload
+    const profileUpload = document.getElementById('profile-upload');
+    if (profileUpload) {
+      profileUpload.addEventListener('change', function(e) {
+        const preview = document.getElementById('preview-img');
+        if (this.files && this.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            preview.src = e.target.result;
+          };
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+    }
+  }
+
+  function setupEventListeners() {
     // Search functionality
     const searchBar = document.querySelector('.search-bar input');
     if (searchBar) {
-      searchBar.addEventListener('keypress', function(e) {
+      searchBar.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-          performSearch(this.value);
+          performSearch(searchBar.value);
         }
       });
       
       const searchBtn = document.querySelector('.search-bar i');
       if (searchBtn) {
-        searchBtn.addEventListener('click', function() {
+        searchBtn.addEventListener('click', () => {
           performSearch(searchBar.value);
         });
       }
     }
     
-    // Message input
+    // Help center search
+    const helpSearch = document.getElementById('helpSearch');
+    if (helpSearch) {
+      helpSearch.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          searchHelpArticles(helpSearch.value);
+        }
+      });
+      
+      const searchHelpBtn = document.getElementById('searchHelpBtn');
+      if (searchHelpBtn) {
+        searchHelpBtn.addEventListener('click', () => {
+          searchHelpArticles(helpSearch.value);
+        });
+      }
+    }
+    
+    // Back to list in help center
+    const backToList = document.getElementById('backToList');
+    if (backToList) {
+      backToList.addEventListener('click', () => {
+        document.getElementById('articleDetail').style.display = 'none';
+        document.getElementById('helpArticles').style.display = 'block';
+      });
+    }
+    
+    // Notification bell
+    const notificationBell = document.querySelector('.notification');
+    if (notificationBell) {
+      notificationBell.addEventListener('click', () => {
+        openModal('notificationsModal');
+        // Mark notifications as read
+        document.querySelector('.notification-badge').style.display = 'none';
+      });
+    }
+    
+    // Chat functionality
+    const sendMessageBtn = document.getElementById('sendMessage');
+    if (sendMessageBtn) {
+      sendMessageBtn.addEventListener('click', sendMessage);
+    }
+    
     const messageInput = document.getElementById('messageInput');
     if (messageInput) {
-      messageInput.addEventListener('keypress', function(e) {
+      messageInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
           sendMessage();
         }
       });
     }
-  }
-  
-  // Switch between sections
-  function switchSection(section) {
-    // Update active nav link
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('data-target') === section) {
-        link.classList.add('active');
-      }
-    });
     
-    // Hide all content sections
-    document.querySelectorAll('.content-section').forEach(section => {
-      section.classList.remove('active');
-    });
+    // Clear chat button
+    const clearChatBtn = document.getElementById('clearChat');
+    if (clearChatBtn) {
+      clearChatBtn.addEventListener('click', () => {
+        if (confirm('Are you sure you want to clear this chat?')) {
+          document.getElementById('chatMessages').innerHTML = `
+            <div class="no-messages">
+              <i class="fas fa-comment-slash"></i>
+              <p>No messages yet. Start a conversation!</p>
+            </div>
+          `;
+        }
+      });
+    }
     
-    // Show target section
-    document.getElementById(section).classList.add('active');
-    currentSection = section;
-  }
-  
-  // Switch between profile tabs
-  function switchProfileTab(tab) {
-    // Update active tab
-    const profileTabs = document.querySelectorAll('.profile-tab');
-    profileTabs.forEach(tabElement => {
-      tabElement.classList.remove('active');
-      if (tabElement.getAttribute('data-tab') === tab) {
-        tabElement.classList.add('active');
-      }
-    });
-    
-    // Hide all profile content
-    document.querySelectorAll('.profile-content').forEach(content => {
-      content.classList.remove('active');
-    });
-    
-    // Show selected content
-    document.getElementById(tab + 'Tab').classList.add('active');
-  }
-  
-  // Open modal
-  function openModal(id) {
-    const modal = document.getElementById(id);
-    if (modal) {
-      modal.style.display = 'flex';
-      document.body.classList.add('modal-open');
+    // Report user button
+    const reportUserBtn = document.getElementById('reportUserBtn');
+    if (reportUserBtn) {
+      reportUserBtn.addEventListener('click', () => {
+        openModal('reportModal');
+      });
     }
   }
-  
-  // Close modal
-  function closeModal(id) {
-    const modal = document.getElementById(id);
-    if (modal) {
-      modal.style.display = 'none';
-      document.body.classList.remove('modal-open');
+
+  async function handleAuthStateChanged(user) {
+    try {
+      if (user) {
+        console.log("User authenticated:", user.email);
+        
+        // Update UI elements
+        const userNameElement = document.getElementById('userName');
+        const userEmailElement = document.getElementById('userEmail');
+        const userAvatar = document.getElementById('userAvatar');
+        const profileName = document.getElementById('profileName');
+        const profileAvatar = document.getElementById('profileAvatar');
+        
+        if (userNameElement) userNameElement.textContent = user.displayName || "User";
+        if (userEmailElement) userEmailElement.textContent = user.email;
+        if (userAvatar) userAvatar.src = user.photoURL || "https://placehold.co/40";
+        if (profileName) profileName.textContent = user.displayName || "User";
+        if (profileAvatar) profileAvatar.src = user.photoURL || "https://placehold.co/120";
+
+        // Initialize user profile
+        await initializeUserProfile(user);
+        
+        // Check if profile is complete
+        if (!user.displayName || !user.photoURL) {
+          openModal('signupModal');
+        } else {
+          // Load user posts if on profile page
+          if (currentSection === 'profile') {
+            loadUserPosts(user.uid);
+          }
+        }
+      } else {
+        console.log("No user signed in, redirecting to login");
+        window.location.href = "login.html";
+      }
+    } catch (error) {
+      handleGlobalError(error);
     }
   }
-  
-  // Show toast notification
+
+  async function initializeUserProfile(user) {
+    const userRef = db.collection('users').doc(user.uid);
+    const userDoc = await userRef.get();
+    
+    if (!userDoc.exists) {
+      console.log("Creating new user profile");
+      await userRef.set({
+        username: user.displayName || "Anonymous",
+        email: user.email,
+        photoUrl: user.photoURL || "",
+        location: "",
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } else {
+      // Update profile page with user data
+      const userData = userDoc.data();
+      document.getElementById('profileLocation').textContent = userData.location || "Barangay Bulihan, Silang, Cavite";
+      document.getElementById('profileBio').textContent = userData.bio || "Member since " + (userData.createdAt?.toDate().getFullYear() || "2023") + ". Active trader in the community.";
+      
+      // Load user stats
+      loadUserStats(user.uid);
+    }
+  }
+
+  async function loadUserPosts(userId) {
+    const container = document.getElementById('userPosts');
+    if (!container) return;
+    
+    try {
+      container.innerHTML = '<div class="loading-placeholder"><div class="loading-card" style="height: 180px;"></div></div>';
+      
+      const query = db.collection('marketplaceItems')
+        .where("userId", "==", userId)
+        .orderBy('createdAt', 'desc')
+        .limit(10);
+
+      const snapshot = await query.get();
+      console.log(`Retrieved ${snapshot.docs.length} user posts`);
+
+      container.innerHTML = '';
+      
+      if (snapshot.empty) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-box-open"></i>
+            <p>You haven't posted any items yet</p>
+            <button class="btn-submit" onclick="openModal('addPostModal')">
+              <i class="fas fa-plus"></i> Create Your First Post
+            </button>
+          </div>
+        `;
+        return;
+      }
+      
+      for (const doc of snapshot.docs) {
+        const item = doc.data();
+        const userData = await getUserData(item.userId);
+        container.innerHTML += createUserPostCard(doc.id, item, userData);
+      }
+    } catch (error) {
+      handleLoadError(error, container);
+    }
+  }
+
+  async function loadUserStats(userId) {
+    try {
+      // Get posts count
+      const postsQuery = db.collection('marketplaceItems')
+        .where("userId", "==", userId);
+      
+      const postsSnapshot = await postsQuery.get();
+      document.getElementById('postsCount').textContent = postsSnapshot.size;
+      
+      // Get trades count (in a real app, you would query actual trades)
+      document.getElementById('tradesCount').textContent = Math.floor(postsSnapshot.size * 0.7); // Simulated data
+      
+      // Get rating (in a real app, you would calculate from reviews)
+      document.getElementById('ratingCount').textContent = "5.0";
+      
+    } catch (error) {
+      console.error("Error loading user stats:", error);
+    }
+  }
+
+  async function handlePostSubmit(e) {
+    e.preventDefault();
+    console.log("Post form submitted");
+    
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
+    }
+    
+    try {
+      const formData = await processFormData();
+      await saveMarketplaceItem(formData);
+      
+      showToast("🎉 Item posted successfully!", "success");
+      closeModal('addPostModal');
+      loadContent();
+      
+      // Refresh profile posts if on profile page
+      if (currentSection === 'profile' && auth.currentUser) {
+        loadUserPosts(auth.currentUser.uid);
+      }
+    } catch (error) {
+      handleGlobalError(error);
+      showToast(`Error: ${error.message}`, "error");
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+      }
+    }
+  }
+
+  async function processFormData() {
+    // Validate form
+    const title = document.getElementById('postTitle')?.value;
+    const description = document.getElementById('postDescription')?.value;
+    const category = document.getElementById('selectedCategory')?.value;
+    
+    if (!title || !description || !category) {
+      throw new Error("Please fill in all required fields");
+    }
+    
+    // Count selected images
+    const imageInputs = document.querySelectorAll('.image-upload-input');
+    let selectedFiles = 0;
+    imageInputs.forEach(input => {
+      if (input.files?.[0]) selectedFiles++;
+    });
+    
+    if (selectedFiles < 3) {
+      throw new Error("Please upload at least 3 images");
+    }
+
+    return {
+      title: title,
+      description: description,
+      category: category,
+      isSelling: document.getElementById('tradeOrSell')?.checked || false,
+      price: parseFloat(document.getElementById('itemPrice')?.value) || 0,
+      userId: auth.currentUser?.uid || '',
+      isAvailable: true,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      images: await uploadImages()
+    };
+  }
+
+  async function uploadImages() {
+    const imageInputs = document.querySelectorAll('.image-upload-input');
+    const images = [];
+    const uploadPromises = [];
+    
+    // Process each image input
+    for (const input of imageInputs) {
+      if (input.files?.[0]) {
+        const file = input.files[0];
+        const storageRef = storage.ref(`marketplace/${Date.now()}_${file.name}`);
+        
+        uploadPromises.push(
+          storageRef.put(file)
+            .then(snapshot => snapshot.ref.getDownloadURL())
+            .then(url => {
+              images.push(url);
+              console.log("Image uploaded successfully:", url);
+            })
+            .catch(error => {
+              console.error("Upload failed:", error);
+              throw new Error("Image upload failed. Please try again.");
+            })
+        );
+      }
+    }
+
+    // Wait for all uploads to complete
+    await Promise.all(uploadPromises);
+    
+    if (images.length < 3) {
+      throw new Error("Some images failed to upload. Please try again.");
+    }
+
+    return images;
+  }
+
+  async function saveMarketplaceItem(formData) {
+    await db.collection('marketplaceItems').add(formData);
+  }
+
+  async function handleForumPostSubmit(e) {
+    e.preventDefault();
+    console.log("Forum post form submitted");
+    
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
+    }
+    
+    try {
+      const formData = {
+        title: document.getElementById('forumPostTitle')?.value || '',
+        content: document.getElementById('forumPostContent')?.value || '',
+        type: document.getElementById('postType')?.value || '',
+        userId: auth.currentUser?.uid || '',
+        isPublished: true,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+      
+      // Optional fields based on post type
+      if (formData.type === 'scam') {
+        formData.location = document.getElementById('postLocation')?.value || '';
+        formData.paymentMethod = document.getElementById('paymentMethod')?.value || '';
+        if (formData.paymentMethod === 'gcash') {
+          formData.gcashNumber = document.getElementById('gcashNumber')?.value || '';
+        }
+      }
+      
+      await db.collection('forumPosts').add(formData);
+      
+      showToast("Forum post created successfully!", "success");
+      closeModal('addForumPostModal');
+      loadContent();
+    } catch (error) {
+      handleGlobalError(error);
+      showToast(`Error: ${error.message}`, "error");
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+      }
+    }
+  }
+
+  async function handleReportSubmit(e) {
+    e.preventDefault();
+    console.log("Report form submitted");
+    
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
+    }
+    
+    try {
+      const formData = {
+        reason: document.getElementById('reportReason')?.value || '',
+        details: document.getElementById('reportDetails')?.value || '',
+        reportedUserId: document.getElementById('reportUserBtn')?.getAttribute('data-user-id') || '',
+        reporterId: auth.currentUser?.uid || '',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+      
+      // Handle evidence upload if exists
+      const evidenceFile = document.getElementById('reportEvidence')?.files?.[0];
+      if (evidenceFile) {
+        const storageRef = storage.ref(`reports/${Date.now()}_${evidenceFile.name}`);
+        const snapshot = await storageRef.put(evidenceFile);
+        formData.evidenceUrl = await snapshot.ref.getDownloadURL();
+      }
+      
+      await db.collection('reports').add(formData);
+      
+      showToast("Report submitted successfully!", "success");
+      closeModal('reportModal');
+    } catch (error) {
+      handleGlobalError(error);
+      showToast(`Error: ${error.message}`, "error");
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+      }
+    }
+  }
+
+  async function loadContent() {
+    console.log(`Loading content for ${currentSection}`);
+    
+    try {
+      switch(currentSection) {
+        case 'home':
+          await loadHomeContent();
+          break;
+        case 'profile':
+          if (auth.currentUser) {
+            await loadUserPosts(auth.currentUser.uid);
+            await loadUserStats(auth.currentUser.uid);
+          }
+          break;
+        case 'marketplace':
+          await loadMarketplaceItems();
+          break;
+        case 'community':
+          await loadForumPosts();
+          break;
+        case 'help':
+          loadHelpContent();
+          break;
+        default:
+          console.warn(`Unknown section: ${currentSection}`);
+      }
+    } catch (error) {
+      handleGlobalError(error);
+    }
+  }
+
+  async function loadHomeContent() {
+    const container = document.getElementById('homeListings');
+    if (!container) return;
+    
+    try {
+      container.innerHTML = '<div class="loading-placeholder"><div class="loading-card" style="height: 180px;"></div></div>';
+
+      const query = db.collection('marketplaceItems')
+        .where("isAvailable", "==", true)
+        .orderBy('createdAt', 'desc')
+        .limit(10);
+
+      const snapshot = await query.get();
+      console.log(`Retrieved ${snapshot.docs.length} home items`);
+
+      container.innerHTML = '';
+      
+      if (snapshot.empty) {
+        container.innerHTML = '<div class="no-items">No items found</div>';
+        return;
+      }
+      
+      for (const doc of snapshot.docs) {
+        const item = doc.data();
+        const userData = await getUserData(item.userId);
+        container.innerHTML += createMarketplaceItemCard(doc.id, item, userData);
+      }
+    } catch (error) {
+      handleLoadError(error, container);
+    }
+  }
+
+  async function loadMarketplaceItems() {
+    const container = document.getElementById('marketplaceListings');
+    if (!container) return;
+    
+    try {
+      container.innerHTML = '<div class="loading-placeholder"><div class="loading-card" style="height: 180px;"></div></div>';
+
+      const query = db.collection('marketplaceItems')
+        .where("isAvailable", "==", true)
+        .orderBy('createdAt', 'desc')
+        .limit(10);
+
+      const snapshot = await query.get();
+      console.log(`Retrieved ${snapshot.docs.length} marketplace items`);
+
+      container.innerHTML = '';
+      
+      if (snapshot.empty) {
+        container.innerHTML = '<div class="no-items">No listings found</div>';
+        return;
+      }
+      
+      for (const doc of snapshot.docs) {
+        const item = doc.data();
+        const userData = await getUserData(item.userId);
+        container.innerHTML += createMarketplaceItemCard(doc.id, item, userData);
+      }
+    } catch (error) {
+      handleLoadError(error, container);
+    }
+  }
+
+  async function loadForumPosts() {
+    const container = document.getElementById('forumPostsContainer');
+    if (!container) return;
+    
+    try {
+      container.innerHTML = '<div class="loading-placeholder"><div class="loading-card" style="height: 180px;"></div></div>';
+
+      const postTypeFilter = document.getElementById('postTypeFilter')?.value || 'all';
+      
+      let query = db.collection('forumPosts')
+        .where("isPublished", "==", true)
+        .orderBy('createdAt', 'desc')
+        .limit(10);
+
+      if (postTypeFilter !== 'all') {
+        query = query.where('type', '==', postTypeFilter);
+      }
+
+      const snapshot = await query.get();
+      console.log(`Retrieved ${snapshot.docs.length} forum posts`);
+
+      container.innerHTML = '';
+      
+      if (snapshot.empty) {
+        container.innerHTML = '<div class="no-items">No forum posts found</div>';
+        return;
+      }
+      
+      for (const doc of snapshot.docs) {
+        const post = doc.data();
+        const userData = await getUserData(post.userId);
+        container.innerHTML += createForumPostCard(doc.id, post, userData);
+      }
+    } catch (error) {
+      handleLoadError(error, container);
+    }
+  }
+
+  function loadHelpContent() {
+    const categoriesContainer = document.getElementById('helpCategories');
+    const articlesContainer = document.getElementById('helpArticles');
+    
+    if (!categoriesContainer || !articlesContainer) return;
+    
+    // Sample help categories (in a real app, these would come from a database)
+    const helpCategories = [
+      {
+        icon: 'fa-user',
+        title: 'Getting Started',
+        description: 'Learn how to create an account and set up your profile'
+      },
+      {
+        icon: 'fa-store',
+        title: 'Marketplace',
+        description: 'How to buy, sell and trade items in the marketplace'
+      },
+      {
+        icon: 'fa-comments',
+        title: 'Messaging',
+        description: 'How to communicate with other users safely'
+      },
+      {
+        icon: 'fa-users',
+        title: 'Community',
+        description: 'Participating in the community forum'
+      },
+      {
+        icon: 'fa-shield-alt',
+        title: 'Safety',
+        description: 'Tips for safe trading and avoiding scams'
+      },
+      {
+        icon: 'fa-cog',
+        title: 'Account Settings',
+        description: 'Manage your account preferences and settings'
+      }
+    ];
+    
+    // Sample help articles (in a real app, these would come from a database)
+    const helpArticles = [
+      {
+        id: '1',
+        category: 'Getting Started',
+        title: 'How to create an account',
+        content: '<p>Creating an account is easy! Just follow these steps...</p>'
+      },
+      {
+        id: '2',
+        category: 'Marketplace',
+        title: 'Listing an item for sale',
+        content: '<p>To list an item for sale, follow these steps...</p>'
+      },
+      {
+        id: '3',
+        category: 'Safety',
+        title: 'Avoiding scams',
+        content: '<p>Here are some tips to help you avoid scams...</p>'
+      }
+    ];
+    
+    // Render categories
+    categoriesContainer.innerHTML = helpCategories.map(category => `
+      <div class="category-card" onclick="showHelpArticles('${category.title}')">
+        <i class="fas ${category.icon}"></i>
+        <h3>${category.title}</h3>
+        <p>${category.description}</p>
+      </div>
+    `).join('');
+    
+    // Render articles
+    articlesContainer.innerHTML = helpArticles.map(article => `
+      <div class="article-card" onclick="showHelpArticleDetail('${article.id}')">
+        <h3>${article.title}</h3>
+        <div class="article-meta">
+          <span>${article.category}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function createMarketplaceItemCard(id, item, userData) {
+    return `
+      <div class="product-card" data-id="${id}">
+        <span class="product-badge ${item.isSelling ? '' : 'trade'}">
+          ${item.isSelling ? 'For Sale' : 'For Trade'}
+        </span>
+        <img src="${item.images?.[0] || 'https://placehold.co/250'}" alt="${item.title}" class="product-image">
+        <div class="product-info">
+          <h3>${item.title}</h3>
+          <div class="price">${item.isSelling ? `₱${item.price.toFixed(2)}` : 'Trade Only'}</div>
+          <div class="product-meta">
+            <div class="user-info">
+              <img src="${userData.photoUrl || 'https://placehold.co/40x40'}" 
+                   alt="${userData.username}" 
+                   class="user-photo">
+              <span>${userData.username}</span>
+            </div>
+            ${userData.location ? `
+            <div class="location">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>${userData.location}</span>
+            </div>
+            ` : ''}
+            <span class="date-posted">
+              ${item.createdAt?.toDate().toLocaleDateString() || 'Recently'}
+            </span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function createUserPostCard(id, item, userData) {
+    return `
+      <div class="product-card" data-id="${id}">
+        <span class="product-badge ${item.isSelling ? '' : 'trade'}">
+          ${item.isSelling ? 'For Sale' : 'For Trade'}
+        </span>
+        <img src="${item.images?.[0] || 'https://placehold.co/250'}" alt="${item.title}" class="product-image">
+        <div class="product-info">
+          <h3>${item.title}</h3>
+          <div class="price">${item.isSelling ? `₱${item.price.toFixed(2)}` : 'Trade Only'}</div>
+          <div class="product-meta">
+            <span class="date-posted">
+              ${item.createdAt?.toDate().toLocaleDateString() || 'Recently'}
+            </span>
+            <div class="post-actions">
+              <button class="edit-post-btn" onclick="editPost('${id}')">
+                <i class="fas fa-edit"></i> Edit
+              </button>
+              <button class="delete-post-btn" onclick="deletePost('${id}')">
+                <i class="fas fa-trash"></i> Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function createForumPostCard(id, post, userData) {
+    return `
+      <div class="forum-post" data-id="${id}">
+        <div class="post-header">
+          <img src="${userData.photoUrl || 'https://placehold.co/40x40'}" 
+               alt="${userData.username}" 
+               class="user-photo">
+          <div class="post-user-info">
+            <span class="username">${userData.username}</span>
+            <span class="post-date">${post.createdAt?.toDate().toLocaleDateString() || 'Recently'}</span>
+          </div>
+        </div>
+        <div class="post-content">
+          <h3>${post.title}</h3>
+          <p>${post.content}</p>
+        </div>
+        <div class="post-footer">
+          <button class="like-btn"><i class="far fa-thumbs-up"></i> ${post.likes || 0}</button>
+          <button class="comment-btn"><i class="far fa-comment"></i> ${post.comments?.length || 0}</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function handleLoadError(error, container) {
+    handleGlobalError(error);
+    
+    if (container) {
+      container.innerHTML = '<div class="error">Failed to load items. Please try again.</div>';
+    }
+    
+    if (error.message.includes("index")) {
+      console.error("Firestore query requires an index. Check the console for the link to create it.");
+    }
+  }
+
   function showToast(message, type = "success") {
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
@@ -2897,8 +3312,7 @@
       }, 3000);
     }, 10);
   }
-  
-  // Perform search
+
   function performSearch(query) {
     if (!query || query.trim() === '') {
       showToast("Please enter a search term", "error");
@@ -2906,28 +3320,81 @@
     }
     
     showToast(`Searching for: ${query}`, "info");
+    // In a real app, you would perform the search here
     console.log("Search query:", query);
   }
-  
-  // Search help articles
-  function searchHelpArticles() {
-    const query = document.getElementById('helpSearch').value.trim();
-    if (!query) {
+
+  function searchHelpArticles(query) {
+    if (!query || query.trim() === '') {
       showToast("Please enter a search term", "error");
       return;
     }
     
     showToast(`Searching help for: ${query}`, "info");
+    // In a real app, you would perform the search here
     console.log("Help search query:", query);
   }
-  
-  // Show help articles for a category
+
+  function sendMessage() {
+    const messageInput = document.getElementById('messageInput');
+    const message = messageInput?.value.trim();
+    
+    if (!message) {
+      showToast("Please enter a message", "error");
+      return;
+    }
+    
+    const chatMessages = document.getElementById('chatMessages');
+    if (chatMessages) {
+      // Remove "no messages" placeholder if it exists
+      const noMessages = chatMessages.querySelector('.no-messages');
+      if (noMessages) noMessages.remove();
+      
+      // Add new message
+      chatMessages.innerHTML += `
+        <div class="message sent">
+          <div class="message-content">
+            ${message}
+            <span class="message-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+          </div>
+        </div>
+      `;
+      
+      // Scroll to bottom
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      
+      // Clear input
+      messageInput.value = '';
+      
+      // Simulate reply after 1-3 seconds
+      setTimeout(() => {
+        const replies = [
+          "Thanks for your message!",
+          "I'm interested in your item",
+          "Can we meet tomorrow?",
+          "What's your best price?"
+        ];
+        const reply = replies[Math.floor(Math.random() * replies.length)];
+        
+        chatMessages.innerHTML += `
+          <div class="message received">
+            <div class="message-content">
+              ${reply}
+              <span class="message-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+            </div>
+          </div>
+        `;
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }, 1000 + Math.random() * 2000);
+    }
+  }
+
   function showHelpArticles(category) {
+    // In a real app, you would filter articles by category
     console.log("Showing articles for category:", category);
     showToast(`Showing articles for: ${category}`, "info");
   }
-  
-  // Show help article detail
+
   function showHelpArticleDetail(articleId) {
     const articlesContainer = document.getElementById('helpArticles');
     const articleDetail = document.getElementById('articleDetail');
@@ -2966,342 +3433,147 @@
       articleDetail.style.display = 'block';
     }
   }
-  
-  // Back to help list
-  function backToHelpList() {
-    const articlesContainer = document.getElementById('helpArticles');
-    const articleDetail = document.getElementById('articleDetail');
-    
-    if (articlesContainer && articleDetail) {
-      articleDetail.style.display = 'none';
-      articlesContainer.style.display = 'block';
-    }
+
+  function editPost(postId) {
+    // In a real app, you would implement post editing
+    console.log("Editing post with ID:", postId);
+    showToast("Edit post functionality would be implemented here", "info");
   }
-  
-  // Submit feedback for help article
-  function submitFeedback(helpful) {
-    showToast(`Thank you for your feedback! (${helpful === 'yes' ? 'Helpful' : 'Not helpful'})`, "info");
-  }
-  
-  // Send message in chat
-  function sendMessage() {
-    const messageInput = document.getElementById('messageInput');
-    const message = messageInput?.value.trim();
-    
-    if (!message) {
-      showToast("Please enter a message", "error");
-      return;
-    }
-    
-    const chatMessages = document.getElementById('chatMessages');
-    if (chatMessages) {
-      // Remove "no messages" placeholder if it exists
-      const noMessages = chatMessages.querySelector('.no-messages');
-      if (noMessages) noMessages.remove();
+
+  function deletePost(postId) {
+    if (confirm("Are you sure you want to delete this post?")) {
+      // In a real app, you would delete the post from the database
+      console.log("Deleting post with ID:", postId);
+      showToast("Post deleted successfully", "success");
       
-      // Add new message
-      chatMessages.innerHTML += `
-        <div class="message sent">
-          <div class="message-content">
-            ${message}
-            <span class="message-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
-          </div>
-        </div>
-      `;
+      // Remove the post from the UI
+      const postElement = document.querySelector(`.product-card[data-id="${postId}"]`);
+      if (postElement) {
+        postElement.remove();
+      }
       
-      // Scroll to bottom
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-      
-      // Clear input
-      messageInput.value = '';
-      
-      // Simulate reply after 1-3 seconds
-      setTimeout(() => {
-        const replies = [
-          "Thanks for your message!",
-          "I'm interested in your item.",
-          "Can we meet tomorrow?",
-          "What's your best price?",
-          "Is this still available?"
-        ];
-        const reply = replies[Math.floor(Math.random() * replies.length)];
-        
-        chatMessages.innerHTML += `
-          <div class="message received">
-            <div class="message-content">
-              ${reply}
-              <span class="message-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
-            </div>
+      // Check if there are no more posts
+      const postsContainer = document.getElementById('userPosts');
+      if (postsContainer && postsContainer.children.length === 0) {
+        postsContainer.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-box-open"></i>
+            <p>You haven't posted any items yet</p>
+            <button class="btn-submit" onclick="openModal('addPostModal')">
+              <i class="fas fa-plus"></i> Create Your First Post
+            </button>
           </div>
         `;
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }, 1000 + Math.random() * 2000);
-    }
-  }
-  
-  // Clear chat
-  function clearChat() {
-    if (confirm('Are you sure you want to clear this chat?')) {
-      document.getElementById('chatMessages').innerHTML = `
-        <div class="no-messages">
-          <i class="fas fa-comment-slash"></i>
-          <p>No messages yet. Start a conversation!</p>
-        </div>
-      `;
-    }
-  }
-  
-  // Delete chat
-  function deleteChat() {
-    if (confirm('Are you sure you want to delete this chat?')) {
-      showToast("Chat deleted", "info");
-      document.getElementById('chatMessages').innerHTML = `
-        <div class="no-messages">
-          <i class="fas fa-comment-slash"></i>
-          <p>No messages yet. Start a conversation!</p>
-        </div>
-      `;
-    }
-  }
-  
-  // Handle post form submission
-  function handlePostSubmit(e) {
-    e.preventDefault();
-    console.log("Post form submitted");
-    
-    // Validate form
-    const title = document.getElementById('postTitle').value;
-    const description = document.getElementById('postDescription').value;
-    const category = document.getElementById('selectedCategory').value;
-    
-    if (!title || !description || !category) {
-      showToast("Please fill in all required fields", "error");
-      return;
-    }
-    
-    // Count selected images
-    const imageInputs = document.querySelectorAll('.image-upload-input');
-    let selectedFiles = 0;
-    imageInputs.forEach(input => {
-      if (input.files?.[0]) selectedFiles++;
-    });
-    
-    if (selectedFiles < 3) {
-      showToast("Please upload at least 3 images", "error");
-      return;
-    }
-    
-    // Show success message
-    showToast("Item posted successfully!", "success");
-    closeModal('addPostModal');
-    
-    // In a real app, you would save the post to a database here
-    console.log("Post data:", {
-      title,
-      description,
-      category,
-      isSelling: document.getElementById('tradeOrSell').checked,
-      price: parseFloat(document.getElementById('itemPrice').value) || 0,
-      images: selectedFiles
-    });
-    
-    // Add the new post to the marketplace
-    if (currentSection === 'marketplace' || currentSection === 'home') {
-      const listingsFeed = document.getElementById(currentSection === 'marketplace' ? 'marketplaceListings' : 'homeListings');
-      if (listingsFeed) {
-        listingsFeed.innerHTML = `
-          <div class="product-card">
-            <span class="product-badge ${document.getElementById('tradeOrSell').checked ? '' : 'trade'}">
-              ${document.getElementById('tradeOrSell').checked ? 'For Sale' : 'For Trade'}
-            </span>
-            <img src="https://placehold.co/250" alt="${title}">
-            <div class="product-info">
-              <h3>${title}</h3>
-              <div class="price">${document.getElementById('tradeOrSell').checked ? `₱${parseFloat(document.getElementById('itemPrice').value).toFixed(2)}` : 'Trade Only'}</div>
-              <div class="product-meta">
-                <div class="user-info">
-                  <img src="${sampleUser.avatar}" alt="${sampleUser.name}" class="user-photo">
-                  <span>${sampleUser.name}</span>
-                </div>
-                <div class="location">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <span>${sampleUser.location}</span>
-                </div>
-                <span class="date-posted">Just now</span>
-              </div>
-            </div>
-          </div>
-        ` + listingsFeed.innerHTML;
-      }
-    }
-    
-    // Add to profile posts if on profile page
-    if (currentSection === 'profile') {
-      const userPosts = document.getElementById('userPosts');
-      if (userPosts) {
-        userPosts.innerHTML = `
-          <div class="product-card">
-            <span class="product-badge ${document.getElementById('tradeOrSell').checked ? '' : 'trade'}">
-              ${document.getElementById('tradeOrSell').checked ? 'For Sale' : 'For Trade'}
-            </span>
-            <img src="https://placehold.co/250" alt="${title}">
-            <div class="product-info">
-              <h3>${title}</h3>
-              <div class="price">${document.getElementById('tradeOrSell').checked ? `₱${parseFloat(document.getElementById('itemPrice').value).toFixed(2)}` : 'Trade Only'}</div>
-              <div class="product-meta">
-                <span class="date-posted">Just now</span>
-                <div class="post-actions">
-                  <button class="edit-post-btn" onclick="editPost('new')">
-                    <i class="fas fa-edit"></i> Edit
-                  </button>
-                  <button class="delete-post-btn" onclick="deletePost('new')">
-                    <i class="fas fa-trash"></i> Delete
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        ` + userPosts.innerHTML;
-        
-        // Update posts count
-        const postsCount = document.getElementById('postsCount');
-        if (postsCount) {
-          postsCount.textContent = parseInt(postsCount.textContent) + 1;
-        }
       }
     }
   }
-  
-  // Handle forum post submission
-  function handleForumPostSubmit(e) {
-    e.preventDefault();
-    console.log("Forum post form submitted");
+
+  function saveProfileSettings() {
+    const nickname = document.getElementById('nickname')?.value;
+    const zone = document.getElementById('zone')?.value;
+    const contact = document.getElementById('contact')?.value;
+    const gcash = document.getElementById('gcash')?.value;
     
-    // Validate form
-    const postType = document.getElementById('postType').value;
-    const title = document.getElementById('forumPostTitle').value;
-    const content = document.getElementById('forumPostContent').value;
-    
-    if (!postType || !title || !content) {
-      showToast("Please fill in all required fields", "error");
+    if (!nickname) {
+      showToast("Please enter a nickname", "error");
       return;
     }
     
-    // Show success message
-    showToast("Forum post created successfully!", "success");
-    closeModal('addForumPostModal');
+    // In a real app, you would save these to the database
+    console.log("Saving profile settings:", { nickname, zone, contact, gcash });
+    showToast("Profile settings saved successfully!", "success");
     
-    // In a real app, you would save the post to a database here
-    console.log("Forum post data:", {
-      postType,
-      title,
-      content,
-      location: document.getElementById('postLocation').value,
-      paymentMethod: document.getElementById('paymentMethod').value,
-      gcashNumber: document.getElementById('gcashNumber').value
-    });
-    
-    // Add the new post to the forum
-    const forumPostsContainer = document.getElementById('forumPostsContainer');
-    if (forumPostsContainer) {
-      forumPostsContainer.innerHTML = `
-        <div class="forum-post">
-          <div class="post-header">
-            <img src="${sampleUser.avatar}" alt="${sampleUser.name}" class="user-photo">
-            <div class="post-user-info">
-              <span class="username">${sampleUser.name}</span>
-              <span class="post-date">Just now</span>
-            </div>
-          </div>
-          <div class="post-content">
-            <h3>${title}</h3>
-            <p>${content}</p>
-          </div>
-          <div class="post-footer">
-            <button class="like-btn" onclick="likePost(this)"><i class="far fa-thumbs-up"></i> 0</button>
-            <button class="comment-btn" onclick="showComments(this)"><i class="far fa-comment"></i> 0</button>
-          </div>
-        </div>
-      ` + forumPostsContainer.innerHTML;
-    }
-  }
-  
-  // Handle report submission
-  function handleReportSubmit(e) {
-    e.preventDefault();
-    console.log("Report form submitted");
-    
-    const reason = document.getElementById('reportReason').value;
-    const details = document.getElementById('reportDetails').value;
-    
-    if (!reason || !details) {
-      showToast("Please fill in all required fields", "error");
-      return;
-    }
-    
-    // Show success message
-    showToast("Report submitted successfully!", "success");
-    closeModal('reportModal');
-    
-    // In a real app, you would save the report to a database here
-    console.log("Report data:", {
-      reason,
-      details,
-      evidence: document.getElementById('reportEvidence').files?.[0]?.name || "None"
-    });
-  }
-  
-  // Handle signup form submission
-  function handleSignupSubmit(e) {
-    e.preventDefault();
-    console.log("Signup form submitted");
-    
-    const name = document.getElementById('signupName').value;
-    const email = document.getElementById('signupEmail').value;
-    const zone = document.getElementById('signupZone').value;
-    const contact = document.getElementById('signupContact').value;
-    
-    if (!name || !email || !zone || !contact || !document.getElementById('acceptTerms').checked) {
-      showToast("Please fill in all required fields", "error");
-      return;
-    }
-    
-    // Show success message
-    showToast("Profile completed successfully!", "success");
-    closeModal('signupModal');
-    
-    // Update user info
-    document.getElementById('userName').textContent = name;
-    document.getElementById('profileName').textContent = name;
+    // Update UI
+    document.getElementById('userName').textContent = nickname;
+    document.getElementById('profileName').textContent = nickname;
     document.getElementById('profileLocation').textContent = `Zone ${zone}, Barangay Bulihan`;
-    
-    // Update profile picture if uploaded
-    const photoFile = document.getElementById('signupPhoto').files?.[0];
-    if (photoFile) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        document.getElementById('userAvatar').src = e.target.result;
-        document.getElementById('profileAvatar').src = e.target.result;
-      };
-      reader.readAsDataURL(photoFile);
+  }
+
+  function confirmDelete() {
+    if (confirm("Are you sure you want to delete your account? This cannot be undone.")) {
+      // In a real app, you would delete the user account
+      console.log("Account deletion requested");
+      showToast("Account deletion initiated", "info");
     }
   }
-  
-  // Toggle trade/sell switch
-  function toggleTradeSell() {
-    document.getElementById('priceInput').style.display = 
-      document.getElementById('tradeOrSell').checked ? 'block' : 'none';
+
+  function startTour() {
+    // In a real app, you would implement a guided tour
+    console.log("Starting user tour");
+    showToast("Starting guided tour", "info");
+    closeModal('welcomeModal');
   }
-  
-  // Select category
-  function selectCategory(btn) {
+
+  function openTerms() {
+    // In a real app, you would show terms of service
+    console.log("Opening terms of service");
+    showToast("Terms of service would be displayed here", "info");
+  }
+
+  function openPrivacy() {
+    // In a real app, you would show privacy policy
+    console.log("Opening privacy policy");
+    showToast("Privacy policy would be displayed here", "info");
+  }
+
+  async function getUserData(userId) {
+    try {
+      const userDoc = await db.collection('users').doc(userId).get();
+      if (userDoc.exists) {
+        return userDoc.data();
+      }
+      return {
+        username: "Anonymous",
+        photoUrl: "https://placehold.co/40",
+        location: "Unknown"
+      };
+    } catch (error) {
+      console.error("Error getting user data:", error);
+      return {
+        username: "Anonymous",
+        photoUrl: "https://placehold.co/40",
+        location: "Unknown"
+      };
+    }
+  }
+
+  function switchSection(sectionId) {
+    // Hide all sections
+    document.querySelectorAll('.content-section').forEach(section => {
+      section.classList.remove('active');
+    });
+    
+    // Show selected section
+    document.getElementById(sectionId).classList.add('active');
+    currentSection = sectionId;
+    
+    // Load content for the section
+    loadContent();
+  }
+
+  function switchProfileTab(tabId) {
+    // Hide all tabs
+    document.querySelectorAll('.profile-content').forEach(tab => {
+      tab.classList.remove('active');
+    });
+    
+    // Show selected tab
+    document.getElementById(tabId + 'Tab').classList.add('active');
+  }
+
+  function toggleTradeSell() {
+    const tradeOrSell = document.getElementById('tradeOrSell');
+    document.getElementById('priceInput').style.display = 
+      tradeOrSell.checked ? 'block' : 'none';
+  }
+
+  function selectCategory(button) {
     const categoryBtns = document.querySelectorAll('.category-btn');
     categoryBtns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('selectedCategory').value = btn.getAttribute('data-category');
+    button.classList.add('active');
+    document.getElementById('selectedCategory').value = button.getAttribute('data-category');
   }
-  
-  // Handle image upload for marketplace posts
+
   function handleImageUpload(input) {
     const container = input.closest('.image-upload-box');
     const preview = container.querySelector('.image-preview');
@@ -3334,8 +3606,7 @@
       reader.readAsDataURL(input.files[0]);
     }
   }
-  
-  // Handle image upload for forum posts
+
   function handleForumImageUpload(input) {
     const container = input.closest('.image-upload-box');
     const preview = container.querySelector('.image-preview');
@@ -3368,8 +3639,53 @@
       reader.readAsDataURL(input.files[0]);
     }
   }
-  
-  // Preview profile image
+
+  function handlePostTypeChange() {
+    const postType = document.getElementById('postType').value;
+    const isScam = postType === 'scam';
+    document.getElementById('locationField').style.display = isScam ? 'block' : 'none';
+    document.getElementById('paymentMethodField').style.display = isScam ? 'block' : 'none';
+    document.getElementById('gcashField').style.display = 'none';
+  }
+
+  function handlePaymentMethodChange() {
+    const paymentMethod = document.getElementById('paymentMethod').value;
+    document.getElementById('gcashField').style.display = 
+      paymentMethod === 'gcash' ? 'block' : 'none';
+  }
+
+  function clearChat() {
+    if (confirm('Are you sure you want to clear this chat?')) {
+      document.getElementById('chatMessages').innerHTML = `
+        <div class="no-messages">
+          <i class="fas fa-comment-slash"></i>
+          <p>No messages yet. Start a conversation!</p>
+        </div>
+      `;
+    }
+  }
+
+  function deleteChat() {
+    if (confirm('Are you sure you want to delete this chat?')) {
+      document.getElementById('chatMessages').innerHTML = `
+        <div class="no-messages">
+          <i class="fas fa-comment-slash"></i>
+          <p>No messages yet. Start a conversation!</p>
+        </div>
+      `;
+      showToast("Chat deleted", "success");
+    }
+  }
+
+  function backToHelpList() {
+    document.getElementById('articleDetail').style.display = 'none';
+    document.getElementById('helpArticles').style.display = 'block';
+  }
+
+  function submitFeedback(response) {
+    showToast(`Feedback submitted: ${response === 'yes' ? 'Helpful' : 'Not helpful'}`, "info");
+  }
+
   function previewImage(event) {
     const preview = document.getElementById('preview-img');
     if (event.target.files && event.target.files[0]) {
@@ -3380,159 +3696,51 @@
       reader.readAsDataURL(event.target.files[0]);
     }
   }
-  
-  // Handle post type change in forum
-  function handlePostTypeChange() {
-    const postType = document.getElementById('postType').value;
-    const isScam = postType === 'scam';
-    document.getElementById('locationField').style.display = isScam ? 'block' : 'none';
-    document.getElementById('paymentMethodField').style.display = isScam ? 'block' : 'none';
-    document.getElementById('gcashField').style.display = 'none';
-  }
-  
-  // Handle payment method change in forum
-  function handlePaymentMethodChange() {
-    document.getElementById('gcashField').style.display = 
-      document.getElementById('paymentMethod').value === 'gcash' ? 'block' : 'none';
-  }
-  
-  // Like a forum post
-  function likePost(button) {
-    const likeCount = parseInt(button.textContent.match(/\d+/)?.[0] || '0');
-    button.innerHTML = `<i class="far fa-thumbs-up"></i> ${likeCount + 1}`;
-    showToast("Post liked", "info");
-  }
-  
-  // Show comments for a forum post
-  function showComments(button) {
-    const commentCount = parseInt(button.textContent.match(/\d+/)?.[0] || '0');
-    showToast(`Showing ${commentCount} comments`, "info");
-  }
-  
-  // Edit a post
-  function editPost(postId) {
-    console.log("Editing post with ID:", postId);
-    showToast("Edit post functionality would be implemented here", "info");
-  }
-  
-  // Delete a post
-  function deletePost(postId) {
-    if (confirm("Are you sure you want to delete this post?")) {
-      console.log("Deleting post with ID:", postId);
-      showToast("Post deleted successfully", "success");
-      
-      // Remove the post from the UI
-      const postElement = document.querySelector(`.product-card[data-id="${postId}"]`);
-      if (postElement) {
-        postElement.remove();
-      }
-      
-      // Update posts count
-      const postsCount = document.getElementById('postsCount');
-      if (postsCount) {
-        postsCount.textContent = parseInt(postsCount.textContent) - 1;
-      }
-      
-      // Check if there are no more posts
-      const postsContainer = document.getElementById('userPosts');
-      if (postsContainer && postsContainer.children.length === 0) {
-        postsContainer.innerHTML = `
-          <div class="empty-state">
-            <i class="fas fa-box-open"></i>
-            <p>You haven't posted any items yet</p>
-            <button class="btn-submit" onclick="openModal('addPostModal')">
-              <i class="fas fa-plus"></i> Create Your First Post
-            </button>
-          </div>
-        `;
-      }
+
+  window.openModal = function(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.style.display = 'flex';
+      document.body.classList.add('modal-open');
     }
-  }
-  
-  // Save profile settings
-  function saveProfileSettings() {
-    const nickname = document.getElementById('nickname').value;
-    const zone = document.getElementById('zone').value;
-    const contact = document.getElementById('contact').value;
-    const gcash = document.getElementById('gcash').value;
-    
-    if (!nickname) {
-      showToast("Please enter a nickname", "error");
-      return;
+  };
+
+  window.closeModal = function(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.style.display = 'none';
+      document.body.classList.remove('modal-open');
     }
-    
-    // Update user info
-    document.getElementById('userName').textContent = nickname;
-    document.getElementById('profileName').textContent = nickname;
-    document.getElementById('profileLocation').textContent = `Zone ${zone}, Barangay Bulihan`;
-    
-    // Update profile picture if changed
-    const photoFile = document.getElementById('profile-upload').files?.[0];
-    if (photoFile) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        document.getElementById('userAvatar').src = e.target.result;
-        document.getElementById('profileAvatar').src = e.target.result;
-      };
-      reader.readAsDataURL(photoFile);
-    }
-    
-    showToast("Profile settings saved successfully!", "success");
-    closeModal('settingsModal');
-  }
-  
-  // Confirm account deletion
-  function confirmDelete() {
-    if (confirm("Are you sure you want to delete your account? This cannot be undone.")) {
-      showToast("Account deletion initiated", "info");
-      // In a real app, you would delete the user account here
-    }
-  }
-  
-  // Start guided tour
-  function startTour() {
-    showToast("Starting guided tour", "info");
-    closeModal('welcomeModal');
-  }
-  
-  // Open terms of service
-  function openTerms() {
-    showToast("Terms of service would be displayed here", "info");
-  }
-  
-  // Open privacy policy
-  function openPrivacy() {
-    showToast("Privacy policy would be displayed here", "info");
-  }
-  
-  // Logout
-  function logout() {
-    showToast("Logged out successfully", "success");
-    // In a real app, you would redirect to login page
-    console.log("User logged out");
-  }
-  
-  // Load more content
-  function loadMoreContent() {
-    const loadMoreBtn = document.getElementById(`loadMore${currentSection.charAt(0).toUpperCase() + currentSection.slice(1)}Btn`);
-    if (loadMoreBtn) {
-      loadMoreBtn.disabled = true;
-      loadMoreBtn.textContent = "Loading...";
-      
-      // Simulate loading more content
-      setTimeout(() => {
-        showToast(`Loaded more ${currentSection} content`, "info");
-        loadMoreBtn.disabled = false;
-        loadMoreBtn.textContent = "Load More";
-      }, 1000);
-    }
-  }
-  
-  // Load forum posts
-  function loadForumPosts() {
-    const filter = document.getElementById('postTypeFilter').value;
-    showToast(`Loading forum posts with filter: ${filter}`, "info");
-  }
+  };
+
+  window.logout = function() {
+    auth.signOut().then(() => {
+      window.location.href = "login.html";
+    }).catch(error => {
+      handleGlobalError(error);
+    });
+  };
+
+  window.showHelpArticles = showHelpArticles;
+  window.showHelpArticleDetail = showHelpArticleDetail;
+  window.startTour = startTour;
+  window.openTerms = openTerms;
+  window.openPrivacy = openPrivacy;
+  window.editPost = editPost;
+  window.deletePost = deletePost;
+  window.switchSection = switchSection;
+  window.switchProfileTab = switchProfileTab;
+  window.toggleTradeSell = toggleTradeSell;
+  window.selectCategory = selectCategory;
+  window.handleImageUpload = handleImageUpload;
+  window.handleForumImageUpload = handleForumImageUpload;
+  window.handlePostTypeChange = handlePostTypeChange;
+  window.handlePaymentMethodChange = handlePaymentMethodChange;
+  window.clearChat = clearChat;
+  window.deleteChat = deleteChat;
+  window.backToHelpList = backToHelpList;
+  window.submitFeedback = submitFeedback;
+  window.previewImage = previewImage;
 </script>
 </body>
 </html>
