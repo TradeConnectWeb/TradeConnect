@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TradeConnect - Marketplace</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!--#include virtual="/components/header.html" -->
+  <!--#include virtual="/components/sidebar.html" -->
+  
+  <div class="main-content">
+    <div class="marketplace-header">
+      <h1>Marketplace</h1>
+      <p>Buy, sell, or trade items in your community</p>
+      
+      <div class="marketplace-filters">
+        <select id="categoryFilter">
+          <option value="">All Categories</option>
+          <option value="fashion">Fashion & Apparel</option>
+          <option value="electronics">Electronics</option>
+          <option value="home">Home Goods</option>
+          <option value="food">Food & Beverages</option>
+        </select>
+        
+        <select id="typeFilter">
+          <option value="">All Types</option>
+          <option value="sale">For Sale</option>
+          <option value="trade">For Trade</option>
+        </select>
+        
+        <button class="btn-primary" onclick="applyFilters()">
+          <i class="fas fa-filter"></i> Apply Filters
+        </button>
+      </div>
+    </div>
+    
+    <div class="listings-feed" id="marketplaceListings">
+      <!-- Listings will be loaded here -->
+    </div>
+    
+    <button id="loadMoreBtn" class="load-more-btn" onclick="loadMoreListings()">
+      <i class="fas fa-plus"></i> Load More
+    </button>
+  </div>
+
+  <button class="floating-post-btn" onclick="openModal('addPostModal')">
+    <i class="fas fa-plus"></i>
+  </button>
+
+  <script src="/assets/js/firebase.js"></script>
+  <script src="/assets/js/auth.js"></script>
+  <script src="/assets/js/marketplace.js"></script>
+  <script src="/assets/js/modals.js"></script>
+</body>
+</html>

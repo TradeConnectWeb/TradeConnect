@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TradeConnect - Home</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!--#include virtual="/components/header.html" -->
+  <!--#include virtual="/components/sidebar.html" -->
+  
+  <div class="main-content">
+    <div class="top-nav">
+      <div class="search-bar">
+        <input type="text" placeholder="Search for items or users...">
+        <i class="fas fa-search"></i>
+      </div>
+      <div class="user-actions">
+        <div class="notification" onclick="openModal('notificationsModal')">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge">3</span>
+        </div>
+        <div class="user-profile" id="userProfile">
+          <img id="userAvatar" src="/assets/images/placeholder.png" alt="User Avatar">
+          <div class="user-info">
+            <span id="userName">Loading...</span>
+            <span id="userEmail">user@example.com</span>
+          </div>
+          <div class="user-dropdown">
+            <a href="/profile.html" class="dropdown-item">
+              <i class="fas fa-user"></i> Profile
+            </a>
+            <a href="javascript:void(0)" class="dropdown-item" onclick="openModal('settingsModal')">
+              <i class="fas fa-cog"></i> Settings
+            </a>
+            <a href="javascript:void(0)" class="dropdown-item" onclick="logout()">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="home-feed">
+      <h2>Recent Listings</h2>
+      <div class="categories-scroll">
+        <div class="category active">All Items</div>
+        <div class="category">Fashion</div>
+        <div class="category">Electronics</div>
+        <div class="category">Home Goods</div>
+      </div>
+      
+      <div class="listings-feed" id="homeListings">
+        <!-- Listings will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <button class="floating-post-btn" onclick="openModal('addPostModal')">
+    <i class="fas fa-plus"></i>
+  </button>
+
+  <!--#include virtual="/components/modals.html" -->
+  <script src="/assets/js/firebase.js"></script>
+  <script src="/assets/js/auth.js"></script>
+  <script src="/assets/js/marketplace.js"></script>
+  <script src="/assets/js/modals.js"></script>
+  <script src="/assets/js/ui.js"></script>
+</body>
+</html>

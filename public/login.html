@@ -9,8 +9,8 @@
   <title>TradeConnect - Login</title>
   <style>
     :root {
-      --primary: #4a6fa5; /* Deep blue */
-      --secondary: #166088; /* Darker blue */
+      --primary: #4a6fa5;
+      --secondary: #166088;
       --error: #e74c3c;
       --success: #2ecc71;
       --light-gray: #f5f5f5;
@@ -115,12 +115,7 @@
       margin-bottom: 25px;
     }
 
-    .input-group i {
-      display: none;
-    }
-
-    .input-group input,
-    .input-group select {
+    .input-group input {
       width: 100%;
       padding: 12px 40px 12px 15px;
       border: 1px solid #ccc;
@@ -129,20 +124,17 @@
       transition: all 0.3s;
     }
 
-    .input-group input:focus,
-    .input-group select:focus {
+    .input-group input:focus {
       border-color: var(--primary);
       outline: none;
       box-shadow: 0 0 5px rgba(74, 111, 165, 0.5);
     }
 
-    .input-group input.error,
-    .input-group select.error {
+    .input-group input.error {
       border-color: var(--error);
     }
 
-    .input-group input.success,
-    .input-group select.success {
+    .input-group input.success {
       border-color: var(--success);
     }
     
@@ -293,7 +285,7 @@
           <img src="logo.png" alt="TradeConnect Logo"/>
         </div>
         <div class="app-title">TradeConnect</div>
-        <div class="description">Your Extra Could Be Someone’s Essential, Start Trading!</div>
+        <div class="description">Your Extra Could Be Someone's Essential, Start Trading!</div>
       </div>
     </div>
 
@@ -337,7 +329,7 @@
     </div>
   </div>
 
-  <script type="module"> 
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
     import { 
       getAuth, 
@@ -346,10 +338,11 @@
       setPersistence,
       browserSessionPersistence,
       browserLocalPersistence,
-      onAuthStateChanged
+      onAuthStateChanged,
+      signOut
     } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { 
-      getDatabase, 
+      getDatabase,
       ref,
       get
     } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
@@ -362,7 +355,7 @@
       storageBucket: "tradeconnect-3c728.appspot.com",
       messagingSenderId: "299665603548",
       appId: "1:299665603548:web:9ff10af44cd41605382d19",
-      databaseURL: "https://tradeconnect-3c728-default-rtdb.firebaseio.com"
+      databaseURL: "https://tradeconnect-3c728-default-rtdb.asia-southeast1.firebasedatabase.app"
     };
 
     // Initialize Firebase
@@ -385,13 +378,11 @@
     // Check for saved credentials on page load
     document.addEventListener('DOMContentLoaded', () => {
       const savedEmail = localStorage.getItem('tradeConnectEmail');
-      const savedPassword = localStorage.getItem('tradeConnectPassword');
+      const savedRemember = localStorage.getItem('tradeConnectRemember') === 'true';
       
-      if (savedEmail && savedPassword) {
+      if (savedEmail && savedRemember) {
         emailInput.value = savedEmail;
-        passwordInput.value = savedPassword;
         rememberMe.checked = true;
-        passwordInput.dispatchEvent(new Event('input')); // Trigger eye icon visibility
       }
     });
 
@@ -429,11 +420,17 @@
     // Resend verification email
     resendLink.addEventListener('click', async function(e) {
       e.preventDefault();
+      const email = localStorage.getItem('emailForVerification') || emailInput.value.trim();
       
       try {
         resendLink.innerHTML = `<span class="loading-spinner"></span> Sending...`;
-        await sendEmailVerification(auth.currentUser);
-        alert("Verification email resent successfully!");
+        
+        // Find the user by email (you might need to implement this differently)
+        const userCredential = await signInWithEmailAndPassword(auth, email, "temporary_password");
+        await sendEmailVerification(userCredential.user);
+        await signOut(auth);
+        
+        alert("Verification email resent successfully! Please check your inbox.");
       } catch (error) {
         console.error("Resend error:", error);
         alert("Failed to resend verification email: " + error.message);
@@ -523,22 +520,22 @@
           sentEmail.textContent = email;
           loginForm.style.display = 'none';
           
-          // Sign out to prevent access without verification
-          await signOut(auth);
-          
           // Save email for resend functionality
           localStorage.setItem('emailForVerification', email);
+          
+          // Sign out to prevent access without verification
+          await signOut(auth);
           
           throw new Error('Email not verified');
         }
 
-        // Save credentials if remember me is checked
+        // Save email if remember me is checked (don't save password for security)
         if (rememberMe.checked) {
           localStorage.setItem('tradeConnectEmail', email);
-          localStorage.setItem('tradeConnectPassword', password);
+          localStorage.setItem('tradeConnectRemember', 'true');
         } else {
           localStorage.removeItem('tradeConnectEmail');
-          localStorage.removeItem('tradeConnectPassword');
+          localStorage.removeItem('tradeConnectRemember');
         }
 
         // Check user role and redirect accordingly
@@ -548,12 +545,12 @@
         if (snapshot.exists()) {
           const userData = snapshot.val();
           if (userData.role === 'admin') {
-            window.location.href = 'admindashboard.html';
+            window.location.href = 'admin.html';
           } else {
-            window.location.href = 'index.html';
+            window.location.href = 'dashboard.html';
           }
         } else {
-          window.location.href = 'index.html';
+          window.location.href = 'dashboard.html';
         }
 
       } catch (error) {
@@ -592,9 +589,8 @@
           errorField = 'password';
           break;
         case "auth/email-not-verified":
-          errorMessage = "Email not verified. Please check your inbox.";
-          errorField = 'email';
-          break;
+          // This case is already handled in the main flow
+          return;
       }
       
       showError(`${errorField}-error`, errorField, errorMessage);
@@ -618,12 +614,12 @@
           if (snapshot.exists()) {
             const userData = snapshot.val();
             if (userData.role === 'admin') {
-              window.location.href = 'admindashboard.html';
+              window.location.href = 'admin.html';
             } else {
-              window.location.href = 'index.html';
+              window.location.href = 'dashboard.html';
             }
           } else {
-            window.location.href = 'index.html';
+            window.location.href = 'dashboard.html';
           }
         });
       }

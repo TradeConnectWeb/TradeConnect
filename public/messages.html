@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TradeConnect - Messages</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!--#include virtual="/components/header.html" -->
+  <!--#include virtual="/components/sidebar.html" -->
+  
+  <div class="main-content">
+    <div class="messages-container">
+      <div class="conversations-list">
+        <h2>Conversations</h2>
+        <div class="conversation-search">
+          <input type="text" placeholder="Search conversations...">
+          <i class="fas fa-search"></i>
+        </div>
+        
+        <div class="conversation-items" id="conversationsList">
+          <!-- Conversations will be loaded here -->
+        </div>
+      </div>
+      
+      <div class="chat-container">
+        <div class="chat-header">
+          <div class="chat-partner-info">
+            <img src="/assets/images/placeholder.png" alt="User" class="partner-avatar">
+            <div>
+              <h3 id="chatPartnerName">Select a conversation</h3>
+              <span class="status" id="chatPartnerStatus">Offline</span>
+            </div>
+          </div>
+          <div class="chat-actions">
+            <button class="action-btn" id="clearChat" onclick="clearChat()">
+              <i class="fas fa-trash-alt"></i> Clear
+            </button>
+            <button class="action-btn" id="reportUserBtn" onclick="openModal('reportModal')">
+              <i class="fas fa-flag"></i> Report
+            </button>
+          </div>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+          <div class="no-messages">
+            <i class="fas fa-comment-slash"></i>
+            <p>Select a conversation to start chatting</p>
+          </div>
+        </div>
+        
+        <div class="message-input">
+          <div class="image-upload-chat">
+            <input type="file" id="chatImageUpload" accept="image/*" multiple>
+            <label for="chatImageUpload" title="Attach images">
+              <i class="fas fa-image"></i>
+            </label>
+          </div>
+          <input type="text" id="messageInput" placeholder="Type your message..." disabled>
+          <button id="sendMessage" onclick="sendMessage()" disabled>
+            <i class="fas fa-paper-plane"></i> Send
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/js/firebase.js"></script>
+  <script src="/assets/js/auth.js"></script>
+  <script src="/assets/js/chat.js"></script>
+  <script src="/assets/js/modals.js"></script>
+</body>
+</html>

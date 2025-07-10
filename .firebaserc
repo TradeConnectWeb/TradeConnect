@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "tradeconnect-3c728"
-  }
+    "default": "tradeconnect-3c728",
+    "defualt": "tradeconnect-3c728"
+  },
+  "targets": {},
+  "etags": {}
 }

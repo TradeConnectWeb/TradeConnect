@@ -7,6 +7,12 @@
       "**/node_modules/**"
     ],
     "cleanUrls": true,
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
     "headers": [
       {
         "source": "/images/**",
@@ -37,6 +43,24 @@
             "value": "1; mode=block"
           }
         ]
+      },
+      {
+        "source": "**/*.@(js|css)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=31536000"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(jpg|jpeg|gif|png|svg|webp)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=31536000"
+          }
+        ]
       }
     ]
   },
@@ -49,7 +73,7 @@
       "codebase": "default"
     },
     {
-      "source": "JavaScript ",
+      "source": "JavaScript",
       "codebase": "functions",
       "ignore": [
         "node_modules",

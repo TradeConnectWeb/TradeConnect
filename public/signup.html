@@ -454,13 +454,13 @@
     </div>
   </div>
 
-  <!-- Success Notification Modal -->
-  <div class="modal" id="successModal">
+  <!-- Verification Modal -->
+  <div class="modal" id="verificationModal">
     <div class="modal-content">
-      <h3>Success!</h3>
-      <p>Your account has been created successfully!</p>
-      <p>We've sent a verification email to <span id="successEmail"></span>. Please verify your email to complete your registration.</p>
-      <button class="close-modal" id="closeSuccessModal">OK</button>
+      <h3>Please Verify Your Email</h3>
+      <p>We've sent a verification email to <span id="modalEmail"></span>.</p>
+      <p>Please check your inbox and click the verification link to activate your account.</p>
+      <button class="close-modal" id="proceedToLogin">Proceed to Login</button>
     </div>
   </div>
 
@@ -489,7 +489,7 @@
       storageBucket: "tradeconnect-3c728.appspot.com",
       messagingSenderId: "299665603548",
       appId: "1:299665603548:web:9ff10af44cd41605382d19",
-      databaseURL: "https://tradeconnect-3c728-default-rtdb.firebaseio.com"
+      databaseURL: "https://tradeconnect-3c728-default-rtdb.asia-southeast1.firebasedatabase.app"
     };
 
     // Initialize Firebase
@@ -506,11 +506,11 @@
     const termsLink = document.getElementById('termsLink');
     const termsModal = document.getElementById('termsModal');
     const closeModal = document.getElementById('closeModal');
-    const successModal = document.getElementById('successModal');
-    const closeSuccessModal = document.getElementById('closeSuccessModal');
+    const verificationModal = document.getElementById('verificationModal');
+    const modalEmail = document.getElementById('modalEmail');
+    const proceedToLogin = document.getElementById('proceedToLogin');
     const verificationNotice = document.getElementById('verificationNotice');
     const sentEmail = document.getElementById('sentEmail');
-    const successEmail = document.getElementById('successEmail');
     const resendLink = document.getElementById('resendLink');
     
     // Check if we're coming back from email verification
@@ -535,9 +535,8 @@
         // Update user's emailVerified status in database
         await set(ref(db, 'users/' + result.user.uid + '/emailVerified'), true);
         
-        // Show success message and redirect
-        alert("Email verified successfully! You can now login.");
-        window.location.href = "login.html";
+        // Redirect to dashboard after verification
+        window.location.href = "dashboard.html";
       } catch (error) {
         console.error("Email verification error:", error);
         alert("Email verification failed: " + error.message);
@@ -605,8 +604,8 @@
       termsModal.style.display = 'none';
     });
 
-    closeSuccessModal.addEventListener('click', function() {
-      successModal.style.display = 'none';
+    proceedToLogin.addEventListener('click', function() {
+      window.location.href = "login.html";
     });
 
     // Resend verification email
@@ -633,8 +632,8 @@
       if (event.target === termsModal) {
         termsModal.style.display = 'none';
       }
-      if (event.target === successModal) {
-        successModal.style.display = 'none';
+      if (event.target === verificationModal) {
+        verificationModal.style.display = 'none';
       }
     });
 
@@ -671,7 +670,7 @@
         clearError('email-error', 'email');
       }
 
-      // Zone validation - Functional Suitability
+      // Zone validation
       if (!zone || !zone.startsWith("Zone")) {
         showError('zone-error', 'zone', 'Please select your zone');
         isValid = false;
@@ -773,17 +772,26 @@
           createdAt: new Date().toISOString()
         });
 
-        // Show success modal with verification notice
-        successEmail.textContent = email;
-        successModal.style.display = 'flex';
+        // Sign out the user
+        await signOut(auth);
+
+        // Show verification modal
+        modalEmail.textContent = email;
+        verificationModal.style.display = 'flex';
         
         // Hide form and show verification notice
         signupForm.style.display = 'none';
         verificationNotice.style.display = 'block';
         sentEmail.textContent = email;
         
-        // Sign out (optional, depending on your flow)
-        await signOut(auth);
+        // Redirect based on user role after 3 seconds
+        setTimeout(() => {
+          if (userRole === "admin") {
+            window.location.href = "admin.html";
+          } else {
+            window.location.href = "index.html";
+          }
+        }, 3000);
 
       } catch (error) {
         console.error("Signup error:", error);

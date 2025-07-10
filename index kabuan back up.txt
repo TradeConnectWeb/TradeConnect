@@ -1729,7 +1729,7 @@
         </div>
       </div>
 
-      <!-- Home Feed Section -->
+     
       <div id="home" class="content-section active">
         <div class="home-header">
           <h2>Home Feed</h2>
@@ -1745,19 +1745,18 @@
           <div class="category">Health & Beauty</div>
         </div>
 
-        <!-- Live Listings Feed -->
+        
         <div class="listings-feed" id="homeListings">
-          <!-- Product cards will be loaded here -->
+         
         </div>
         <button id="loadMoreHomeBtn" class="load-more-btn">Load More</button>
 
-        <!-- "Post Item" Floating Button -->
+      
         <button class="floating-post-btn" onclick="openModal('addPostModal')" title="Create new listing">
           <i class="fas fa-plus"></i>
         </button>
       </div>
 
-      <!-- Profile Page Section -->
       <div id="profile" class="content-section">
         <div class="profile-container">
           <div class="profile-header">
@@ -1770,15 +1769,15 @@
             
             <div class="profile-stats">
               <div class="stat-item">
-                <div class="stat-number" id="postsCount">0</div>
+                <div class="stat-number" id="postsCount"></div>
                 <div class="stat-label">Posts</div>
               </div>
               <div class="stat-item">
-                <div class="stat-number" id="tradesCount">0</div>
+                <div class="stat-number" id="tradesCount"></div>
                 <div class="stat-label">Trades</div>
               </div>
               <div class="stat-item">
-                <div class="stat-number" id="ratingCount">0</div>
+                <div class="stat-number" id="ratingCount"></div>
                 <div class="stat-label">Rating</div>
               </div>
             </div>
@@ -1796,7 +1795,7 @@
           <div class="profile-content active" id="postsTab">
             <h3>My Posts</h3>
             <div class="profile-posts" id="userPosts">
-              <!-- User's posts will be loaded here -->
+            
             </div>
           </div>
           
@@ -1822,14 +1821,14 @@
         </div>
       </div>
 
-      <!-- Messages Section -->
+      
       <div id="messages" class="content-section">
         <h2>Messages</h2>
         <p>Connect with other traders in your community</p>
         
-        <!-- Chat Container -->
+        
         <div class="chat-container">
-          <!-- Chat Header -->
+         
           <div class="chat-header">
             <div class="chat-partner-info">
               <img src="https://placehold.co/40" alt="User" class="partner-avatar">
@@ -1851,16 +1850,16 @@
             </div>
           </div>
           
-          <!-- Chat Messages -->
+         
           <div class="chat-messages" id="chatMessages">
-            <!-- Messages will appear here -->
+           
             <div class="no-messages">
               <i class="fas fa-comment-slash"></i>
               <p>No messages yet. Start a conversation!</p>
             </div>
           </div>
           
-          <!-- Message Input -->
+      
           <div class="message-input">
             <div class="image-upload-chat">
               <input type="file" id="chatImageUpload" accept="image/*" multiple>
@@ -1876,10 +1875,10 @@
         </div>
       </div>
 
-      <!-- Marketplace Section -->
-      <div id="marketplace" class="content-section">
-        <div class="marketplace-header">
-          <h2>Marketplace</h2>
+     
+      <div id="home" class="content-section">
+        <div class="home-header">
+          <h2>home</h2>
           <p>Buy, sell, or trade items in your community</p>
         </div>
         
@@ -1888,19 +1887,19 @@
         </button>
         
         <div class="listings-feed" id="marketplaceListings">
-          <!-- Listings will be loaded here dynamically -->
+        
         </div>
         <button id="loadMoreMarketplaceBtn" class="load-more-btn">Load More</button>
       </div>
 
-      <!-- Add Post Modal -->
+      
       <div id="addPostModal" class="modal">
         <div class="modal-content">
           <span class="close" onclick="closeModal('addPostModal')">&times;</span>
           <h3>Create New Listing</h3>
           <p>Fill in the details of the item you want to list</p>
 
-          <!-- Toast Notification -->
+         
           <div id="postSuccessToast" class="toast">🎉 Item posted successfully!</div>
 
           <form id="postForm" onsubmit="handlePostSubmit(event)">
@@ -1954,7 +1953,7 @@
                   <img class="image-preview">
                 </div>
               </div>
-              <div class="error-message">Please upload at least 3 images</div>
+              <div class="error-message">Please upload Minimum1 maximum 3 images</div>
             </div>
 
             <div class="form-group">
@@ -1982,7 +1981,7 @@
         </div>
       </div>
 
-      <!-- Community Forum Section -->
+     
       <div id="community" class="content-section">
         <h2>Community Forum</h2>
         <p>Connect with other community members</p>
@@ -1994,10 +1993,9 @@
         <div class="forum-filters">
           <select id="postTypeFilter">
             <option value="all">All Posts</option>
-            <option value="review">✅ Review/Feedback</option>
-            <option value="scam">⚠️ Report a Scam</option>
-            <option value="question">💬 Question/Tips</option>
-            <option value="buy">🔎 Looking to Buy</option>
+            <option value="review"> Review/Feedback</option>
+            <option value="scam"> Report a Scam</option>
+            <option value="buy"> Looking to Buy</option>
           </select>
           <button id="applyFilter" class="btn-submit" onclick="loadForumPosts()">
             <i class="fas fa-filter"></i> Apply Filter

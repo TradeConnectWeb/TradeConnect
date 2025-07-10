@@ -1,0 +1,32 @@
+TradeConnect/
+├── public/
+│   ├── index.html               ✅ Homepage / Marketplace Feed
+│   ├── login.html               ✅ Login Page
+│   ├── profile.html             ✅ User Profile Page
+│   ├── messages.html            ✅ Chat Interface
+│   ├── marketplace.html         ✅ All Listings
+│   ├── forum.html               ✅ Community Board
+│   ├── help.html                ✅ Help Center
+│
+│   ├── components/              ✅ HTML partials
+│   │   ├── header.html
+│   │   ├── sidebar.html
+│   │   ├── footer.html
+│   │   └── modals.html          ✅ All modals like Create Post, Settings, etc.
+│
+│   ├── assets/
+│   │   ├── css/
+│   │   │   └── styles.css       ✅ All global styles
+│   │   ├── js/
+│   │   │   ├── firebase.js      ✅ Firebase config/init
+│   │   │   ├── auth.js          ✅ Login/Register/Profile
+│   │   │   ├── chat.js          ✅ Messaging
+│   │   │   ├── marketplace.js   ✅ Listings
+│   │   │   ├── forum.js         ✅ Community forum logic
+│   │   │   ├── modals.js        ✅ Modal open/close logic
+│   │   │   └── ui.js            ✅ Sidebar toggle, animations, etc.
+│   │   └── images/
+│   │       └── ...
+│
+├── firebase.json                ✅ Hosting config
+└── .firebaserc

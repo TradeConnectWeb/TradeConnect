@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TradeConnect - Community Forum</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!--#include virtual="/components/header.html" -->
+  <!--#include virtual="/components/sidebar.html" -->
+  
+  <div class="main-content">
+    <div class="forum-header">
+      <h1>Community Forum</h1>
+      <p>Connect with other community members</p>
+      
+      <button id="addForumPostBtn" class="btn-primary" onclick="openModal('addForumPostModal')">
+        <i class="fas fa-plus"></i> New Post
+      </button>
+    </div>
+    
+    <div class="forum-filters">
+      <select id="forumCategoryFilter">
+        <option value="all">All Topics</option>
+        <option value="general">General Discussion</option>
+        <option value="scams">Scam Reports</option>
+        <option value="tips">Trading Tips</option>
+        <option value="feedback">Feedback</option>
+      </select>
+      
+      <select id="forumSortFilter">
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+        <option value="popular">Most Popular</option>
+      </select>
+      
+      <button class="btn-primary" onclick="applyForumFilters()">
+        <i class="fas fa-filter"></i> Apply Filters
+      </button>
+    </div>
+    
+    <div class="forum-posts" id="forumPostsContainer">
+      <!-- Forum posts will be loaded here -->
+    </div>
+    
+    <button id="loadMoreForumBtn" class="load-more-btn" onclick="loadMoreForumPosts()">
+      <i class="fas fa-plus"></i> Load More
+    </button>
+  </div>
+
+  <script src="/assets/js/firebase.js"></script>
+  <script src="/assets/js/auth.js"></script>
+  <script src="/assets/js/forum.js"></script>
+  <script src="/assets/js/modals.js"></script>
+</body>
+</html>
