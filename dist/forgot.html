@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <link rel="icon" href="/favicon.ico" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TradeConnect - Forgot Password</title>
+  <style>
+       :root {
+  --primary: #4a6fa5; /* Deep blue */
+  --secondary: #166088; /* Darker blue */
+}
+   * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Open Sans", sans-serif;
+    }
+    
+    body {
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      max-width: 800px;
+      width: 100%;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      flex-wrap: wrap;
+    }
+
+    .left-section {
+      flex: 1;
+      min-width: 300px;
+      padding: 50px 30px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      background-color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 10px;
+    }
+
+    .logo img {
+      width: 60px;
+      height: 60px;
+    }
+
+    .logo i {
+      font-size: 40px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+    }
+
+    .app-title {
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .description {
+      font-size: 16px;
+      line-height: 1.5;
+      max-width: 300px;
+      color: white;
+    }
+
+    .right-section {
+      flex: 1;
+      min-width: 300px;
+      padding: 60px 40px;
+      color: black;
+    }
+
+    .right-section h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 24px;
+      color: white;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    .input-group i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #777;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 20px 12px 45px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .input-group input:focus {
+      border-color: #000000;
+      outline: none;
+      box-shadow: 0 0 5px rgba(107, 224, 229, 0.5);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      transform: translateY(-2px);
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+      color: #777;
+    }
+
+    .login-link a {
+      color: #000000;
+      text-decoration: none;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: green;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .message.show {
+      opacity: 1;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+
+     .login-link a {
+      color: #488bdd;
+      text-decoration: none;
+    }
+
+    @keyframes spinAndScale {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.logo img {
+  animation: spinAndScale 3s linear infinite;
+  width: 60px; /* optional - adjust size */
+}
+
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .left-section, .right-section {
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left-section">
+      <div class="logo-container">
+        <div class="logo">
+          <img src="logo.png" alt="Logo" />
+        </div>
+        <div class="app-title">TradeConnect</div>
+        <div class="description">
+         Help Is on the Way 💌
+         We’ve sent a gentle little reset link to your inbox. Just follow the steps and you’ll be back in soon.
+        </div>
+      </div>
+    </div>
+    <div class="right-section">
+      <h2>Forgot Password</h2>
+      <form id="forgotPasswordForm">
+        <div class="input-group">
+          <input type="email" id="email" placeholder="Enter your email" required />
+        </div>
+        <button type="submit">Send Email</button>
+      </form>
+      <div class="message" id="messageBox"></div>
+      <div class="login-link">
+        <p>Remembered your password?</p>
+        <a href="login.html" class="back-btn">Back to Login</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { getAuth, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCxaOGeOvHwS5dnPHRTpw3Lwn2surjXP1E",
+      authDomain: "tradeconnect-3c728.firebaseapp.com",
+      projectId: "tradeconnect-3c728",
+      storageBucket: "tradeconnect-3c728.appspot.com",
+      messagingSenderId: "299665603548",
+      appId: "1:299665603548:web:9ff10af44cd41605382d19"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const form = document.getElementById("forgotPasswordForm");
+    const messageBox = document.getElementById("messageBox");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+
+      sendPasswordResetEmail(auth, email)
+        .then(() => {
+          messageBox.textContent = "✅ Password reset email sent!";
+          messageBox.classList.add("show");
+          messageBox.style.color = "green";
+        })
+        .catch((error) => {
+          messageBox.textContent = "❌ " + error.message;
+          messageBox.classList.add("show");
+          messageBox.style.color = "red";
+        });
+    });
+  </script>
+</body>
+</html>
